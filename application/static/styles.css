@@ -4,10 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
 
-
-
-
-
 title {
     text-transform: capitalize;
 }
@@ -53,18 +49,15 @@ main {
 
  /* Positioning the Menu items to the center */
 .navbar-nav {
-    justify-content: center;
+    justify-content: right;
     width: 100%;
-    gap: 10px;
 }
-
 
 /* For Home link on the Menu Bar: make the text white */
 .navbar-nav .nav-link.active {
     color: black;
  }
 
- /* For Societies, Student Halls, Student links on the Menu Bar: make the text white */
 .navbar-nav .nav-link {
     color: black;
 }
@@ -74,11 +67,6 @@ main {
     background-color: lilac;
     color: white;
     border-radius: 0.5rem;
-}
-
-/* Removing the bullet points for all the Menu items in the list */
-.nav-item {
-    list-style: none;
 }
 
 /* For the Dropdown Menu */
@@ -166,7 +154,17 @@ background-color: #EADECC;
   margin: 0 auto;    /* centers the carousel horizontally */
   padding-top: 40px; /* optional vertical spacing */
 }
-
+.top-section{
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: auto;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+}
 
 #customer-feedback {
     width: 80%;

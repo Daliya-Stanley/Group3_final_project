@@ -11,8 +11,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg sticky-top">
-  <div class="container-fluid" style="padding-left: 10px;">
-    <a href="#" class="navbar-brand d-flex align-items-center">
+    <a href="#" class="navbar-brand">
       <img src="{{ url_for('static', filename='images/around-world_5390597.png') }}" alt="Enchanted Getaways Travel" height="30px" class="d-inline-block align-text-top me-2">
       <h4 class="mb-0">EGT</h4>
     </a>
@@ -143,107 +142,15 @@
       <button class="login-btn">
         <a href="/login"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
       </button>
-      <button class="login-btn">
-        <a href="/signup"><i class='bx bxs-castle bx-burst-hover'></i>Sign up</a>
-      </button>
     </div>
   </div>
   </div>
 </nav>
 
 
-
-
-
-
-
-
-
-<!--<nav class="navbar navbar-expand-lg sticky-top">-->
-<!--        <div class="container-fluid">-->
-<!--            <a href="#" class="navbar-brand">-->
-<!--                <img src="{{ url_for('static', filename='images/around-world_5390597.png') }}" alt="Enchanted Getaways Travel" width="auto" height="20px" class="d-inline-block align-text-top" >-->
-<!--                <h2>EGT</h2>-->
-<!--            </a>-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--        </div>-->
-
-<!--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--      <ul class="navbar-nav mb-2 mb-lg-0">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" aria-current="page" href="#">Home</a>-->
-<!--        </li>-->
-
-<!--        <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--            Enchanted Destinations-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Destination 1</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Destination 2</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 3</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 4</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 5</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--            Magical Products-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Magic Wand</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Flying Carpet</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Pack the world-Suitcase</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">One dress-No mess</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Magic Potion</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--           Spellbind Experiences-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Make a Snowman with Anna</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Flying Lessons with Aladin</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Party Night with Trolls</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Scuba diving with Ariel</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Spa and relaxation with Aurora</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item">-->
-<!--          <a class="nav-link" href="#">Play and Win</a>-->
-<!--        </li>-->
-<!--          <li class="nav-item">-->
-<!--          <a class="nav-link" href="#">About US</a>-->
-
-
-<!--    <div>-->
-<!--                    <button class="login-btn "><a href="/signup"><i class='bx bxs-castle bx-burst-hover'></i>Login</a></button>-->
-<!--                </div>-->
-
-<!--          <div>-->
-<!--                    <button class="login-btn "><a href="/signup"><i class='bx bxs-castle bx-burst-hover'></i>Sign up</a></button>-->
-<!--                </div>-->
-
-<!--      </ul>-->
-
-<!--    </div>-->
-
-<!--</nav>-->
 <section class="top-section"
         style="
-            background-image: url('{{ img }}');
-            height: 100vh;
-            position: relative;
-            top:0;
-            max-width: 1500px;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;">
+            background-image: url('{{ img }}');">
         <div class="container pt-5" >
             <h1>{{ title_body }}</h1>
             <h4>{{ subtitle }}</h4>
