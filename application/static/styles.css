@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
+
+
+
+
+
+title {
+    text-transform: capitalize;
+}
+
+/* Adjusting the text-style, font, size and colour of the logo header (the 'EGT' next to the logo image) */
+.navbar-brand h2 {
+    text-transform: uppercase;
+    font-family:'Poppins', serif;
+    font-size: 2rem;
+    font-weight: 550;
+    color: black;
+    padding-top: 5px;
+}
+
+body {
+  padding-top: 30px; /* Adjust this value to match your navbar height */
+}
+
+
+main {
+  padding-top: 30px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar {
+    background: linear-gradient(to right, #C8A2C8, #E6CCFF);
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family:  'Poppins', sans-serif;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+ /* Positioning the Menu items to the center */
+.navbar-nav {
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+
+/* For Home link on the Menu Bar: make the text white */
+.navbar-nav .nav-link.active {
+    color: black;
+ }
+
+ /* For Societies, Student Halls, Student links on the Menu Bar: make the text white */
+.navbar-nav .nav-link {
+    color: black;
+}
+
+/* Make the textcolour change when mouse arrow hovers over */
+.navbar-nav .nav-link:hover {
+    background-color: lilac;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+/* Removing the bullet points for all the Menu items in the list */
+.nav-item {
+    list-style: none;
+}
+
+/* For the Dropdown Menu */
+.drop-down {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0, 0.2);
+    list-style: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    display: none;
+    overflow-y: visible;
+    z-index: 1050;
+}
+
+.dropdown {
+    position: relative;
+}
+
+/* For the links on the Dropdown Bar: make the text white */
+.dropdown-item {
+    color: black;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dropdown:hover .drop-down {
+    display: block;
+}
+
+.dropdown:hover {
+    color:rgb(198, 128, 0);
+}
+
+/* Adding a line between the society names and 'All Societies' */
+.dropdown .dropdown-divider {
+    border-top: 1px solid black;
+    margin:8px 0;
+}
+
+/* Turning the text colour grey when user is on the page */
+.drop-down .nav-link.disabled {
+    color: gray;
+    font-weight: 600;
+}
+
+.login-btn {
+    background-color: white;
+    border-radius: 2rem;
+    border-color: black;
+    width: 7.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-right: 1rem;
+    text-transform: uppercase;
+}
+
+
+.login-btn a {
+    text-decoration: none;
+    color: #C8A2C8;
+}
+
+.login-btn a:hover {
+    color: #E6CCFF;
+}
+
+.login-btn i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
