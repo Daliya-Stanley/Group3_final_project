@@ -4,10 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
 
-
-
-
-
 title {
     text-transform: capitalize;
 }
@@ -25,7 +21,6 @@ title {
 body {
   padding-top: 0px; /* Adjust this value to match your navbar height */
 }
-
 
 main {
   padding-top: 30px;
@@ -51,20 +46,30 @@ main {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
- /* Positioning the Menu items to the center */
+ /* Positioning the Menu items to the right */
 .navbar-nav {
-    justify-content: center;
+    justify-content: right;
     width: 100%;
     gap: 10px;
 }
 
-
+.top-section{
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500vh;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+}
 /* For Home link on the Menu Bar: make the text white */
 .navbar-nav .nav-link.active {
     color: black;
  }
 
- /* For Societies, Student Halls, Student links on the Menu Bar: make the text white */
+
 .navbar-nav .nav-link {
     color: black;
 }
@@ -74,11 +79,6 @@ main {
     background-color: lilac;
     color: white;
     border-radius: 0.5rem;
-}
-
-/* Removing the bullet points for all the Menu items in the list */
-.nav-item {
-    list-style: none;
 }
 
 /* For the Dropdown Menu */
@@ -115,12 +115,6 @@ main {
     color:rgb(198, 128, 0);
 }
 
-/* Adding a line between the society names and 'All Societies' */
-.dropdown .dropdown-divider {
-    border-top: 1px solid black;
-    margin:8px 0;
-}
-
 /* Turning the text colour grey when user is on the page */
 .drop-down .nav-link.disabled {
     color: gray;
@@ -138,7 +132,6 @@ main {
     text-transform: uppercase;
 }
 
-
 .login-btn a {
     text-decoration: none;
     color: #C8A2C8;
@@ -146,9 +139,4 @@ main {
 
 .login-btn a:hover {
     color: #E6CCFF;
-}
-
-.login-btn i {
-    margin-right: 8px;
-    font-size: 1.1rem;
 }
