@@ -23,7 +23,7 @@ title {
 }
 
 body {
-  padding-top: 30px; /* Adjust this value to match your navbar height */
+  padding-top: 0px; /* Adjust this value to match your navbar height */
 }
 
 
@@ -151,4 +151,71 @@ main {
 .login-btn i {
     margin-right: 8px;
     font-size: 1.1rem;
+}
+
+#component{
+text-align: center;
+}
+
+#components{
+background-color: #EADECC;
+}
+
+.carousel-container {
+  max-width: 400px;  /* adjust as needed */
+  margin: 0 auto;    /* centers the carousel horizontally */
+  padding-top: 40px; /* optional vertical spacing */
+}
+
+
+#customer-feedback {
+    width: 80%;
+    max-width: 500px;
+    max-height: 500px;
+    margin: 0 auto;
+    border: 5px solid #ffffff;
+}
+#customer-feedback .carousel-inner {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    align-items: center;
+    padding-top: 100%;
+}
+#customer-feedback .carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    object-fit: cover;
+
+    carousel-caption {
+    background-color: rgba(127, 117, 101, 0.23);
+    border-radius: 50px;
+    padding: 5px;
+    padding-bottom: 20px;
+    max-width: 80%;
+    text-transform: capitalize;
+}
+.carousel-control-prev, .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
+    width: auto;
+    background: rgba(0, 0, 0, 0.831);
+    border-radius: 50%;
+    padding: 15px;
+}
+.carousel-item h5, .carousel-item p {
+    text-shadow: 6px 6px 12px black;
+}
+
+#feedback{
+background-color: #D2E4BF;
 }
