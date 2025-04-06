@@ -23,7 +23,7 @@
   <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('home_page')}}">Home</a>
       </li>
 
 
@@ -138,7 +138,7 @@
 
     <div class="ms-auto d-flex gap-2">
       <button class="login-btn">
-        <a href="/login"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
+        <a href="{{ url_for('login') }}"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
       </button>
     </div>
   </div>
@@ -146,14 +146,7 @@
 </nav>
 
 
-<section class="top-section"
-        style="
-            background-image: url('{{ img }}');">
-        <div class="container pt-5" >
-            <h1>{{ title_body }}</h1>
-            <h4>{{ subtitle }}</h4>
-        </div>
-      </section>
+
 
  {% block body_content %}
     {% endblock %}

@@ -1,41 +1,48 @@
 {% extends "layout.html" %}
 {% block body_content %}
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');">
+        <div class="container pt-5" >
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
 
-
-            <section id="components">
-              <br>
-<br>
-              <h1 style="text-align:center; font-family: 'Poppins', sans-serif;">This Is What We Offer!!!</h1>
-              <br>
-                <div class="row row-cols-1 row-cols-md-3 g-3">
-              <div class="col">
-                <div class="card">
-                  <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top" alt="Enchanted Desert Travel">
-                  <div class="card-body">
-                    <h5 class="card-title">Our Enchanted Destinations</h5>
-                    <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden dunes stretch endlessly beneath a sky ablaze with stars..</p>
-                  </div>
+          <section id="components">
+            <br>
+            <br>
+            <h1 style="text-align:center; font-family: 'Poppins', sans-serif;">This Is What We Offer!!!</h1>
+            <br>
+              <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card">
+                <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top" alt="Enchanted Desert Travel">
+                <div class="card-body">
+                  <h5 class="card-title">Our Enchanted Destinations</h5>
+                  <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden dunes stretch endlessly beneath a sky ablaze with stars..</p>
                 </div>
               </div>
-              <div class="col">
-                <div class="card">
-                  <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top" alt="Diving experience with Ariel">
-                  <div class="card-body">
-                    <h5 class="card-title">Magical Experiences</h5>
-                    <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life beneath the waves, where dreams and ocean wonders meet.</p>
-                  </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top" alt="Diving experience with Ariel">
+                <div class="card-body">
+                  <h5 class="card-title">Magical Experiences</h5>
+                  <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life beneath the waves, where dreams and ocean wonders meet.</p>
                 </div>
               </div>
-              <div class="col">
-                <div class="card">
-                  <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top" alt="Magical wand">
-                  <div class="card-body">
-                    <h5 class="card-title">Splendid Products</h5>
-                    <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday moments, it’s magic in your hands.</p>
-                  </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top" alt="Magical wand">
+                <div class="card-body">
+                  <h5 class="card-title">Splendid Products</h5>
+                  <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday moments, it’s magic in your hands.</p>
                 </div>
               </div>
-                </div>
+            </div>
+              </div>
 
 <br>
 <br>
