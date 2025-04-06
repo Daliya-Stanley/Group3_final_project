@@ -1,8 +1,11 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+{% block body_content %}
+
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cinderella's Kingdom</title>
 
   <!-- Bootstrap CSS -->
@@ -11,42 +14,42 @@
     rel="stylesheet"
   />
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="Cinderella.css">
+  <link rel="stylesheet" href="cinderella.css" />
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-purple shadow-sm">
     <div class="container">
-      <a class="navbar-brand sparkle" href="#">Cinderella's Kingdom</a>
+      <a class="navbar-brand" href="#">Cinderella's Kingdom</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link sparkle" href="#">Home</a>
+            <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle sparkle" href="#" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
               Activities to Do
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item sparkle" href="#">Attend the Royal Ball</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Visit the Glass Slipper Spa</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Pumpkin Carriage Ride</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Dine in the Grand Hall</a></li>
+              <li><a class="dropdown-item" href="#">Attend the Royal Ball</a></li>
+              <li><a class="dropdown-item" href="#">Visit the Glass Slipper Spa</a></li>
+              <li><a class="dropdown-item" href="#">Pumpkin Carriage Ride</a></li>
+              <li><a class="dropdown-item" href="#">Dine in the Grand Hall</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle sparkle" href="#" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
               Places to Visit
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item sparkle" href="#">Cinderella’s Castle</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Enchanted Forest</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Wishing Well</a></li>
-              <li><a class="dropdown-item sparkle" href="#">Midnight Garden</a></li>
+              <li><a class="dropdown-item" href="#">Cinderella’s Castle</a></li>
+              <li><a class="dropdown-item" href="#">Enchanted Forest</a></li>
+              <li><a class="dropdown-item" href="#">Wishing Well</a></li>
+              <li><a class="dropdown-item" href="#">Midnight Garden</a></li>
             </ul>
           </li>
         </ul>
@@ -58,21 +61,23 @@
   <div id="cinderellaCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://images.unsplash.com/photo-1581320540144-274f7a64f391?fit=crop&w=1400&q=80" class="d-block w-100" alt="Castle">
+        <img id='Castle' src="{{ url_for('static', filename ='images/castle.jpg') }}" alt='castle' style="width: 300px; height: auto;" >
+        class="d-block w-100" alt="Castle">
         <div class="carousel-caption d-none d-md-block">
           <h2>Welcome to a World of Magic</h2>
           <p>Step into the storybook of dreams.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?fit=crop&w=1400&q=80" class="d-block w-100" alt="Ballroom">
+       <img id='Ballroom' src="{{ url_for('static', filename ='images/ballroom.jpg') }}" alt='ballroom' style="width: 300px; height: auto;">
+        class="d-block w-100" alt="Ballroom">
         <div class="carousel-caption d-none d-md-block">
           <h2>Dance at the Royal Ball</h2>
           <p>Where midnight never comes too soon.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://images.unsplash.com/photo-1604602702847-1c2a3d22c7dc?fit=crop&w=1400&q=80" class="d-block w-100" alt="Carriage">
+         <img id='Carriage' src="{{ url_for('static', filename ='images/carriage.jpg') }}" alt='carriage' style="width: 300px; height: auto;">class="d-block w-100" alt="Carriage">
         <div class="carousel-caption d-none d-md-block">
           <h2>Ride in a Golden Carriage</h2>
           <p>Travel like royalty through enchanted lands.</p>
@@ -106,3 +111,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+{% endblock %}

@@ -7,6 +7,10 @@ from application import app
 def home_page():
     return render_template('home.html', title_head='Enchanted Getaway Travels', title_body='Enchanted Getaway Travels', subtitle='★ Travel the unexplored lands ★', img="static/images/wallpaper_home.jpeg")
 
+@app.route("/Cinderella's_kingdom")
+def Cinderella_kingdom():
+    return render_template("Cinderella's_kingdom.html", title_head="Cinderella's_kingdom", title_body='Far far away!', subtitle='★ Welcome to the destination where wishes come true ★', img="static/images/cinderella.jpg")
+
 # @app.route('/')
 # def home():
 #     return render_template()
