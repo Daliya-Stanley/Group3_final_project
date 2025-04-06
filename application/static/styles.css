@@ -141,12 +141,12 @@ main {
     font-size: 1.1rem;
 }
 
-#component{
-text-align: center;
-}
 
 #components{
-background-color: #EADECC;
+background-color: #DAD9D9;
+}
+#feedback{
+background-color: #DAD9D9;
 }
 
 .carousel-container {
@@ -171,7 +171,7 @@ height: 100vh;
     max-width: 500px;
     max-height: 500px;
     margin: 0 auto;
-    border: 5px solid #ffffff;
+    border: 15px solid #ffffff;
 }
 #customer-feedback .carousel-inner {
     position: relative;
