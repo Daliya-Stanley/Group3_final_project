@@ -26,7 +26,7 @@
        <div class="d-flex w-100 align-items-center justify-content-between">
     <ul class="navbar-nav d-flex flex-row gap-3">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
       </li>
 
 
@@ -50,10 +50,10 @@
           {% else %}
           <li><a href="#" class="dropdown-item nav-link disabled">Destination 1</a></li>
            {% endif %}
-          {% if request.path != '/Destination 4'%}
-            <li><a class="dropdown-item" href="#">Destination 4</a></li>
+          {% if request.path != '/frozen_fantasia'%}
+            <li><a class="dropdown-item" href="frozen_fantasia">Arendelle Enchanted Escape</a></li>
           {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Destination 4</a></li>
+          <li><a href="#" class="dropdown-item nav-link disabled">Arendelle Enchanted Escape</a></li>
           {% endif %}
            {% if request.path != '/Destination 5'%}
             <li><a class="dropdown-item" href="#">Destination 5</a></li>
@@ -232,23 +232,25 @@
 <!--    </div>-->
 
 <!--</nav>-->
+
+
 <section class="top-section"
         style="
-            background-image: url('{{ img }}');
-            height: 100vh;
-            position: relative;
-            top:0;
-            max-width: 1500px;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;">
+        background-image: url('{{ img }}');
+    background-position:  center center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    height: 100vh;
+    padding-top: 130px;">
+
         <div class="container pt-5" >
             <h1>{{ title_body }}</h1>
             <h4>{{ subtitle }}</h4>
         </div>
       </section>
+
 
  {% block body_content %}
     {% endblock %}
