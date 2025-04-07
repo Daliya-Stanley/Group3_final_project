@@ -26,7 +26,6 @@ body {
   padding-top: 0px; /* Adjust this value to match your navbar height */
 }
 
-
 main {
   padding-top: 30px;
 }
@@ -218,4 +217,108 @@ background-color: #EADECC;
 
 #feedback{
 background-color: #D2E4BF;
+}
+
+
+/*body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}*/
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.wheel-container {
+    position: relative;
+    width: 440px;
+    height: 440px;
+    margin: 0;
+}
+
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+
+#spinButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid black;
+}
+/**/
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.choices button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+.choices button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+#history {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#history li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#history li:last-child {
+    border-bottom: none;
 }

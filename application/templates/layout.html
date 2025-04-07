@@ -129,9 +129,24 @@
         </ul>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="#">Play and Win</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         Play and Win
+        </a>
+        <ul class="dropdown-menu">
+          {% if request.path != '/wheel_of_fortune'%}
+          <li><a class="dropdown-item" href="/wheel_of_fortune">Wheel of Fortune</a></li>
+          {% else %}
+          <li><a href="/wheel_of_fortune" class="dropdown-item nav-link disabled">Wheel of Fortune</a></li>
+          {% endif %}
+          {% if request.path != '/Rock, Paper, Scissors'%}
+            <li><a class="dropdown-item" href="#">Rock, Paper, Scissors</a></li>
+          {% else %}
+          <li><a href="#" class="dropdown-item nav-link disabled">Rock, Paper, Scissors</a></li>
+          {% endif %}
+           </ul>
       </li>
+
 
       <li class="nav-item">
         <a class="nav-link" href="#">About Us</a>
@@ -151,89 +166,8 @@
   </div>
 </nav>
 
-
-
-
-
-
-
-
-
-<!--<nav class="navbar navbar-expand-lg sticky-top">-->
-<!--        <div class="container-fluid">-->
-<!--            <a href="#" class="navbar-brand">-->
-<!--                <img src="{{ url_for('static', filename='images/around-world_5390597.png') }}" alt="Enchanted Getaways Travel" width="auto" height="20px" class="d-inline-block align-text-top" >-->
-<!--                <h2>EGT</h2>-->
-<!--            </a>-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--        </div>-->
-
-<!--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--      <ul class="navbar-nav mb-2 mb-lg-0">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" aria-current="page" href="#">Home</a>-->
-<!--        </li>-->
-
-<!--        <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--            Enchanted Destinations-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Destination 1</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Destination 2</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 3</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 4</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Destination 5</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--            Magical Products-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Magic Wand</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Flying Carpet</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Pack the world-Suitcase</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">One dress-No mess</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Magic Potion</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--           Spellbind Experiences-->
-<!--          </a>-->
-<!--          <ul class="dropdown-menu">-->
-<!--            <li><a class="dropdown-item" href="#">Make a Snowman with Anna</a></li>-->
-<!--            <li><a class="dropdown-item" href="#">Flying Lessons with Aladin</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Party Night with Trolls</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Scuba diving with Ariel</a></li>-->
-<!--              <li><a class="dropdown-item" href="#">Spa and relaxation with Aurora</a></li>-->
-<!--          </ul>-->
-<!--        </li>-->
-<!--          <li class="nav-item">-->
-<!--          <a class="nav-link" href="#">Play and Win</a>-->
-<!--        </li>-->
-<!--          <li class="nav-item">-->
-<!--          <a class="nav-link" href="#">About US</a>-->
-
-
-<!--    <div>-->
-<!--                    <button class="login-btn "><a href="/signup"><i class='bx bxs-castle bx-burst-hover'></i>Login</a></button>-->
-<!--                </div>-->
-
-<!--          <div>-->
-<!--                    <button class="login-btn "><a href="/signup"><i class='bx bxs-castle bx-burst-hover'></i>Sign up</a></button>-->
-<!--                </div>-->
-
-<!--      </ul>-->
-
-<!--    </div>-->
-
-<!--</nav>-->
 <section class="top-section"
-        style="
+         style="
             background-image: url('{{ img }}');
             height: 100vh;
             position: relative;
@@ -244,18 +178,17 @@
             background-size: cover;
             background-repeat: no-repeat;
             color: white;">
-        <div class="container pt-5" >
-            <h1>{{ title_body }}</h1>
-            <h4>{{ subtitle }}</h4>
-        </div>
-      </section>
+    <div class="container pt-5">
+        <h1>{{ title_body }}</h1>
+        <h4>{{ subtitle }}</h4>
+    </div>
+</section>
 
- {% block body_content %}
-    {% endblock %}
+{% block body_content %}
+{% endblock %}
 
 
-<footer>&copy; Enchanted Getaways 2025
-</footer>
+<footer>&copy; Enchanted Getaways 2025</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous">
 </script>
 
