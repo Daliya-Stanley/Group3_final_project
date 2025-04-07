@@ -4,10 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
 
-
-
-
-
 title {
     text-transform: capitalize;
 }
@@ -53,18 +49,15 @@ main {
 
  /* Positioning the Menu items to the center */
 .navbar-nav {
-    justify-content: center;
+    justify-content: right;
     width: 100%;
-    gap: 10px;
 }
-
 
 /* For Home link on the Menu Bar: make the text white */
 .navbar-nav .nav-link.active {
     color: black;
  }
 
- /* For Societies, Student Halls, Student links on the Menu Bar: make the text white */
 .navbar-nav .nav-link {
     color: black;
 }
@@ -74,11 +67,6 @@ main {
     background-color: lilac;
     color: white;
     border-radius: 0.5rem;
-}
-
-/* Removing the bullet points for all the Menu items in the list */
-.nav-item {
-    list-style: none;
 }
 
 /* For the Dropdown Menu */
@@ -153,12 +141,106 @@ main {
     font-size: 1.1rem;
 }
 
-#component{
-text-align: center;
+.login-wrapper {
+  background-image: url("/static/images/login.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-card {
+  background-color: rgba(0, 0, 0, 0.55);
+  border-radius: 1.5rem;
+  padding: 3rem 2.5rem;
+  max-width: 450px;
+  width: 100%;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.login-card h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.login-card p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.form-floating > label {
+  color: #ccc;
+}
+
+.form-floating > .form-control {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid #ccc;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-primary {
+  background-color: #C8A2C8;
+  border-color: #C8A2C8;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.75rem;
+}
+
+.btn-primary:hover {
+  background-color: #E6CCFF;
+  border-color: #E6CCFF;
+}
+
+.register-link {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  color: #E6CCFF;
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .col-sm-6 {
+    width: 100%;
+  }
+}
+
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-fade {
+  animation: fadeSlideDown 0.9s ease-out both;
 }
 
 #components{
-background-color: #EADECC;
+background-color: #DAD9D9;
+}
+#feedback{
+background-color: #DAD9D9;
 }
 
 .carousel-container {
@@ -166,14 +248,24 @@ background-color: #EADECC;
   margin: 0 auto;    /* centers the carousel horizontally */
   padding-top: 40px; /* optional vertical spacing */
 }
-
+.top-section{
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: auto;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+}
 
 #customer-feedback {
     width: 80%;
     max-width: 500px;
     max-height: 500px;
     margin: 0 auto;
-    border: 5px solid #ffffff;
+    border: 15px solid #ffffff;
 }
 #customer-feedback .carousel-inner {
     position: relative;
@@ -220,5 +312,9 @@ background-color: #EADECC;
 background-color: #D2E4BF;
 }
 
-
-
+.word {
+  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;

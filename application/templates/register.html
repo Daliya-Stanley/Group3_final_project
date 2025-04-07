@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<section class="login-wrapper">
+<div class="login-card ">
+    <h1>Begin Your Magical Journey ✨</h1>
+    <p>Create your enchanted passport to explore hidden getaways.</p>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+            <div class="row g-4 mt-3">
+                <div class="form-floating mb-3">
+                    {{ form.username(id="floatingUsername", placeholder="UserName") }}
+                    <label for="floatingUsername">{{ form.username.label.text }}</label>
+                </div>
+            </div>
+            <div class="row g-3 mt-2">
+                    <div class="form-floating mb-3">
+                        {{ form.email(id="floatingEmail", placeholder="Email") }}
+                        <label for="floatingEmail">{{ form.email.label.text }}</label>
+                    </div>
+            </div>
+            <div class="row g-3 mt-2">
+                <div class="form-floating mb-3">
+                    {{ form.password(id="floatingPassword", placeholder="Password") }}
+                    <label for="floatingPassword">{{ form.password.label.text }}</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">{{ form.submit.label.text }}</button>
+    </form>
+</div>
+</section>
+
+{% endblock %}
