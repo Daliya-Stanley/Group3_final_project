@@ -39,7 +39,7 @@ def home_page():
 
 @app.route('/frozen_fantasia')
 def frozen_page():
-    return render_template('frozen_fantasia.html', title_head='Arendelle Enchanted Escape', title_body='Frozen Realms Retreat', subtitle='★ "Join Elsa, Anna, and friends on a frosty journey through a sparkling winter wonderland, where every day is a magical snow day!" ★', img="static/images/frozen_wallpage.jpeg")
+    return render_template('frozen_fantasia.html', title_head='Arendelle Enchanted Escape', title_body='Frozen Realms Retreat', subtitle='★ Join Elsa, Anna, and friends on a frosty journey through a sparkling winter wonderland, where every day is a magical snow day! ★', img="static/images/frozen_wallpage.jpeg")
 
 # @app.route('/')
 # def home():
