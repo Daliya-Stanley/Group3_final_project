@@ -1,48 +1,54 @@
-from flask import render_template, url_for, request, redirect,jsonify, Blueprint
-from mysql.connector import cursor
-
+from flask import render_template, url_for, request, redirect
+from application.forms.register_form import RegistrationForm
+from application.forms.login_form import LoginForm
 from application import app
-
-import random
-
-from application.data_access import mydb
 
 
 @app.route('/')
+@app.route('/home')
 def home_page():
     return render_template('home.html', title_head='Enchanted Getaway Travels', title_body='Enchanted Getaway Travels', subtitle='★ Travel the unexplored lands ★', img="static/images/wallpaper_home.jpeg")
 
-# @app.route('/')
-# def home():
-#     return render_template()
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegistrationForm()
+    error = ""
 
-@app.route('/wheel_of_fortune')
-def wheel_of_fortune_game():
-    return render_template('wheel_of_fortune.html')
+    if request.method == 'POST':
+        username = register_form.username.data
+        email = register_form.email.data
+        password = register_form.password.data
+
+        #add_person(first_name, last_name, password)
+        return redirect(url_for('welcome'))
+
+    return render_template('register.html',
+                           form=register_form,
+                           message=error,
+                           title_head='register',
+                           title_body='register',
+                           img="")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    error = ""
+
+    if request.method == 'POST':
+        username = login_form.username.data
+        password = login_form.password.data
 
 
+    return render_template('login.html',
+                           form=login_form,
+                           message=error,
+                           title_head='login',
+                           )
 
-def determine_winner(player_choice, computer_choice):
-    if player_choice == computer_choice:
-        return "Draw"
-    elif (player_choice == "rock" and computer_choice == "scissors") or \
-         (player_choice == "paper" and computer_choice == "rock") or \
-         (player_choice == "scissors" and computer_choice == "paper"):
-        return "You win!"
-    else:
-        return "Computer wins!"
+@app.route('/welcome', methods=['GET', 'POST'])
+def welcome():
+    return render_template('welcome.html')
 
-@app.route('/rock_paper_scissors')
-def rps_game():
-    history = mydb.get_game_history()
-    return render_template('rps.html', history=history)
-
-@app.route('/play', methods=['POST'])
-def play():
-    player_choice = request.form['choice']
-    choices = ["rock", "paper", "scissors"]
-    computer_choice = random.choice(choices)
-    result = determine_winner(player_choice, computer_choice)
-    mydb.save_game(player_choice, computer_choice, result)
-    history = mydb.get_game_history()
-    return jsonify({'computer_choice': computer_choice, 'result': result, 'history': [{'player': h[0], 'computer': h[1], 'outcome': h[2], 'time': str(h[3])} for h in history]})
+@app.route('/game', methods=['GET', 'POST'])
+def game():
+    return render_template('game.html')

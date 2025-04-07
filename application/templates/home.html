@@ -1,124 +1,124 @@
 {% extends "layout.html" %}
 {% block body_content %}
-<section id="components">
-    <br>
-    <br>
-    <div class="row row-cols-1 row-cols-md-3 g-3">
-        <div class="col">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top"
-                     alt="Enchanted Desert Travel">
-                <div class="card-body">
-                    <h5 class="card-title">Our Enchanted Destinations</h5>
-                    <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden
-                        dunes stretch endlessly beneath a sky ablaze with stars..</p>
-                </div>
-            </div>
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');">
+        <div class="container pt-5" >
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
         </div>
-        <div class="col">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top"
-                     alt="Diving experience with Ariel">
-                <div class="card-body">
-                    <h5 class="card-title">Magical Experiences</h5>
-                    <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s
-                        Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life
-                        beneath the waves, where dreams and ocean wonders meet.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top"
-                     alt="Magical wand">
-                <div class="card-body">
-                    <h5 class="card-title">Amazing Magical Wand</h5>
-                    <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that
-                        brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday
-                        moments, it’s magic in your hands.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+      </section>
 
-    <br>
-    <br>
-</section>
+          <section id="components">
+            <br>
+            <br>
+            <h1 style="text-align:center; font-family: 'Poppins', sans-serif;">This Is What We Offer!!!</h1>
+            <br>
+              <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="col">
+              <div class="card">
+                <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top" alt="Enchanted Desert Travel">
+                <div class="card-body">
+                  <h5 class="card-title">Our Enchanted Destinations</h5>
+                  <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden dunes stretch endlessly beneath a sky ablaze with stars..</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top" alt="Diving experience with Ariel">
+                <div class="card-body">
+                  <h5 class="card-title">Magical Experiences</h5>
+                  <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life beneath the waves, where dreams and ocean wonders meet.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top" alt="Magical wand">
+                <div class="card-body">
+                  <h5 class="card-title">Splendid Products</h5>
+                  <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday moments, it’s magic in your hands.</p>
+                </div>
+              </div>
+            </div>
+              </div>
+
 <br>
 <br>
-<section id="feedback">
-    <div id="carousel-container">
-        <div id="customer-feedback" class="carousel slide">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="3"
-                        aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="4"
-                        aria-label="Slide 5"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{url_for('static', filename = 'images/flying_carpet.jpeg') }}" class="d-block w-100"
-                         alt="flying carpet">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Flying over Arabia</h5>
-                        <p>Had the best time of life, seeing a whole new world!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{url_for('static', filename = 'images/diving_with_ariel.jpeg') }}" class="d-block w-100"
-                         alt="diving with ariel">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Diving in magical Oceans</h5>
-                        <p>Loved every moment spent with Ariel and Coral reef!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{url_for('static', filename = 'images/party_with_trolls.jpeg') }}" class="d-block w-100"
-                         alt="party with trolls">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Wildest party Ever!</h5>
-                        <p>I have happiness going through my bones when i look back on my lovely memories!</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{url_for('static', filename = 'images/building_snowman.jpeg') }}" class="d-block w-100"
-                         alt="snowman">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>I wanna build a snowman!</h5>
-                        <p>My kid had the best time ever with lovely Anna building the snowman</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="{{url_for('static', filename = 'images/beach_holiday.jpeg') }}" class="d-block w-100"
-                         alt="beach">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Such relaxing beach Holiday</h5>
-                        <p>Beautiful memories of Beach holiday with Ariel and her family!</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback"
-                    data-bs-slide="3000">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback"
-                    data-bs-slide="3000">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+            </section>
+<br>
+<br>
 
-
+<section id ="feedback">
+  <br>
+<br>
+<h1 style="text-align:center; font-family: 'Poppins', sans-serif;">Our satisfied Customer have this to say!!!</h1>
+<br>
+  <div id = "carousel-container">
+  <div id="customer-feedback" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{url_for('static', filename = 'images/flying_carpet.jpeg') }}" class="d-block w-100" alt="flying carpet">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Flying over Arabia</h5>
+        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Had the best time of life, seeing a whole new world!</p>
+      </div>
     </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/diving_with_ariel.jpeg') }}" class="d-block w-100" alt="diving with ariel">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Diving in magical Oceans</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Loved every moment spent with Ariel and Coral reef!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/party_with_trolls.jpeg') }}" class="d-block w-100" alt="party with trolls">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Wildest party Ever!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">I have happiness going through my bones when i look back on my lovely memories!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/building_snowman.jpeg') }}" class="d-block w-100" alt="snowman">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">I wanna build a snowman!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">My kid had the best time ever with lovely Anna building the snowman</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/beach_holiday.jpeg') }}" class="d-block w-100" alt="beach">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Such relaxing beach Holiday</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Beautiful memories of Beach holiday with Ariel and her family!</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
-    <br>
-    <br>
+
+</div>
+
+<br>
+  <br>
 </section>
+
+
+
+
 {% endblock %}
