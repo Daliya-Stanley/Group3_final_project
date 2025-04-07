@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
 {% block body_content %}
 
-<section id="components">
-    <div class="content">
-        <h1>Spin & Win a Prize!</h1>
-        <p id="result"></p>
+
+<section class="login-wrapper">
+    <div class="login-card login-fade">
+        <div class="content">
+            <h1>Hi Traveller!</h1>
+            <h3>Spin and Win a prize!</h3>
+            <p id="result"></p>
+        </div>
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="440" height="440"></canvas>
+            <button id="spinButton">SPIN</button>
+        </div>
     </div>
-    <div class="wheel-container">
-        <div class="pointer"></div>
-        <canvas id="wheelCanvas" width="440" height="440"></canvas>
-        <button id="spinButton">SPIN</button>
-    </div>
+
 
     <script>
         const canvas = document.getElementById("wheelCanvas");
@@ -19,12 +24,12 @@
         const resultText = document.getElementById("result");
 
         const prizes = [
-            "Magic Wand", "No Prize - Try Again", "Flying Carpet", "Pack the world - suitcase",
-            "A meet up with Ariel", "One dress - No mess", "Magic Potion", "Try again",
-            "A meet up with Aladdin", "Extra Spin", "", "A meet up with Aurora"
+            "Magic Wand", "No Prize - Try Again", "Flying Carpet", "Pack the world-suitcase",
+            "Photo with Ariel", "One dress - No mess", "Magic Potion", "No Prize",
+            "Photo with Aladdin", "Extra Spin", "Coffee with the Trolls", "Photo with Aurora"
         ];
 
-        const colors = ["#DDA0DD", "#DA70D6", "#EE82EE"];
+        const colors = ["#fe2712", "#fc600a", "#fb9902"];
 
         let angle = 0;
         let spinning = false;
@@ -35,7 +40,7 @@
             ctx.fillStyle = "white";
             ctx.fill();
             ctx.lineWidth = 4;
-            ctx.strokeStyle = "black";
+            ctx.strokeStyle = "blue";
             ctx.stroke();
             ctx.closePath();
         }
@@ -107,4 +112,5 @@
         spinButton.addEventListener("click", spinWheel);
     </script>
 </section>
+
 {% endblock %}

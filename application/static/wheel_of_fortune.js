@@ -21,7 +21,7 @@ function drawWheel() {
         ctx.closePath();
 
         // Add Text
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = "#white";
         ctx.font = "20px Arial";
         ctx.fillText(prizes[i], 250 + Math.cos(sliceAngle * i) * 100, 250 + Math.sin(sliceAngle * i) * 100);
     }
