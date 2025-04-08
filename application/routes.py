@@ -6,7 +6,7 @@ from application import app
 
 import random
 
-from application.data_access import mydb
+
 
 @app.route('/')
 @app.route('/home')
