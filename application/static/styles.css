@@ -142,7 +142,7 @@ main {
 }
 
 .login-wrapper {
-  background-image: url("/static/images/wheel.jpg");
+  background-image: url("/static/images/login.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -155,6 +155,11 @@ main {
   padding: 2rem;
 }
 
+
+.wheel-wrapper {
+  background-image: url("/static/images/wheel.jpg");
+}
+
 .login-card {
   background-color: rgba(0, 0, 0, 0.55);
   border-radius: 1.5rem;
@@ -164,6 +169,10 @@ main {
   color: white;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   text-align: center;
+}
+
+.wheel-card {
+  max-width: 600px;
 }
 
 .login-card h1 {
@@ -248,16 +257,17 @@ background-color: #DAD9D9;
   margin: 0 auto;    /* centers the carousel horizontally */
   padding-top: 40px; /* optional vertical spacing */
 }
+
 .top-section{
-height: 100vh;
-            position: relative;
-            top:0;
-            max-width: auto;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
+    height: 100vh;
+    position: relative;
+    top:0;
+    max-width: auto;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
 }
 
 #customer-feedback {
@@ -320,50 +330,18 @@ background-color: #D2E4BF;
   display: inline-block;
   }
 
-
-/*body {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding: 20px;
-}*/
-
 .content {
     flex: 1;
     padding: 20px;
 }
 
-
-
-.wheel-container {
-    background-image: url('/static/images/wheel.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: relative;
-    width: 440px;
-    height: 440px;
-    margin: 0;
-}
-
 #wheelCanvas {
     width: 100%;
     height: 100%;
-}
-
-
-#spinButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: #ff5722;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
 }
 
 .pointer {
@@ -377,7 +355,7 @@ background-color: #D2E4BF;
     border-right: 10px solid transparent;
     border-bottom: 20px solid black;
 }
-/**/
+
 .container {
     background-image: url('static/images/wheel.jpg');
     background-size: cover;
@@ -388,6 +366,7 @@ background-color: #D2E4BF;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
 h1 {
     margin-bottom: 20px;
 }

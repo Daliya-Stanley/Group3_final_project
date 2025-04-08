@@ -46,6 +46,7 @@ def play():
     result = determine_winner(player_choice, computer_choice)
     return jsonify({'computer_choice': computer_choice, 'result': result})
 
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     register_form = RegistrationForm()
     error = ""
