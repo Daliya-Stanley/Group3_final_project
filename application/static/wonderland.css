@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Pattaya&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+#title{
+    font-family: "Pattaya", san-serif;
+    color:white;
+    text-align: center;
+    margin-top:50px;
+}
+
+.highlight{
+font-weight: bold;
+font-size: 50px;
+letter-spacing: 4px;
+}
+
+body{
+ background-color:#d6b2f0;
+}
+
+.accordion-button {
+  font-family: 'Lilita One', sans-serif;
+  background-color: #bc6ff4;
+  color: white;
+  border: 1px solid #d8bfd8;
+  font-size: 20px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #ffc16f;
+  color: white;
+  box-shadow: none;
+}
+
+.accordion-body{
+font-family: 'Lilita One', sans-serif;
+background-color: #ecd8fa;
+  text-align: center;
+  padding: 1rem;
+   font-size: 20px;
+}
+
+/*.accordion-item{
+background-color: #ecd8fa
+} */
+
+.drop{
+  display: block;
+  margin: 50px auto 0;
+  border: 7px solid #ffc16f;
+  border-radius: 20px;
+  max-width: 50%;
+  height: auto;
+}
+
+.img-fluid.shadow.rounded.mb-3 {
+  display: block;
+  margin: 0 auto;
+  border: 7px solid #ffc16f;
+  border-radius: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+/*.card-text{
+font-family: "Lilita One", san-serif;
+color: white;
+font-size: 20px;
+
+} */
+
+ /* .card.mb-3{
+width: 700px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  left: 75px;
+  background-color:#bc6ff4;
+  display: block;
+  border: 7px solid #ffc16f ;
+  border-radius: 20px;
+}
+
+.card:hover .col-md-4{
+  transform: scale(1.1);
+} */
+
+footer{
+background-color:white;
+}
