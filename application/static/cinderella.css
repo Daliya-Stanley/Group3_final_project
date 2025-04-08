@@ -17,11 +17,13 @@ body {
   padding: 0 15px; /* Add some padding */
 }
 
+
 /* === Navbar === */
 .navbar {
   background: linear-gradient(to right, #a564d6, #c8a2c8);
   border-bottom: 2px solid #e0c3fc;
   box-shadow: 0 4px 15px rgba(168, 112, 236, 0.4);
+  padding: 1rem 0; /* Add padding for vertical spacing */
 }
 
 .navbar-brand {
@@ -55,6 +57,11 @@ body {
   margin: 1rem auto; /* Centering images with margin */
   border-radius: 10px; /* Rounded corners for images */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s; /* Smooth hover effect */
+}
+
+.gallery img:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .caption {
