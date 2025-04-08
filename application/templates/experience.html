@@ -1,0 +1,193 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+
+
+<!--<section class="product-top-section">-->
+<!--    <div class="product-heading">-->
+<!--        <h1>Magical Products at your fingertips!!!</h1>-->
+<!--    </div>-->
+
+<!--    <div class="product-description">-->
+<!--        <p>What you once imagined is now here for you to use!!</p>-->
+<!--    </div>-->
+
+
+
+
+<!--</section>-->
+
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+
+        <div class="container pt-5" >
+          <br>
+          <br>
+          <br>
+          <br>
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<section id ="experience">
+<br>
+  <br>
+<h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Experiences!!!</h4>
+<br>
+  <div id = "experience-carousel-container">
+  <div id="customer-feedback" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{url_for('static', filename = 'images/Experience-snowman.jpeg') }}" class="d-block w-100" alt="flying carpet">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Make as Snowman with Anna and Gang!</h5>
+        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">oin Anna and her Frozen friends for a magical snowman-making adventure where laughter, snowflakes, and enchantment come to life!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/Experience-carpet.jpeg') }}" class="d-block w-100" alt="diving with ariel">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Have a flying lesson with Aladin! </h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Soar above the clouds with Aladdin on a magical flying carpet ride—an unforgettable adventure straight out of Agrabah!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/Experience-Troll.jpeg') }}" class="d-block w-100" alt="party with trolls">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Party like no one with Trolls!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Get ready to dance, sing, and sparkle in the ultimate feel-good party with the Trolls—where every moment is a burst of magic and music!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/Experience-Spa.jpeg') }}" class="d-block w-100" alt="snowman">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Have a relaxing Spa at Aurora's palace!!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;"> Indulge in a royal spa day at Princess Aurora’s castle, where enchantment meets elegance for the ultimate fairy-tale pampering!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/Experience-Scuba.jpeg') }}" class="d-block w-100" alt="beach">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Go Snorkeling Underwater with Ariel</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;"> Dive into an underwater wonderland with Ariel and explore vibrant reefs, shimmering treasures, and ocean magic like never before!</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+</div>
+
+<br>
+  <br>
+</section>
+
+
+  <section class="product-mid-section">
+<br>
+    <br>
+
+  <!-- First Row: 3 Cards -->
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-snowman.jpeg') }}" alt="Magic Carpet">
+        <div class="card-body">
+          <h5 class="card-title">Make as Snowman-Experience</h5>
+          <p class="card-text">4000 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-carpet.jpeg') }}" alt="Magic Wand">
+        <div class="card-body">
+          <h5 class="card-title">Flying lesson- Experience</h5>
+          <p class="card-text">7500 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Troll.jpeg') }}" alt="Magic Potion">
+        <div class="card-body">
+          <h5 class="card-title">Troll Party-Experience</h5>
+          <p class="card-text">1800 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Second Row: 2 Cards -->
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Scuba.jpeg') }}" alt="Magic Dress">
+        <div class="card-body">
+          <h5 class="card-title">Scuba Diving- Experience</h5>
+          <p class="card-text">7200 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Spa.jpeg') }}" alt="Magic Suitcase">
+        <div class="card-body">
+          <h5 class="card-title">Spa Experience</h5>
+          <p class="card-text">2800 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

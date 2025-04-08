@@ -2,8 +2,22 @@
 {% block body_content %}
 <section class="top-section"
         style="
-            background-image: url('{{ img }}');">
+            background-image: url('{{ img }}');
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
         <div class="container pt-5" >
+          <br>
+          <br>
+          <br>
+          <br>
             <h1>{{ title_body }}</h1>
             <h4>{{ subtitle }}</h4>
         </div>
@@ -117,6 +131,8 @@
 <br>
   <br>
 </section>
+
+
 
 
 

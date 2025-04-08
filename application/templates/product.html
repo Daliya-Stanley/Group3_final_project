@@ -1,0 +1,193 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+
+
+<!--<section class="product-top-section">-->
+<!--    <div class="product-heading">-->
+<!--        <h1>Magical Products at your fingertips!!!</h1>-->
+<!--    </div>-->
+
+<!--    <div class="product-description">-->
+<!--        <p>What you once imagined is now here for you to use!!</p>-->
+<!--    </div>-->
+
+
+
+
+<!--</section>-->
+
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+
+        <div class="container pt-5" >
+          <br>
+          <br>
+          <br>
+          <br>
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<section id ="product">
+<br>
+  <br>
+<h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Products!!!</h4>
+<br>
+  <div id = "product-carousel-container">
+  <div id="customer-feedback" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  <button type="button" data-bs-target="#customer-feedback" data-bs-slide-to="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="d-block w-100" alt="flying carpet">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Magical Wand</h5>
+        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">With a flick of this magical wand, your wildest dreams come true in a swirl of sparkle and wonder!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/product-magic bottle.jpeg') }}" class="d-block w-100" alt="diving with ariel">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Magic Potion</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Sip the magic potion that holds the power to heal anything, restoring joy and strength in every drop!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/product_clothes.jpeg') }}" class="d-block w-100" alt="party with trolls">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Spectacular one dress- no mess!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Slip into the enchanted dress that transforms to match any occasion, shifting styles with a touch of magic!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/product_suitcase.jpeg') }}" class="d-block w-100" alt="snowman">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">All you can pack Suitcase!!</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Discover the all-you-can-pack suitcase that magically fits everything you need—no matter how much you bring!</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static', filename = 'images/product_carpet.jpeg') }}" class="d-block w-100" alt="beach">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Magical Carpet</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Ride the magic carpet that whisks you away to any destination your heart desires, in a blink of wonder!</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+</div>
+
+<br>
+  <br>
+</section>
+
+
+  <section class="product-mid-section">
+<br>
+    <br>
+
+  <!-- First Row: 3 Cards -->
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/product_carpet.jpeg') }}" alt="Magic Carpet">
+        <div class="card-body">
+          <h5 class="card-title">Magic Carpet</h5>
+          <p class="card-text">5000 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">
+        <div class="card-body">
+          <h5 class="card-title">Magic Wand</h5>
+          <p class="card-text">500 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/product-magic bottle.jpeg') }}" alt="Magic Potion">
+        <div class="card-body">
+          <h5 class="card-title">Magic Potion</h5>
+          <p class="card-text">1000 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Second Row: 2 Cards -->
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/product_clothes.jpeg') }}" alt="Magic Dress">
+        <div class="card-body">
+          <h5 class="card-title">One dress - No mess</h5>
+          <p class="card-text">Sold as a set - 200 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/product_suitcase.jpeg') }}" alt="Magic Suitcase">
+        <div class="card-body">
+          <h5 class="card-title">Pack You All Can - Suitcase</h5>
+          <p class="card-text">800 Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

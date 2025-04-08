@@ -6,6 +6,7 @@
     <title>{{title_head}}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'styles.css') }}">
+     <link rel="stylesheet" href="{{ url_for('static', filename= 'frozen_styles.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -47,8 +48,8 @@
           {% else %}
           <li><a href="#" class="dropdown-item nav-link disabled">Destination 1</a></li>
            {% endif %}
-          {% if request.path != '/Destination 4'%}
-            <li><a class="dropdown-item" href="#">Destination 4</a></li>
+          {% if request.path != '/Arendelle'%}
+            <li><a class="dropdown-item" href="Arendelle">Magical Land of Arandelle</a></li>
           {% else %}
           <li><a href="#" class="dropdown-item nav-link disabled">Destination 4</a></li>
           {% endif %}
@@ -60,76 +61,15 @@
         </ul>
       </li>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-         Our Products
-        </a>
-        <ul class="dropdown-menu">
-          {% if request.path != '/Magic Wand'%}
-          <li><a class="dropdown-item" href="#">Magic Wand</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Magic Wand</a></li>
-          {% endif %}
-          {% if request.path != '/Flying Carpet'%}
-            <li><a class="dropdown-item" href="#">Flying Carpet</a></li>
-          {% else %}
-           <li><a href="#" class="dropdown-item nav-link disabled">Flying Carpet</a></li>
-            {% endif %}
-          {% if request.path != '/Pack the world-Suitcase'%}
-              <li><a class="dropdown-item" href="#">Pack the world-Suitcase</a></li>
-          {% else %}
-           <li><a href="#" class="dropdown-item nav-link disabled">Pack the world-Suitcase</a></li>
-          {% endif %}
-          {% if request.path != '/One dress-No mess'%}
-              <li><a class="dropdown-item" href="#">One dress-No mess</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">One dress-No mess</a></li>
-          {% endif %}
-          {% if request.path != '/Magic Potion'%}
-              <li><a class="dropdown-item" href="#">Magic Potion</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Magic Potion</a></li>
-          {% endif %}
-        </ul>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-         Experiences
-        </a>
-        <ul class="dropdown-menu">
-          {% if request.path != '/Make a Snowman with Anna'%}
-          <li><a class="dropdown-item" href="#">Make a Snowman with Anna</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Make a Snowman with Anna</a></li>
-          {% endif %}
-          {% if request.path != '/Flying Lessons with Aladin'%}
-            <li><a class="dropdown-item" href="#">Flying Lessons with Aladin</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Flying Lessons with Aladin</a></li>
-          {% endif %}
-          {% if request.path != '/Party Night with Trolls'%}
-              <li><a class="dropdown-item" href="#">Party Night with Trolls</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Party Night with Trolls</a></li>
-           {% endif %}
-          {% if request.path != '/Scuba diving with Ariel'%}
-              <li><a class="dropdown-item" href="#">Scuba diving with Ariel</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Scuba diving with Ariel</a></li>
-          {% endif %}
-          {% if request.path != '/Spa and relaxation with Aurora'%}
-              <li><a class="dropdown-item" href="#">Spa and relaxation with Aurora</a></li>
-          {% else %}
- <li><a href="#" class="dropdown-item nav-link disabled">Spa and relaxation with Aurora</a></li>
-        {% endif %}
-        </ul>
-      </li>
-
       <li class="nav-item">
-        <a class="nav-link" href="#">Play and Win</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('product_page')}}">Our Magical Products</a>
       </li>
 
+
+
+       <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('experience_page')}}">Our Magical Experiences!</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="#">About Us</a>
       </li>

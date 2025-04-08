@@ -1,0 +1,123 @@
+.mid-section{
+background-color:#CEF4FC;
+}
+.bottom-section{
+background-color:#73C2FB;
+}
+
+
+.product-mid-section{
+background-color:#E6CCFE;
+}
+
+#product {
+    width: 100%;
+    max-width: 1500px;
+    max-height: 100%;
+    margin: 0 auto;
+    background-color: #CBBDE2;
+}
+
+#carousel-container {
+border: 2px solid #A82993;
+}
+
+#product-carousel-container {
+border: 2px solid #A82993;
+}
+
+
+#product .carousel-inner {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    align-items: center;
+    padding-top: 100%;
+}
+#product .carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#experience-carousel-container {
+border: 2px solid #A82993;
+}
+
+
+#experience .carousel-inner {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    align-items: center;
+    padding-top: 100%;
+}
+#experience .carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#experience{
+background-color:#E6CCFE;
+}
+
+background-image: url("/static/images/Experience_background.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         Our Products
+        </a>
+        <ul class="dropdown-menu">
+          {% if request.path != '/Magic Wand'%}
+          <li><a class="dropdown-item" href="#">Magic Wand</a></li>
+          {% else %}
+          <li><a href="#" class="dropdown-item nav-link disabled">Magic Wand</a></li>
+          {% endif %}
+          {% if request.path != '/Flying Carpet'%}
+            <li><a class="dropdown-item" href="#">Flying Carpet</a></li>
+          {% else %}
+           <li><a href="#" class="dropdown-item nav-link disabled">Flying Carpet</a></li>
+            {% endif %}
+          {% if request.path != '/Pack the world-Suitcase'%}
+              <li><a class="dropdown-item" href="#">Pack the world-Suitcase</a></li>
+          {% else %}
+           <li><a href="#" class="dropdown-item nav-link disabled">Pack the world-Suitcase</a></li>
+          {% endif %}
+          {% if request.path != '/One dress-No mess'%}
+              <li><a class="dropdown-item" href="#">One dress-No mess</a></li>
+          {% else %}
+          <li><a href="#" class="dropdown-item nav-link disabled">One dress-No mess</a></li>
+          {% endif %}
+          {% if request.path != '/Magic Potion'%}
+              <li><a class="dropdown-item" href="#">Magic Potion</a></li>
+          {% else %}
+          <li><a href="#" class="dropdown-item nav-link disabled">Magic Potion</a></li>
+          {% endif %}
+        </ul>
+      </li>
