@@ -56,7 +56,7 @@ body {
 .gallery-item img {
   display: block;
   max-width: 80%; /* Adjust this to a smaller size */
-  height: auto; /* Maintain aspect ratio */
+  height: 300px; /* Maintain aspect ratio */
   margin: 1rem auto; /* Centering images with margin */
   border-radius: 10px; /* Rounded corners for images */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
