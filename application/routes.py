@@ -156,7 +156,7 @@ def cinderella_kingdom():
         title_head="Cinderella's Kingdom",
         title_body='Far Far Away!',
         subtitle='★ Welcome to the destination where wishes come true ★',
-        img="images/cinderella.jpg"
+        img="static/images/cinderella.jpg"
     )
 
 
