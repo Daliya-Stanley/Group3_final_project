@@ -9,7 +9,6 @@ import random
 
 
 @app.route('/')
-@app.route('/home')
 def home_page():
     return render_template('home.html', title_head='Enchanted Getaway Travels',
                            title_body='Enchanted Getaway Travels',
@@ -159,3 +158,15 @@ def cinderella_kingdom():
         subtitle='★ Welcome to the destination where wishes come true ★',
         img="images/cinderella.jpg"
     )
+
+
+
+
+
+
+
+@app.route('/wonderland')
+def wonderland():
+    return render_template('destination1.html', title_head='Wonderland', title_body='Wonderland', subtitle='Want to wander in Wonderland?', img='static/images/WT.jpg')
+
+
