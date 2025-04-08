@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+
+<section class="login-wrapper wheel-wrapper">
+    <div class="login-card login-fade wheel-card">
+        <div class="content">
+            <h1>Hi Traveller!</h1>
+            <h3>Spin and Win a prize!</h3>
+            <p id="result"></p>
+        </div>
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="440" height="440"></canvas>
+            <button id="spinButton" class="btn-wheel-primary">SPIN</button>
+        </div>
+    </div>
+
+
+    <script>
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const spinButton = document.getElementById("spinButton");
+        const resultText = document.getElementById("result");
+
+        const prizes = [
+            "A Magic Wand", "No Prize - Try Again", "A Flying Carpet",
+            "Photo with Ariel", "One dress - No mess", "A Magic Potion",
+            "Photo with Aladdin", "Extra Spin", "Coffee with the Trolls", "Photo with Aurora"
+        ];
+
+        const colors = ["#fe2712", "#fc600a", "#fb9902"];
+
+        let angle = 0;
+        let spinning = false;
+
+        function drawOuterCircle() {
+            ctx.beginPath();
+            ctx.arc(220, 220, 210, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "gold";
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function drawWheel() {
+            drawOuterCircle();
+            const sliceAngle = (2 * Math.PI) / prizes.length;
+            for (let i = 0; i < prizes.length; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(220, 220);
+                ctx.arc(220, 220, 200, i * sliceAngle, (i + 1) * sliceAngle);
+                ctx.lineTo(220, 220);
+                ctx.closePath();
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "gold";
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(220, 220);
+                ctx.rotate((i + 0.5) * sliceAngle);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "14px Arial";
+                ctx.fillText(prizes[i], 180, 10);
+                ctx.restore();
+            }
+        }
+
+        function getPrizeIndex(finalAngle) {
+            const degrees = finalAngle % 360;
+            const sliceDegrees = 360 / prizes.length;
+            return Math.floor((360 - degrees + sliceDegrees / 2) % 360 / sliceDegrees);
+        }
+
+        function spinWheel() {
+            if (spinning) return;
+            spinning = true;
+            let spinAngle = Math.floor(3600 + Math.random() * 1000);
+            let spinTime = 3000;
+            let start = null;
+
+            function animateWheel(timestamp) {
+                if (!start) start = timestamp;
+                let progress = timestamp - start;
+                angle = (progress / spinTime) * spinAngle;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.translate(220, 220);
+                ctx.rotate(angle * (Math.PI / 180));
+                ctx.translate(-220, -220);
+                drawWheel();
+                ctx.restore();
+
+                if (progress < spinTime) {
+                    requestAnimationFrame(animateWheel);
+                } else {
+                    spinning = false;
+                    let winningIndex = getPrizeIndex(angle);
+                    resultText.textContent = "You won: " + prizes[winningIndex];
+                }
+            }
+
+            requestAnimationFrame(animateWheel);
+        }
+
+        drawWheel();
+        spinButton.addEventListener("click", spinWheel);
+    </script>
+</section>
+
+{% endblock %}

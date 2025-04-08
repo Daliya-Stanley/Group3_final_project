@@ -1,0 +1,111 @@
+/* === General Reset & Base Styling === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Cinzel Decorative', cursive, 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #f5e9ff, #fef6ff);
+  color: #4b0082;
+}
+
+.container {
+  max-width: 1200px; /* Set a max-width for the container */
+  margin: auto; /* Center the container */
+  padding: 0 15px; /* Add some padding */
+}
+
+/* === Navbar === */
+.navbar {
+  background: linear-gradient(to right, #a564d6, #c8a2c8);
+  border-bottom: 2px solid #e0c3fc;
+  box-shadow: 0 4px 15px rgba(168, 112, 236, 0.4);
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 3px #6b21a8;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+  font-weight: 500;
+  margin-right: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffd6ff;
+}
+
+/* === Gallery Section === */
+.gallery {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.gallery img {
+  display: block;
+  max-width: 100%; /* Responsive images */
+  height: auto; /* Maintain aspect ratio */
+  margin: 1rem auto; /* Centering images with margin */
+  border-radius: 10px; /* Rounded corners for images */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.caption {
+  margin: 1rem 0;
+  color: #4b0082; /* Text color for captions */
+}
+
+.caption h3 {
+  font-size: 1.8rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.caption p {
+  font-size: 1rem;
+}
+
+/* === About Section === */
+.about {
+  background: linear-gradient(to bottom right, #fce4ff, #fff8ff);
+  padding: 5rem 0;
+  border-top: 2px dashed #d3b3f5;
+  border-bottom: 2px dashed #d3b3f5;
+}
+
+.about h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #8e44ad;
+  text-shadow: 1px 1px 2px #d8b9ff;
+}
+
+.about p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: auto;
+  color: #5e3370;
+  line-height: 1.7;
+}
+
+/* === Footer === */
+footer {
+  background-color: #7b38c4;
+  color: #fff;
+  text-shadow: 1px 1px 2px #000;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 1rem 0; /* Added padding for better spacing */
+}
+
+/* === Utilities === */
+.bg-purple {
+  background-color: #7b38c4 !important;
+}

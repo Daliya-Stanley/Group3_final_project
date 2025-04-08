@@ -155,6 +155,11 @@ main {
   padding: 2rem;
 }
 
+
+.wheel-wrapper {
+  background-image: url("/static/images/wheel.jpg");
+}
+
 .login-card {
   background-color: rgba(0, 0, 0, 0.55);
   border-radius: 1.5rem;
@@ -164,6 +169,10 @@ main {
   color: white;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   text-align: center;
+}
+
+.wheel-card {
+  max-width: 600px;
 }
 
 .login-card h1 {
@@ -200,6 +209,13 @@ main {
   border-radius: 0.75rem;
 }
 
+.btn-wheel-primary {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.75rem;
+}
 .btn-primary:hover {
   background-color: #E6CCFF;
   border-color: #E6CCFF;
@@ -248,16 +264,17 @@ background-color: #DAD9D9;
   margin: 0 auto;    /* centers the carousel horizontally */
   padding-top: 40px; /* optional vertical spacing */
 }
+
 .top-section{
-height: 100vh;
-            position: relative;
-            top:0;
-            max-width: auto;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
+    height: 100vh;
+    position: relative;
+    top:0;
+    max-width: auto;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
 }
 
 #customer-feedback {
@@ -318,3 +335,147 @@ background-color: #D2E4BF;
   padding: 10px;
   border-radius: 10px;
   display: inline-block;
+  }
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid black;
+}
+
+.container {
+    background-image: url('static/images/wheel.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.choices button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+.choices button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+#history {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#history li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#history li:last-child {
+    border-bottom: none;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.choices button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+.choices button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+#history {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+#history li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#history li:last-child {
+    border-bottom: none;
+}
