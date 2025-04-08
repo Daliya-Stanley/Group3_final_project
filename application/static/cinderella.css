@@ -9,6 +9,22 @@ body {
   font-family: 'Cinzel Decorative', cursive, 'Poppins', sans-serif;
   background: linear-gradient(to bottom, #f5e9ff, #fef6ff);
   color: #4b0082;
+  overflow: hidden; /* Prevents scrollbars from appearing */
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../images/default.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.content {
+  text-align: center;
+  color: white;
 }
 
 /* === Navbar === */
