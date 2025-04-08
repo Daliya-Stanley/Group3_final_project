@@ -67,9 +67,11 @@ def home_page():
 
 
 
-@app.route("/Cinderella_kingdom")
-def Cinderella_kingdom():
-    return render_template("Cinderellas_kingdom.html", title_head="Cinderella's_kingdom", title_body='Far Far Away!', subtitle='★ Welcome to the destination where wishes come true ★', img="static/images/cinderella.jpg")
+@app.route("/cinderella_kingdom")
+def cinderella_kingdom():
+    return render_template(
+        "cinderellas_kingdom.html", title_head="Cinderella's Kingdom", title_body='Far Far Away!', subtitle='★ Welcome to the destination where wishes come true ★', img="images/cinderella.jpg"  # Path to the image should be relative to the static folder
+    )
 
 
 
