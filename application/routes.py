@@ -82,7 +82,3 @@ def cinderella_kingdom():
 
 
 
-
-# @app.route('/')
-# def home():
-#     return render_template()
