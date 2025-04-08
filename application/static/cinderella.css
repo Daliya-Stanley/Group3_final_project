@@ -17,11 +17,13 @@ body {
   padding: 0 15px; /* Add some padding */
 }
 
+
 /* === Navbar === */
 .navbar {
   background: linear-gradient(to right, #a564d6, #c8a2c8);
   border-bottom: 2px solid #e0c3fc;
   box-shadow: 0 4px 15px rgba(168, 112, 236, 0.4);
+  padding: 1rem 0; /* Add padding for vertical spacing */
 }
 
 .navbar-brand {
@@ -41,24 +43,28 @@ body {
 .navbar-nav .nav-link:hover {
   color: #ffd6ff;
 }
-
 /* === Gallery Section === */
 .gallery {
   padding: 2rem 0;
   text-align: center;
 }
 
-.gallery img {
+.gallery-item {
+  margin-bottom: 30px; /* Space between gallery items */
+}
+
+.gallery-item img {
   display: block;
-  max-width: 100%; /* Responsive images */
-  height: auto; /* Maintain aspect ratio */
+  max-width: 80%; /* Adjust this to a smaller size */
+  height: 300px; /* Maintain aspect ratio */
   margin: 1rem auto; /* Centering images with margin */
   border-radius: 10px; /* Rounded corners for images */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s; /* Smooth hover effect */
 }
 
 .caption {
-  margin: 1rem 0;
+  margin-top: 10px; /* Space above captions */
   color: #4b0082; /* Text color for captions */
 }
 
@@ -69,6 +75,11 @@ body {
 
 .caption p {
   font-size: 1rem;
+}
+
+/* Image hover effect */
+.gallery-item img:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 /* === About Section === */
