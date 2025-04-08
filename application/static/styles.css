@@ -209,6 +209,13 @@ main {
   border-radius: 0.75rem;
 }
 
+.btn-wheel-primary {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.75rem;
+}
 .btn-primary:hover {
   background-color: #E6CCFF;
   border-color: #E6CCFF;
