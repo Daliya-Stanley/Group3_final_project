@@ -9,6 +9,7 @@ from application import app
 def home_page():
     return render_template('home.html', title_head='Enchanted Getaway Travels', title_body='Enchanted Getaway Travels', subtitle='★ Travel the unexplored lands ★', img="static/images/wallpaper_home.jpeg")
 
+<<<<<<< HEAD
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     register_form = RegistrationForm()
@@ -52,3 +53,80 @@ def welcome():
 @app.route('/game', methods=['GET', 'POST'])
 def game():
     return render_template('game.html')
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route("/cinderella_kingdom")
+def cinderella_kingdom():
+    return render_template(
+        "cinderellas_kingdom.html", title_head="Cinderella's Kingdom", title_body='Far Far Away!', subtitle='★ Welcome to the destination where wishes come true ★', img="images/cinderella.jpg"
+    )
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Daphne
