@@ -3,6 +3,29 @@
 <link rel="stylesheet" href="{{ url_for('static', filename= 'wonderland.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
+
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+        <div class="container pt-5" >
+          <br>
+          <br>
+          <br>
+          <br>
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
 <h1 id="title"> Ever dreamt of falling down the rabbit hole into the whimsical world of <span class="highlight">Wonderland?</span>  </h1>
 
 <section class="wonderland">
