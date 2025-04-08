@@ -67,9 +67,9 @@ def home_page():
 
 
 
-@app.route("/Cinderella's_kingdom")
+@app.route("/Cinderella_kingdom")
 def Cinderella_kingdom():
-    return render_template("Cinderella's_kingdom.html", title_head="Cinderella's_kingdom", title_body='Far Far Away!', subtitle='★ Welcome to the destination where wishes come true ★', img="static/images/cinderella.jpg")
+    return render_template("Cinderellas_kingdom.html", title_head="Cinderella's_kingdom", title_body='Far Far Away!', subtitle='★ Welcome to the destination where wishes come true ★', img="static/images/cinderella.jpg")
 
 
 
