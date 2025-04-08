@@ -43,16 +43,19 @@ body {
 .navbar-nav .nav-link:hover {
   color: #ffd6ff;
 }
-
 /* === Gallery Section === */
 .gallery {
   padding: 2rem 0;
   text-align: center;
 }
 
-.gallery img {
+.gallery-item {
+  margin-bottom: 30px; /* Space between gallery items */
+}
+
+.gallery-item img {
   display: block;
-  max-width: 100%; /* Responsive images */
+  max-width: 80%; /* Adjust this to a smaller size */
   height: auto; /* Maintain aspect ratio */
   margin: 1rem auto; /* Centering images with margin */
   border-radius: 10px; /* Rounded corners for images */
@@ -60,12 +63,8 @@ body {
   transition: transform 0.3s; /* Smooth hover effect */
 }
 
-.gallery img:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
 .caption {
-  margin: 1rem 0;
+  margin-top: 10px; /* Space above captions */
   color: #4b0082; /* Text color for captions */
 }
 
@@ -76,6 +75,11 @@ body {
 
 .caption p {
   font-size: 1rem;
+}
+
+/* Image hover effect */
+.gallery-item img:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 /* === About Section === */
