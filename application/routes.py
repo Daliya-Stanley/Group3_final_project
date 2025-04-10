@@ -136,7 +136,7 @@ def experience_page():
 
 @app.route('/Product')
 def product_page():
-    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg")
+    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products =prouduct_list)
 
 
 
