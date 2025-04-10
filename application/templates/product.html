@@ -164,6 +164,19 @@
   <br>
 
   <!-- Second Row: 2 Cards -->
+    {% for product in products %}
+    <div class="col-md-4 d-flex justify-content-center">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{url_for('static', filename='images/{{product.ProductImage}}') }}" alt="Magic Suitcase">
+        <div class="card-body">
+          <h5 class="card-title">{{product.ProductName}}</h5>
+          <p class="card-text">{{product.ProductPrice}} Fairy Land Coins</p>
+          <a href="#" class="btn btn-primary">Buy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row g-4 justify-content-center">
     <div class="col-md-4 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
@@ -176,17 +189,7 @@
       </div>
     </div>
 
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_suitcase.jpeg') }}" alt="Magic Suitcase">
-        <div class="card-body">
-          <h5 class="card-title">Pack You All Can - Suitcase</h5>
-          <p class="card-text">800 Fairy Land Coins</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 </section>
 
