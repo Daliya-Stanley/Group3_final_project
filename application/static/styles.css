@@ -494,3 +494,32 @@ h2 {
 #history li:last-child {
     border-bottom: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logo {
+height: 50px;
+  width: auto;
+  border-radius: 8px;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
