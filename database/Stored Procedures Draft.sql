@@ -30,6 +30,18 @@ END //
 
 DELIMITER ;
 
+DELIMITER // 
+
+CREATE PROCEDURE pGet_Available_Products(
+IN pStatus varchar(25)
+)
+BEGIN
+SELECT * FROM ProductStatus 
+WHERE Status = Available;
+END //
+
+DELIMITER ;
+
 DELIMITER //
 
 CREATE PROCEDURE pGet_Booked_Experiences(

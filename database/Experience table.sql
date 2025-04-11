@@ -10,8 +10,8 @@ DateReserved date NULL
 
 INSERT INTO Experiences (ExperienceName, ExperiencePrice, DateReserved)
 VALUES 
-('Make a Snowman','£50'),
-('Flying Lesson','£250'),
-('Troll Party','£50'),
-('Scuba Diving','£250'),
-('Spa Experience','£100');
+('Make a Snowman', 50, null),
+('Flying Lesson', 250, null),
+('Troll Party', 50, null),
+('Scuba Diving', 250, null),
+('Spa Experience',100, null);
