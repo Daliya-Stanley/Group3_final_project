@@ -9,7 +9,9 @@ def fill_form_check(form, field):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', [InputRequired(), fill_form_check,validators.Length(min=4, max=25)],render_kw={"class": "form-control"})
+    firstname = StringField('First Name', [InputRequired(), fill_form_check,validators.Length(min=4, max=25)],render_kw={"class": "form-control"})
+    lastname = StringField('Last Name', [InputRequired(), fill_form_check, validators.Length(min=4, max=25)],
+                            render_kw={"class": "form-control"})
     email = StringField('Email Address', [InputRequired(), fill_form_check,validators.Length(min=6, max=35)],render_kw={"class": "form-control"})
     password = PasswordField('New Password', [
         validators.DataRequired(),
