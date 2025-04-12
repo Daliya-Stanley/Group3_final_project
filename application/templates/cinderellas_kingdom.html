@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
+
 {% block head %}
   <title>{{ title_head }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='cinderella.css') }}">
-{% endblock %}
+{% block title %} Cinderalla's Kingdom  {% endblock %}
+
+
+{% block title %}
 
 {% block body_content %}
 

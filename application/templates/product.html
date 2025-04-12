@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body_content %}
 
-
+{% block title %} Products {% endblock %}
 
 <!--<section class="product-top-section">-->
 <!--    <div class="product-heading">-->
@@ -127,39 +127,39 @@
 
   <!-- First Row: 3 Cards -->
   <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_carpet.jpeg') }}" alt="Magic Carpet">
-        <div class="card-body">
-          <h5 class="card-title">Magic Carpet</h5>
-          <p class="card-text">5000 Fairy Land Coins</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/product_carpet.jpeg') }}" alt="Magic Carpet">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Magic Carpet</h5>-->
+<!--          <p class="card-text">5000 Fairy Land Coins</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">
-        <div class="card-body">
-          <h5 class="card-title">Magic Wand</h5>
-          <p class="card-text">500 Fairy Land Coins</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Magic Wand</h5>-->
+<!--          <p class="card-text">500 Fairy Land Coins</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product-magic bottle.jpeg') }}" alt="Magic Potion">
-        <div class="card-body">
-          <h5 class="card-title">Magic Potion</h5>
-          <p class="card-text">1000 Fairy Land Coins</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/product-magic bottle.jpeg') }}" alt="Magic Potion">&ndash;&gt;-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Magic Potion</h5>-->
+<!--          <p class="card-text">1000 Fairy Land Coins</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <br>
 
@@ -167,30 +167,31 @@
     {% for product in products %}
     <div class="col-md-4 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
+<!--        <img src = "{{Product.ProductImage}}" alt ="Product Image pic">-->
         <img class="card-img-top" src="{{url_for('static', filename='images/{{product.ProductImage}}') }}" alt="Magic Suitcase">
         <div class="card-body">
           <h5 class="card-title">{{product.ProductName}}</h5>
-          <p class="card-text">{{product.ProductPrice}} Fairy Land Coins</p>
+          <p class="card-text">{{product.ProductPrice}} </p>
           <a href="#" class="btn btn-primary">Buy</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_clothes.jpeg') }}" alt="Magic Dress">
-        <div class="card-body">
-          <h5 class="card-title">One dress - No mess</h5>
-          <p class="card-text">Sold as a set - 200 Fairy Land Coins</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
+<!--  <div class="row g-4 justify-content-center">-->
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/product_clothes.jpeg') }}" alt="Magic Dress">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">One dress - No mess</h5>-->
+<!--          <p class="card-text">Sold as a set - 200 Fairy Land Coins</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
-
+{% endfor %}
 </section>
 
 {% endblock %}

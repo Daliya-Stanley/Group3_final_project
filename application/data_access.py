@@ -29,3 +29,16 @@ def get_products():
         product_list.append({'productname': product[0], 'productprice': product[1], 'productimage': product[2]})
     return product_list
 
+
+def get_experiences():
+    conn = get_db_connection()
+    cursor =conn.cursor()
+    sql = "INSERT INTO Experience(ExperienceName, ExperiencePrice, DateReserved, ExperienceImage from Experience"
+
+    cursor.execute(sql)
+    result_set = cursor.fetchall()
+    result_list = []
+    for experience in result_set:
+
+
+
