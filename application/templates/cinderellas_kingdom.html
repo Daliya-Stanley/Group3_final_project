@@ -45,29 +45,51 @@
 <section class="activities text-center py-5">
     <h2>Fun Things to Do</h2>
 
-    <article class="activity">
-        <h3>Attend the Grand Ball</h3>
-        <p>Dress in your finest attire and dance the night away at the Grand Ball. Join fellow guests for a night of enchanting music, delightful dances, and a chance to meet magical characters!</p>
-        <img src="{{ url_for('static', filename='images/grand_ball.jpg') }}" alt="Grand Ball" class="activity-img img-fluid">
-    </article>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Card for Grand Ball -->
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/grand_ball.jpg') }}" class="card-img-top" alt="Grand Ball">
+                <div class="card-body">
+                    <h5 class="card-title">Attend the Grand Ball</h5>
+                    <p class="card-text">Dress in your finest attire and dance the night away at the Grand Ball. Join fellow guests for a night of enchanting music, delightful dances, and a chance to meet magical characters!</p>
+                </div>
+            </div>
+        </div>
 
-    <article class="activity">
-        <h3>Explore the Enchanted Gardens</h3>
-        <p>Wander through the beautiful Enchanted Gardens, where every flower tells a tale. Enjoy magical picnics or simply relax amidst the fragrant blooms filled with butterflies.</p>
-        <img src="{{ url_for('static', filename='images/enchanted_gardens.jpg') }}" alt="Enchanted Gardens" class="activity-img img-fluid">
-    </article>
+        <!-- Card for Enchanted Gardens -->
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/enchanted_gardens.jpg') }}" class="card-img-top" alt="Enchanted Gardens">
+                <div class="card-body">
+                    <h5 class="card-title">Explore the Enchanted Gardens</h5>
+                    <p class="card-text">Wander through the beautiful Enchanted Gardens, where every flower tells a tale. Enjoy magical picnics or simply relax amidst the fragrant blooms filled with butterflies.</p>
+                </div>
+            </div>
+        </div>
 
-    <article class="activity">
-        <h3>Meet the Fairy Godmother</h3>
-        <p>Don’t miss your chance to meet your very own Fairy Godmother. She’s ready to sprinkle a little magic into your life! Share your dreams and see them come to life with her help.</p>
-        <img src="{{ url_for('static', filename='images/fairy_godmother.jpg') }}" alt="Fairy Godmother" class="activity-img img-fluid">
-    </article>
+        <!-- Card for Fairy Godmother -->
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/fairy_godmother.jpg') }}" class="card-img-top" alt="Fairy Godmother">
+                <div class="card-body">
+                    <h5 class="card-title">Meet the Fairy Godmother</h5>
+                    <p class="card-text">Don’t miss your chance to meet your very own Fairy Godmother. She’s ready to sprinkle a little magic into your life! Share your dreams and see them come to life with her help.</p>
+                </div>
+            </div>
+        </div>
 
-    <article class="activity">
-        <h3>Horse-Drawn Carriage Rides</h3>
-        <p>Take a magical ride in a horse-drawn carriage through the kingdom. Feel like royalty as you enjoy the sights of the beautiful landscapes that surround you.</p>
-        <img src="{{ url_for('static', filename='images/carriage_ride.jpg') }}" alt="Horse-Drawn Carriage" class="activity-img img-fluid">
-    </article>
+        <!-- Card for Horse-Drawn Carriage Rides -->
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/carriage_ride.jpg') }}" class="card-img-top" alt="Horse-Drawn Carriage Rides">
+                <div class="card-body">
+                    <h5 class="card-title">Horse-Drawn Carriage Rides</h5>
+                    <p class="card-text">Take a magical ride in a horse-drawn carriage through the kingdom. Feel like royalty as you enjoy the sights of the beautiful landscapes that surround you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Plan Your Visit Section -->
