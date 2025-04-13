@@ -6,7 +6,6 @@ from application.data_access import *
 from application import app
 from datetime import timedelta
 
-
 app.permanent_session_lifetime = timedelta(days=30)
 
 import random
@@ -167,8 +166,8 @@ def experience_page():
 @app.route('/Product')
 def product_page():
     product_list = get_products()
-    print(product_list)
-    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products=product_list)
+    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products = product_list)
+
 
 @app.route('/product_sale')
 def product_sale():
@@ -205,4 +204,7 @@ def cinderella_kingdom():
 def wonderland():
     return render_template('destination1.html', title_head='Wonderland', title_body='Wonderland', subtitle='Want to wander in Wonderland?', img='static/images/WT.jpg')
 
+@app.route('/aquariel')
+def aquariel():
+    return render_template('aquariel.html', title_head='Aquariel', title_body='Aquariel', subtitle='Where tides whisper secrets beneath the sea foam')
 
