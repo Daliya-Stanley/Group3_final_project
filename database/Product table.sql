@@ -13,7 +13,7 @@ alter table Product
 add column ProductImage VARCHAR (50) NOT NULL;
 
 INSERT INTO Product (ProductName, ProductPrice, ProductStatusID, ProductImage)
-VALUES 
+VALUES
 ('All You Can Pack Suitcase', 200, 1, 'product_suitcase.jpeg'),
 ('Magical Carpet', 500, 1, 'product_carpet.jpeg'),
 ('Magic Potion', 100, 1, 'product-magic bottle.jpeg'),

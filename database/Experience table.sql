@@ -9,7 +9,7 @@ DateReserved date NULL
 );
 
 INSERT INTO Experiences (ExperienceName, ExperiencePrice, DateReserved)
-VALUES 
+VALUES
 ('Make a Snowman', 50, null),
 ('Flying Lesson', 250, null),
 ('Troll Party', 50, null),
