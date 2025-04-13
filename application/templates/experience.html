@@ -125,70 +125,76 @@
   <section class="product-mid-section">
 <br>
     <br>
-
+{% if  'user_email'  in session %}
   <!-- First Row: 3 Cards -->
   <div class="row g-4 justify-content-center">
     <div class="col-md-4 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-snowman.jpeg') }}" alt="Magic Carpet">
+        <img class="card-img-top" src="{{url_for('static', filename='images/{Experience.ExperienceImage}') }}" alt="Magic Carpet">
         <div class="card-body">
-          <h5 class="card-title">Make as Snowman-Experience</h5>
-          <p class="card-text">£50 </p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-carpet.jpeg') }}" alt="Magic Wand">
-        <div class="card-body">
-          <h5 class="card-title">Flying lesson- Experience</h5>
-          <p class="card-text">£250</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Troll.jpeg') }}" alt="Magic Potion">
-        <div class="card-body">
-          <h5 class="card-title">Troll Party-Experience</h5>
-          <p class="card-text">£50</p>
+          <h5 class="card-title">{{Experience.ExperienceName}}</h5>
+          <p class="card-text">{{Experience.ExperiencePrice }}</p>
           <a href="#" class="btn btn-primary">Buy</a>
         </div>
       </div>
     </div>
   </div>
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-carpet.jpeg') }}" alt="Magic Wand">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Flying lesson- Experience</h5>-->
+<!--          <p class="card-text">£250</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Troll.jpeg') }}" alt="Magic Potion">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Troll Party-Experience</h5>-->
+<!--          <p class="card-text">£50</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <br>-->
+
+<!--  &lt;!&ndash; Second Row: 2 Cards &ndash;&gt;-->
+<!--  <div class="row g-4 justify-content-center">-->
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Scuba.jpeg') }}" alt="Magic Dress">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Scuba Diving- Experience</h5>-->
+<!--          <p class="card-text">£250 </p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="col-md-4 d-flex justify-content-center">-->
+<!--      <div class="card" style="width: 18rem;">-->
+<!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Spa.jpeg') }}" alt="Magic Suitcase">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">Spa Experience</h5>-->
+<!--          <p class="card-text">£100</p>-->
+<!--          <a href="#" class="btn btn-primary">Buy</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+ {% else %}
+
+    <p>You are not logged in.</p>
   <br>
+  <p><a href = '/login'>Click here to log in!</a></p>
 
-  <!-- Second Row: 2 Cards -->
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Scuba.jpeg') }}" alt="Magic Dress">
-        <div class="card-body">
-          <h5 class="card-title">Scuba Diving- Experience</h5>
-          <p class="card-text">£250 </p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-Spa.jpeg') }}" alt="Magic Suitcase">
-        <div class="card-body">
-          <h5 class="card-title">Spa Experience</h5>
-          <p class="card-text">£100</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  {% endif %}
 </section>
 
 {% endblock %}

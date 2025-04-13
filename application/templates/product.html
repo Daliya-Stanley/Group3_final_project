@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} MAgical Products {% endblock %}
+{% block title %} Magical Products {% endblock %}
 {% block body_content %}
 
 
@@ -51,6 +51,8 @@
 
 
 
+<section class="product-mid-section">
+{% if  'user_email'  in session %}
 <br>
 <br>
 <section id ="product">
@@ -122,73 +124,88 @@
 </section>
 
 
-  <section class="product-mid-section">
-<br>
-    <br>
+
+
+
+ {% for product in products %}
 
   <!-- First Row: 3 Cards -->
   <div class="row g-4 justify-content-center">
     <div class="col-md-4 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_carpet.jpeg') }}" alt="Magic Carpet">
+        <img class="card-img-top" src="{{url_for('static', filename='images/' + product.productimage)}} " alt="{{product.productname}}">
         <div class="card-body">
-          <h5 class="card-title">Magic Carpet</h5>
-          <p class="card-text">£500</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">
-        <div class="card-body">
-          <h5 class="card-title">Magic Wand</h5>
-          <p class="card-text">£50</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product-magic bottle.jpeg') }}" alt="Magic Potion">
-        <div class="card-body">
-          <h5 class="card-title">Magic Potion</h5>
-          <p class="card-text">£100</p>
+          <h5 class="card-title">{{product.productname}}</h5>
+          <p class = "card-text">£{{product.productprice}}</p>
           <a href="#" class="btn btn-primary">Buy</a>
         </div>
       </div>
     </div>
   </div>
+    <br>
+    <br>
 
+     {% endfor %}
+<!--&lt;!&ndash;    <div class="col-md-4 d-flex justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="card" style="width: 18rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h5 class="card-title">Magic Wand</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="card-text">£50</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="#" class="btn btn-primary">Buy</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="col-md-4 d-flex justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="card" style="width: 18rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/product-magic bottle.jpeg') }}" alt="Magic Potion">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h5 class="card-title">Magic Potion</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="card-text">£100</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="#" class="btn btn-primary">Buy</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  <br>&ndash;&gt;-->
+
+<!--&lt;!&ndash;  &lt;!&ndash; Second Row: 2 Cards &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="row g-4 justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="col-md-4 d-flex justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="card" style="width: 18rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/product_clothes.jpeg') }}" alt="Magic Dress">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h5 class="card-title">One dress - No mess</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="card-text">£100</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="#" class="btn btn-primary">Buy</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div class="col-md-4 d-flex justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="card" style="width: 18rem;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/product_suitcase.jpeg') }}" alt="Magic Suitcase">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;          <h5 class="card-title">Pack You All Can - Suitcase</h5>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p class="card-text">£200</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <a href="#" class="btn btn-primary">Buy</a>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+
+    {% else %}
+
+    <p>You are not logged in.</p>
   <br>
+  <p><a href = '/login'>Click here to log in!</a></p>
 
-  <!-- Second Row: 2 Cards -->
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_clothes.jpeg') }}" alt="Magic Dress">
-        <div class="card-body">
-          <h5 class="card-title">One dress - No mess</h5>
-          <p class="card-text">£100</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/product_suitcase.jpeg') }}" alt="Magic Suitcase">
-        <div class="card-body">
-          <h5 class="card-title">Pack You All Can - Suitcase</h5>
-          <p class="card-text">£200</p>
-          <a href="#" class="btn btn-primary">Buy</a>
-        </div>
-      </div>
-    </div>
-  </div>
+    {% endif %}
 
 </section>
 
 {% endblock %}
+

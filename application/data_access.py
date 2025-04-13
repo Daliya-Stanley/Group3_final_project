@@ -28,6 +28,7 @@ def get_products():
     product_list = []
     for product in result_set:
         product_list.append({'productname': product[0], 'productprice': product[1], 'productimage': product[2]})
+    # print(product_list)
     return product_list
 
 

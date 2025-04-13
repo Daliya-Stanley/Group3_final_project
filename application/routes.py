@@ -6,6 +6,7 @@ from application.data_access import *
 from application import app
 from datetime import timedelta
 
+
 app.permanent_session_lifetime = timedelta(days=30)
 
 import random
@@ -95,7 +96,7 @@ def login():
                 app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('welcome'))
+            return redirect(url_for('product_page'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -165,10 +166,16 @@ def experience_page():
 
 @app.route('/Product')
 def product_page():
-    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg")
+    product_list = get_products()
+    print(product_list)
+    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products=product_list)
 
-
-
+@app.route('/product_sale')
+def product_sale():
+    if 'user_email' in session:
+        user_email= session['user_email']
+        return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
+    return render_template('product_sale.html', user_email=False, title='Login Area')
 
 
 

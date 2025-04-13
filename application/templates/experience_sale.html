@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body_content %}
+{% block title %} Products {% endblock %}
+
+<section>
+   <p>Log in to see our Enchanted Experiences for Sale!</p>
+  {% if 'user_email' ==False %}
+  <p>You are not logged in.</p>
+  <br>
+  <p><a href = '/login'>Click here to log in!</a></p>
+  {% else %}
+  <p>Logged in as {{ FirstName }}<p>
+  <br>
+  <p><b><a href = '/logout'>Log out</a></b></p>
+  {% endif %}
+</section>
+{% endblock %}
