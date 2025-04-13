@@ -494,3 +494,13 @@ h2 {
 #history li:last-child {
     border-bottom: none;
 }
+
+.container {
+    background-image: url('static/images/wheel.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;

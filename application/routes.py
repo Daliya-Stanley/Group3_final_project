@@ -37,13 +37,19 @@ def rock_paper_scissors():
       return render_template('rock_paper_scissors.html')
 
 
-@app.route('/play', methods=['POST'])
+@app.route('/rock_paper_scissors', methods=['POST'])
 def play():
-    player_choice = request.form['choice']
+    player_choice = request.form['user_choice']
     choices = ["rock", "paper", "scissors"]
     computer_choice = random.choice(choices)
     result = determine_winner(player_choice, computer_choice)
-    return jsonify({'computer_choice': computer_choice, 'result': result})
+    return render_template('rock_paper_scissors.html', title_head='Rock Paper Scissors',
+                           title_body='Rock Paper Scissors!!',
+                           subtitle='★ Rock Paper Scissors ★',
+                           computer_choice=computer_choice,
+                           result=result)
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -107,7 +113,9 @@ def game():
 
 
 
-
+@app.route('/mulan')
+def mulan_page():
+      return render_template('mulan.html')
 
 
 

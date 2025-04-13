@@ -10,15 +10,28 @@
     <div class="container">
         <h1>Rock, Paper, Scissors</h1>
 
-        <div class="choices">
-            <button onclick="playGame('rock')">Rock</button>
-            <button onclick="playGame('paper')">Paper</button>
-            <button onclick="playGame('scissors')">Scissors</button>
-        </div>
+        <form action="/rock_paper_scissors" method="POST">
+    <p><label for="user_choice">Your Choice:</label></p>
+    <p>
+      <select id="user_choice" name="user_choice" required>
+        <option value="">--Select--</option>
+        <option value="R">Rock</option>
+        <option value="P">Paper</option>
+        <option value="S">Scissors</option>
+      </select>
+    </p>
+
+    <p><input type="submit" value="Play Game" /></p>
+  </form>
+
 
         <div id="result" class="result"></div>
+        {% if computer_choice %}
+    <h2>Computer's Choice: {{ computer_choice }}</h2>
+    <h3>{{ result }}</h3>
+{% endif %}
 
-        <h2>Game History</h2>
+
         <ul id="history">
             {% for game in history %}
                 <li>You chose: {{ game[0] }}, Computer chose: {{ game[1] }}, Result: {{ game[2] }} ({{ game[3] }})</li>
