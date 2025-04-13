@@ -138,6 +138,12 @@ def experience_page():
 def product_page():
     return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products =prouduct_list)
 
+# @app.route('/')
+# def admin():
+#     if 'username' in session:
+#         username = session['username']
+#         return render_template('adminarea.html', username=username, title='Admin Area')
+#     return render_template('adminarea.html', username=False, title='Admin Area')
 
 
 
