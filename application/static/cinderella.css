@@ -1,122 +1,82 @@
-/* === General Reset & Base Styling === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Cinzel Decorative', cursive, 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #f5e9ff, #fef6ff);
-  color: #4b0082;
+    font-family: 'Garamond', serif; /* Elegant serif font for a fairy tale feel */
+    margin: 0;
+    padding: 0;
+    background: #f9f6e7; /* Light, soft background */
+    color: #333; /* Dark text for readability */
 }
 
-.container {
-  max-width: 1200px; /* Set a max-width for the container */
-  margin: auto; /* Center the container */
-  padding: 0 15px; /* Add some padding */
+header {
+    background: url('images/header-background.jpg') no-repeat center center/cover;
+    padding: 40px 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7); /* Soft shadow for depth */
 }
 
-
-/* === Navbar === */
-.navbar {
-  background: linear-gradient(to right, #a564d6, #c8a2c8);
-  border-bottom: 2px solid #e0c3fc;
-  box-shadow: 0 4px 15px rgba(168, 112, 236, 0.4);
-  padding: 1rem 0; /* Add padding for vertical spacing */
+h1 {
+    font-size: 3.5em; /* Larger for dramatic impact */
+    margin-bottom: 10px;
+    color: #6b5bff; /* Enchanting purple for the main title */
 }
 
-.navbar-brand {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 1px 1px 3px #6b21a8;
+h2 {
+    font-size: 2.8em; /* Larger second-level headers */
+    margin-top: 30px;
+    color: #ff69b4; /* Soft pink for secondary headings */
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8); /* Light shadow for depth */
 }
 
-.navbar-nav .nav-link {
-  color: #fff;
-  font-weight: 500;
-  margin-right: 1rem;
-  transition: all 0.3s ease-in-out;
+h3 {
+    font-size: 2.2em; /* Better hierarchy */
+    margin-top: 20px;
+    color: #4b4b4b; /* Color for section headings */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Light shadow for contrast */
 }
 
-.navbar-nav .nav-link:hover {
-  color: #ffd6ff;
-}
-/* === Gallery Section === */
-.gallery {
-  padding: 2rem 0;
-  text-align: center;
-}
-
-.gallery-item {
-  margin-bottom: 30px; /* Space between gallery items */
+.intro, .activities, .plan-visit {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent for readability */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Pronounced shadow */
+    border-radius: 15px; /* Softer look */
 }
 
-.gallery-item img {
-  display: block;
-  max-width: 80%; /* Adjust this to a smaller size */
-  height: 300px; /* Maintain aspect ratio */
-  margin: 1rem auto; /* Centering images with margin */
-  border-radius: 10px; /* Rounded corners for images */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s; /* Smooth hover effect */
+.activity {
+    margin: 30px 0; /* Space between activities */
 }
 
-.caption {
-  margin-top: 10px; /* Space above captions */
-  color: #4b0082; /* Text color for captions */
+.activity-img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px; /* Rounded borders */
+    transition: transform 0.3s ease; /* Smooth hover effect */
 }
 
-.caption h3 {
-  font-size: 1.8rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+.activity-img:hover {
+    transform: scale(1.05); /* Zoom effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
 }
 
-.caption p {
-  font-size: 1rem;
-}
-
-/* Image hover effect */
-.gallery-item img:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-/* === About Section === */
-.about {
-  background: linear-gradient(to bottom right, #fce4ff, #fff8ff);
-  padding: 5rem 0;
-  border-top: 2px dashed #d3b3f5;
-  border-bottom: 2px dashed #d3b3f5;
-}
-
-.about h2 {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-  color: #8e44ad;
-  text-shadow: 1px 1px 2px #d8b9ff;
-}
-
-.about p {
-  font-size: 1.1rem;
-  max-width: 700px;
-  margin: auto;
-  color: #5e3370;
-  line-height: 1.7;
-}
-
-/* === Footer === */
 footer {
-  background-color: #7b38c4;
-  color: #fff;
-  text-shadow: 1px 1px 2px #000;
-  font-weight: 500;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-  padding: 1rem 0; /* Added padding for better spacing */
+    text-align: center;
+    padding: 20px; /* Spacious feel */
+    background-color: #6b5bff; /* Deep purple for the footer */
+    color: #fff;
+    font-size: 1.2em; /* Larger footer text */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5); /* Elevation */
 }
 
-/* === Utilities === */
-.bg-purple {
-  background-color: #7b38c4 !important;
+/* Responsive styles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em; /* Responsive font size for headers */
+    }
+    h2 {
+        font-size: 2.2em;
+    }
+    h3 {
+        font-size: 1.7em;
+    }
 }

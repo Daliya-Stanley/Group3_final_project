@@ -6,100 +6,79 @@
 
 {% block body_content %}
 
+<!-- Top Section -->
 <section class="top-section"
         style="
             background-image: url('{{ img }}');
             height: 100vh;
             position: relative;
-            top:0;
+            top: 0;
             max-width: 1500px;
             background-position: center center;
             background-attachment: fixed;
             background-size: cover;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
             color: white;">
 
-        <div class="container pt-5" >
-            <h1>{{ title_body }}</h1>
-            <h4>{{ subtitle }}</h4>
-        </div>
-      </section>
-
-
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-purple shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="#">Cinderella's Kingdom</a>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Activities to Do</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Attend the Royal Ball</a></li>
-            <li><a class="dropdown-item" href="#">Visit the Glass Slipper Spa</a></li>
-            <li><a class="dropdown-item" href="#">Pumpkin Carriage Ride</a></li>
-            <li><a class="dropdown-item" href="#">Dine in the Grand Hall</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Places to Visit</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Cinderella’s Castle</a></li>
-            <li><a class="dropdown-item" href="#">Enchanted Forest</a></li>
-            <li><a class="dropdown-item" href="#">Wishing Well</a></li>
-            <li><a class="dropdown-item" href="#">Midnight Garden</a></li>
-          </ul>
-        </li>
-      </ul>
+    <div class="container pt-5">
+        <h1>{{ title_body }}</h1>
+        <h4>{{ subtitle }}</h4>
     </div>
-  </div>
-</nav>
+</section>
+
+<!-- Welcome Header -->
+<header class="text-center py-5">
+    <h1>Welcome to Cinderella's Kingdom</h1>
+    <p>Experience the magic of a fairy tale world where dreams come true!</p>
+</header>
 
 <!-- About Section -->
-<section class="about text-center py-5">
-  <div class="container">
-    <h2>About the Destination</h2>
-    <p>
-      Nestled beyond enchanted forests and glowing rivers, Cinderella’s Kingdom invites you to live your own fairy tale. From golden staircases to timeless romance, your fantasy vacation awaits.
-    </p>
-  </div>
+<section class="intro text-center py-5">
+    <div class="container">
+        <h2>Discover the Enchantment</h2>
+        <p>
+            Step into a realm of wonder where fairy tales flourish and adventures await at every corner. Cinderella's Kingdom offers enchanting experiences for visitors of all ages. From magical ballrooms to charming gardens, your holiday here will be nothing short of spectacular.
+        </p>
+    </div>
 </section>
 
-<!-- Image Gallery Section -->
-<section class="gallery text-center py-5">
-  <h2>Step into the storybook of dreams</h2>
-  <p>Take a drink and wish away! You just might be part of a fairy tale.</p>
-  <div class="container">
-    <!-- Gallery Item: Castle -->
-    <div class="gallery-item">
-      <img src="{{ url_for('static', filename='images/castle.jpg') }}" class="img-fluid" alt="Castle">
-    </div>
+<!-- Activities Section -->
+<section class="activities text-center py-5">
+    <h2>Fun Things to Do</h2>
 
-    <!-- Gallery Item: Ballroom -->
-    <div class="gallery-item">
-      <div class="caption">
-        <h3>Dance at the Royal Ball</h3>
-        <p>Where midnight never comes too soon.</p>
-        <img src="{{ url_for('static', filename='images/ballroomjpg.jpg') }}" class="img-fluid" alt="Ballroom">
-      </div>
-    </div>
+    <article class="activity">
+        <h3>Attend the Grand Ball</h3>
+        <p>Dress in your finest attire and dance the night away at the Grand Ball. Join fellow guests for a night of enchanting music, delightful dances, and a chance to meet magical characters!</p>
+        <img src="{{ url_for('static', filename='images/grand_ball.jpg') }}" alt="Grand Ball" class="activity-img img-fluid">
+    </article>
 
-    <!-- Gallery Item: Carriage -->
-    <div class="gallery-item">
-      <div class="caption">
-        <h3>Ride in a Golden Carriage</h3>
-        <p>Travel like royalty through enchanted lands.</p>
-        <img src="{{ url_for('static', filename='images/carriage3.jpg') }}" class="img-fluid" alt="Carriage">
-      </div>
-    </div>
-  </div>
+    <article class="activity">
+        <h3>Explore the Enchanted Gardens</h3>
+        <p>Wander through the beautiful Enchanted Gardens, where every flower tells a tale. Enjoy magical picnics or simply relax amidst the fragrant blooms filled with butterflies.</p>
+        <img src="{{ url_for('static', filename='images/enchanted_gardens.jpg') }}" alt="Enchanted Gardens" class="activity-img img-fluid">
+    </article>
+
+    <article class="activity">
+        <h3>Meet the Fairy Godmother</h3>
+        <p>Don’t miss your chance to meet your very own Fairy Godmother. She’s ready to sprinkle a little magic into your life! Share your dreams and see them come to life with her help.</p>
+        <img src="{{ url_for('static', filename='images/fairy_godmother.jpg') }}" alt="Fairy Godmother" class="activity-img img-fluid">
+    </article>
+
+    <article class="activity">
+        <h3>Horse-Drawn Carriage Rides</h3>
+        <p>Take a magical ride in a horse-drawn carriage through the kingdom. Feel like royalty as you enjoy the sights of the beautiful landscapes that surround you.</p>
+        <img src="{{ url_for('static', filename='images/carriage_ride.jpg') }}" alt="Horse-Drawn Carriage" class="activity-img img-fluid">
+    </article>
 </section>
+
+<!-- Plan Your Visit Section -->
+<section class="plan-visit text-center py-5">
+    <h2>Plan Your Visit</h2>
+    <p>Visit Cinderella's Kingdom and embrace the fairy tale life. Book your holiday now for an unforgettable experience that you and your family will cherish forever!</p>
+</section>
+
 <!-- Footer -->
 <footer class="text-center bg-purple text-white py-3">
-  <p>✨ Enchanting getaways for dreamers of all ages ✨</p>
+    <p>✨ Enchanting getaways for dreamers of all ages ✨</p>
 </footer>
 
 {% endblock %}
