@@ -1,11 +1,14 @@
-from flask import render_template, url_for, request, redirect,jsonify, Blueprint
+from flask import render_template, url_for, request, redirect,jsonify, flash,session
 from mysql.connector import cursor
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
+from application.data_access import *
 from application import app
+from datetime import timedelta
+
+app.permanent_session_lifetime = timedelta(days=30)
 
 import random
-
 
 
 @app.route('/')
@@ -57,14 +60,18 @@ def register():
     error = ""
 
     if request.method == 'POST':
-        username = register_form.username.data
+        firstname = register_form.firstname.data
+        lastname = register_form.lastname.data
         email = register_form.email.data
         password = register_form.password.data
 
-        # Here you would call a function to add the user, e.g.:
-        # add_person(username, email, password)
+        result = register_person(firstname, lastname, email, password)
 
-        return redirect(url_for('welcome'))
+        if result["success"]:
+            flash(result["message"], "success")
+            return redirect(url_for('welcome'))
+        else:
+            error = result["message"]
 
     return render_template('register.html',
                            form=register_form,
@@ -79,15 +86,37 @@ def login():
     error = ""
 
     if request.method == 'POST':
-        username = login_form.username.data
+        email = login_form.email.data
         password = login_form.password.data
-        # Logic to verify the user would go here
-        # If successful, redirect to a welcome page or dashboard
+        remember = login_form.remember_me.data
+
+        result = authenticate_user(email, password)
+
+        if result["success"]:
+            # Login success: store session info and redirect
+            session['user_email'] = result["email"]
+
+            if remember:
+                session.permanent = True  # Make the session persistent
+                app.permanent_session_lifetime = timedelta(days=30)
+
+            flash("Login successful! Welcome back 🎉", "success")
+            return redirect(url_for('welcome'))
+        else:
+            # Login failed: show error message
+            error = result["message"]
 
     return render_template('login.html',
                            form=login_form,
                            message=error,
                            title_head='Login')
+
+@app.route('/logout')
+def logout():
+    session.pop('user_email', None)  # remove the user from the session
+    flash("You've been logged out 👋", "info")
+    return redirect(url_for('login'))
+
 
 @app.route('/welcome', methods=['GET', 'POST'])
 def welcome():

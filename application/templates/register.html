@@ -1,17 +1,31 @@
 {% extends "layout.html" %}
+{% block title %} Register {% endblock %}
 {% block body_content %}
 <section class="login-wrapper">
 <div class="login-card ">
     <h1>Begin Your Magical Journey ✨</h1>
     <p>Create your enchanted passport to explore hidden getaways.</p>
+
+    {% if message %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+
     <form method="POST">
         {{ form.hidden_tag() }}
             <div class="row g-4 mt-3">
                 <div class="form-floating mb-3">
-                    {{ form.username(id="floatingUsername", placeholder="UserName") }}
-                    <label for="floatingUsername">{{ form.username.label.text }}</label>
+                    {{ form.firstname(id="floatingFirstName", placeholder="FirstName") }}
+                    <label for="floatingFirstName">{{ form.firstname.label.text }}</label>
                 </div>
             </div>
+            <div class="row g-4 mt-3">
+                    <div class="form-floating mb-3">
+                        {{ form.lastname(id="floatingLastName", placeholder="LastName") }}
+                        <label for="floatingLastName">{{ form.lastname.label.text }}</label>
+                    </div>
+                </div>
             <div class="row g-3 mt-2">
                     <div class="form-floating mb-3">
                         {{ form.email(id="floatingEmail", placeholder="Email") }}

@@ -1,3 +1,6 @@
+Flask~=3.1.0
+mysql-connector-python~=9.2.0
+bcrypt
 Flask
 flask_wtf
 wtforms

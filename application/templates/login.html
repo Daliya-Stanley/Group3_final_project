@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% block title %} Login {% endblock %}
 {% block body_content %}
 <section class="login-wrapper">
 <div class="login-card login-fade">
@@ -8,8 +9,8 @@
         {{ form.hidden_tag() }}
             <div class="row g-3 mt-2">
                 <div class="form-floating mb-3">
-                    {{ form.username(id="floatingUsername", placeholder="UserName") }}
-                    <label for="floatingUsername">{{ form.username.label.text }}</label>
+                    {{ form.email(id="floatingEmail", placeholder="Email") }}
+                    <label for="floatingUsername">{{ form.email.label.text }}</label>
                 </div>
             </div>
             <div class="row g-3 mt-2">
@@ -17,6 +18,10 @@
                     {{ form.password(id="floatingPassword", placeholder="Password") }}
                     <label for="floatingPassword">{{ form.password.label.text }}</label>
                 </div>
+            </div>
+            <div class="form-check mt-3">
+                {{ form.remember_me(class_="form-check-input", id="remember_me") }}
+                <label class="form-check-label" for="remember_me">Remember Me</label>
             </div>
             <button type="submit" class="btn btn-primary mt-4">{{ form.submit.label.text }}</button>
             <p class="register-link">New here? <a href="{{ url_for('register') }}">Start your journey</a></p>
