@@ -80,9 +80,15 @@
 
 
     <div class="ms-auto d-flex gap-2">
-      <button class="login-btn">
-        <a href="{{ url_for('login') }}"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
-      </button>
+            {% if  'user_email'  in session %}
+            <button class="login-btn">
+                <a href="{{ url_for('logout') }}"><i class='bx bxs-castle bx-burst-hover'></i>Logout</a>
+            </button>
+            {% else %}
+            <button class="login-btn">
+                <a href="{{ url_for('login') }}"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
+            </button>
+            {% endif %}
     </div>
   </div>
   </div>
