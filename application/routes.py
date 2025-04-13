@@ -12,6 +12,7 @@ import random
 
 
 @app.route('/')
+@app.route('/home')
 def home_page():
     return render_template('home.html', title_head='Enchanted Getaway Travels',
                            title_body='Enchanted Getaway Travels',
@@ -77,6 +78,11 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm()
+    #the request.args.get('next') gets the value of the parameter next during a GET request
+    #when we submit a POST request via the form the request.args.get('next') no longer contains 'next'
+    #so because of the <input type="hidden" name="next" value="{{ next }}"> that exists in the login form the value of the variable 'next' is stored
+    #and we get its value through the request.form.get('next')
+    next_page = request.args.get('next') or request.form.get('next')
     error = ""
 
     if request.method == 'POST':
@@ -95,7 +101,7 @@ def login():
                 app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('product_page'))
+            return redirect(next_page or url_for('home_page'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -103,7 +109,8 @@ def login():
     return render_template('login.html',
                            form=login_form,
                            message=error,
-                           title_head='Login')
+                           title_head='Login',
+                           next=next_page)
 
 @app.route('/logout')
 def logout():
