@@ -210,6 +210,18 @@ def add_to_cart(product_id):
     return redirect(url_for('product_page'))
 
 
+@app.route('/remove_from_cart/<int:product_id>')
+def remove_from_cart(product_id):
+    cart = session.get('cart', {})
+
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+        session['cart'] = cart
+        flash('Product removed from cart!', 'info')
+
+    return redirect(url_for('view_cart'))
+
+
 @app.route('/cart')
 def view_cart():
     cart = session.get("cart", {})
@@ -231,7 +243,6 @@ def view_cart():
             total_price += total
 
             products_in_cart.append({'productid': product_id, 'productname': name, 'productprice': price,'productimage': image, 'quantity': quantity, 'total': total})
-    print("Cart session:", session.get('cart'))
     return render_template ('cart.html', products=products_in_cart, total= total_price)
 
 @app.route('/product_sale')
