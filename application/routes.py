@@ -1,4 +1,4 @@
-from flask import render_template, url_for, request, redirect,jsonify, flash,session
+from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from mysql.connector import cursor
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
@@ -69,6 +69,12 @@ def register():
 
         if result["success"]:
             flash(result["message"], "success")
+
+            session['user_email'] = result["email"]
+
+            session.permanent = True  # Make the session persistent
+            app.permanent_session_lifetime = timedelta(days=30)
+
             return redirect(url_for('welcome'))
         else:
             error = result["message"]
@@ -101,7 +107,7 @@ def login():
                 app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('welcome'))
+            return redirect(url_for('rock_paper_scissors'))
         else:
             # Login failed: show error message
             error = result["message"]
