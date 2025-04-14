@@ -54,6 +54,7 @@
 <br>
 <br>
 <section id ="experience">
+  {% if  'user_email'  in session %}
 <br>
   <br>
 <h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Experiences!!!</h4>
@@ -121,24 +122,29 @@
   <br>
 </section>
 
+<br>
+<br>
+
 
   <section class="product-mid-section">
 <br>
     <br>
-{% if  'user_email'  in session %}
+{% for experience in experiences %}
   <!-- First Row: 3 Cards -->
   <div class="row g-4 justify-content-center">
     <div class="col-md-4 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/{Experience.ExperienceImage}') }}" alt="Magic Carpet">
+        <img class="card-img-top" src="{{url_for('static', filename='images/' + experience.experienceimage)}} "  alt="Magic Carpet">
         <div class="card-body">
-          <h5 class="card-title">{{Experience.ExperienceName}}</h5>
-          <p class="card-text">{{Experience.ExperiencePrice }}</p>
+          <h5 class="card-title">{{experience.experiencename}}</h5>
+          <p class="card-text">£{{experience.experienceprice }}</p>
           <a href="#" class="btn btn-primary">Buy</a>
         </div>
       </div>
     </div>
   </div>
+
+     {% endfor %}
 <!--    <div class="col-md-4 d-flex justify-content-center">-->
 <!--      <div class="card" style="width: 18rem;">-->
 <!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-carpet.jpeg') }}" alt="Magic Wand">-->
@@ -188,13 +194,15 @@
 <!--      </div>-->
 <!--    </div>-->
 <!--  </div>-->
- {% else %}
+  {% else %}
 
     <p>You are not logged in.</p>
   <br>
-  <p><a href = '/login'>Click here to log in!</a></p>
+<!--    #request.patch returns the path portion of the URL the user is currently on-->
+<!--    #this says after logging in redirect them to the current path-->
+  <p><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
 
-  {% endif %}
+    {% endif %}
 </section>
 
 {% endblock %}

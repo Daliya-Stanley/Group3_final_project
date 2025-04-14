@@ -189,11 +189,11 @@
 
     {% else %}
 
-    <p>You are not logged in.</p>
+    <p style="text-align: centre;">You are not logged in.</p>
   <br>
 <!--    #request.patch returns the path portion of the URL the user is currently on-->
 <!--    #this says after logging in redirect them to the current path-->
-  <p><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
+  <p style="text-align: centre;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
 
     {% endif %}
 
