@@ -1,34 +1,66 @@
-{% extends "layout.html" %}
-{% block title %}Your Cart{% endblock %}
-{% block body_content %}
-<h2>Your Cart</h2>
-{% if products %}
-<table class="table">
-  <tr>
-    <th>Product</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Image</th>
-    <th>Total</th>
-  </tr>
-  {% for product in products %}
-  <tr>
-    <td>{{ product.productname }}</td>
-    <td>{{ product.quantity }}</td>
-    <td>£{{ product.productprice }}</td>
-     <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px">{{ product.productimage }}</td>
-    <td><a href="{{ url_for('remove_from_cart', product_id=product.productid) }}" class="btn btn-danger btn-sm">
-  Remove Items
-</a></td>
-    <td>£{{ product.total }}</td>
-  </tr>
-  {% endfor %}
-</table>
+  {% extends "layout.html" %}
+  {% block title %}Your Cart{% endblock %}
+  {% block body_content %}
+  <h2>Your Cart</h2>
 
-<p><strong>Total: £{{ total }}</strong></p>
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
+  {% if products or experiences %}
+
+  {% if products %}
+  <table class="table">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Total</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.productname }}</td>
+      <td>{{ product.quantity }}</td>
+      <td>£{{ product.productprice }}</td>
+       <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px">{{ product.productimage }}</td>
+      <td><a href="{{ url_for('remove_from_cart',item_type='product', product_id=product.productid) }}" class="btn btn-danger btn-sm">
+    Remove Items
+  </a></td>
+      <td>£{{ product.total }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
 
 
-{% endblock %}
+  {% if experiences %}
+  <table class="table">
+    <tr>
+      <th>Experience</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Date Reserved</th>
+      <th>Total</th>
+    </tr>
+    {% for experience in experiences %}
+    <tr>
+      <td>{{ experience.experiencename }}</td>
+      <td>{{ experience.quantity }}</td>
+      <td>£{{ experience.experienceprice }}</td>
+       <td> <img  src="{{url_for('static', filename='images/' + experience.experienceimage)}}" height="100px" width="100px">{{ experience.experienceimage }}</td>
+      <td>{{ experience.experiencedate }}</td>
+      <td><a href="{{ url_for('remove_from_cart',item_type='experience', experience_id=experience.experienceid) }}" class="btn btn-danger btn-sm">
+    Remove Items
+  </a></td>
+      <td>£{{ experience.total }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  <p><strong>Total: £{{ total }}</strong></p>
+
+  {% else %}
+  <p>Your cart is empty.</p>
+  {% endif %}
+
+
+  {% endblock %}

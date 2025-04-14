@@ -99,13 +99,13 @@ def get_experience():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ExperienceName, ExperiencePrice, ExperienceImage from Experiences" # selecting the first name...
+    sql = "Select ExperienceID, ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences" # selecting the first name...
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     experience_list = []
     for experience in result_set:
-        experience_list.append({'experiencename': experience[0], 'experienceprice': experience[1], 'experienceimage': experience[2]})
+        experience_list.append({'experienceid': experience[0],'experiencename': experience[1], 'experienceprice': experience[2], 'experienceimage': experience[3], 'datereserved' :experience[4]})
         print(experience_list)
     return experience_list
 
