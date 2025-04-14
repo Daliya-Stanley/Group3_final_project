@@ -291,22 +291,20 @@ def add_to_cart_experience(experience_id):
 #
 #     return redirect(url_for('view_cart'))
 
-
 @app.route('/remove_from_cart/<item_type>/<int:item_id>')
 def remove_from_cart(item_type, item_id):
-    cart = session.get('cart', {})
+    cart = session.get('cart', {'products': {}, 'experiences': {}})
 
-    if item_type == 'product':
-        item_key = f"product:{item_id}"
-    elif item_type == 'experience':
-        item_key = f"experience:{item_id}"
-    else:
+    # Convert item_id to string to match the cart key format
+    item_id_str = str(item_id)
+
+    if item_type not in cart:
         flash('Invalid item type', 'danger')
         return redirect(url_for('view_cart'))
 
-    if item_key in cart:
-        del cart[item_key]  # Remove the item from the cart
-        session['cart'] = cart  # Update the session cart
+    if item_id_str in cart[item_type]:
+        del cart[item_type][item_id_str]
+        session['cart'] = cart
         flash(f'{item_type.capitalize()} removed from cart!', 'info')
     else:
         flash(f'{item_type.capitalize()} not found in the cart.', 'warning')

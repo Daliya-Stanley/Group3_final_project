@@ -20,7 +20,7 @@
       <td>{{ product.quantity }}</td>
       <td>£{{ product.productprice }}</td>
        <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px">{{ product.productimage }}</td>
-      <td><a href="{{ url_for('remove_from_cart',item_type='product', product_id=product.productid) }}" class="btn btn-danger btn-sm">
+      <td><a href="{{ url_for('remove_from_cart',item_type='products', item_id=product.productid) }}" class="btn btn-danger btn-sm">
     Remove Items
   </a></td>
       <td>£{{ product.total }}</td>
@@ -47,7 +47,7 @@
       <td>£{{ experience.experienceprice }}</td>
        <td> <img  src="{{url_for('static', filename='images/' + experience.experienceimage)}}" height="100px" width="100px">{{ experience.experienceimage }}</td>
       <td>{{ experience.experiencedate }}</td>
-      <td><a href="{{ url_for('remove_from_cart',item_type='experience', experience_id=experience.experienceid) }}" class="btn btn-danger btn-sm">
+      <td><a href="{{ url_for('remove_from_cart',item_type='experiences', item_id=experience.experienceid) }}" class="btn btn-danger btn-sm">
     Remove Items
   </a></td>
       <td>£{{ experience.total }}</td>
