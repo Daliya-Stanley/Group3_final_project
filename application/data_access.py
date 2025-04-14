@@ -57,7 +57,7 @@ def register_person(fname, lname, email, password):
         cursor.execute(sql_insert_user, val)
         conn.commit()
 
-        return {"success": True, "message": "User registered successfully"}
+        return {"success": True, "message": "User registered successfully", "email" : email}
 
     except Exception as e:
         return {"success": False, "message": f"Unexpected error: {str(e)}"}

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, request, redirect,jsonify, flash,session
+from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from mysql.connector import cursor
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
@@ -41,13 +41,19 @@ def rock_paper_scissors():
       return render_template('rock_paper_scissors.html')
 
 
-@app.route('/play', methods=['POST'])
+@app.route('/rock_paper_scissors', methods=['POST'])
 def play():
-    player_choice = request.form['choice']
+    player_choice = request.form['user_choice']
     choices = ["rock", "paper", "scissors"]
     computer_choice = random.choice(choices)
     result = determine_winner(player_choice, computer_choice)
-    return jsonify({'computer_choice': computer_choice, 'result': result})
+    return render_template('rock_paper_scissors.html', title_head='Rock Paper Scissors',
+                           title_body='Rock Paper Scissors!!',
+                           subtitle='★ Rock Paper Scissors ★',
+                           computer_choice=computer_choice,
+                           result=result)
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -64,7 +70,13 @@ def register():
 
         if result["success"]:
             flash(result["message"], "success")
-            return redirect(url_for('welcome'))
+
+            session['user_email'] = result["email"]
+
+            session.permanent = True  # Make the session persistent
+            app.permanent_session_lifetime = timedelta(days=30)
+
+            return redirect(url_for('rock_paper_scissors'))
         else:
             error = result["message"]
 
@@ -101,7 +113,7 @@ def login():
                 app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(next_page or url_for('home_page'))
+            return redirect(url_for('rock_paper_scissors'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -109,8 +121,7 @@ def login():
     return render_template('login.html',
                            form=login_form,
                            message=error,
-                           title_head='Login',
-                           next=next_page)
+                           title_head='Login')
 
 @app.route('/logout')
 def logout():
@@ -143,7 +154,9 @@ def game():
 
 
 
-
+@app.route('/mulan')
+def mulan_page():
+      return render_template('mulan.html')
 
 
 
