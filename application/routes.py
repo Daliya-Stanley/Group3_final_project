@@ -9,7 +9,19 @@ from datetime import timedelta
 app.permanent_session_lifetime = timedelta(days=30)
 
 import random
+if sys.platform == "win32":
+    mysql_password = "password"
+else:
+    mysql_password = ""
 
+def get_db_connection():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password=mysql_password,
+        database="login"
+    )
+    return mydb
 
 @app.route('/')
 @app.route('/home')
@@ -181,8 +193,46 @@ def experience_page():
     return render_template('experience.html', title_head='Magical Experience', title_body='Our Splendid Magical Experience', subtitle='★ What once was in your dreams in now coming true★', img="static/images/Experience_background.jpeg", experiences = experience_list)
 
 
+@app.route('/add_to_cart/<int:product_id>')
+def add_to_cart(product_id):
+    if 'cart' not in session:
+        session['cart'] ={}
+    cart = session['cart']
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += 1
+    else:
+        cart[str(product_id)] = 1
+
+    session['cart']= cart
+    print("Cart after adding", session['cart'])
+    flash("🪄 Product added to cart! Continue shopping or go to view your cart! ", "success")
+    return redirect(url_for('product_page'))
 
 
+@app.route('/cart')
+def view_cart():
+    cart = session.get("cart", {})
+    products_in_cart = []
+
+    if not cart:
+        return render_template('cart.html',products= [], total=0)
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    total_price = 0
+    for product_id, quantity in cart.items():
+        cursor.execute("Select ProductName, ProductPrice, ProductImage from Product Where ProductID =  %s",(product_id,))
+        product=cursor.fetchone()
+        if product:
+            name, price,image = product
+            total = quantity * price
+            total_price += total
+
+            products_in_cart.append({'productid': product_id, 'productname': name, 'productprice': price,'productimage': image, 'quantity': quantity, 'total': total})
+    print("Cart session:", session.get('cart'))
+    return render_template ('cart.html', products=products_in_cart, total= total_price)
 
 @app.route('/product_sale')
 def product_sale():
@@ -190,6 +240,8 @@ def product_sale():
         user_email= session['user_email']
         return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
     return render_template('product_sale.html', user_email=False, title='Login Area')
+
+
 
 
 
