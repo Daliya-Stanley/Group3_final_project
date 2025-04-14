@@ -21,7 +21,21 @@ def home_page():
 
 @app.route('/wheel_of_fortune')
 def wheel_of_fortune_game():
-    return render_template('wheel_of_fortune.html')
+    user_email= session.get('user_email')
+    first_name = "Traveller"
+    if user_email:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT FirstName FROM User WHERE Email = %s", (user_email,))
+        result = cursor.fetchone()
+        if result:
+            first_name = result[0].capitalize()
+
+        cursor.close()
+        conn.close()
+
+    return render_template('wheel_of_fortune.html', first_name=first_name)
+
 
 
 
@@ -132,6 +146,27 @@ def welcome():
 def game():
     return render_template('game.html')
 
+@app.route('/wheel')
+def wheel():
+    user_id = session.get('user_id')  # Assuming you store user_id at login
+    first_name = "Traveller"
+
+    if user_id:
+        conn = mysql.connector.connect(
+            host='localhost',
+            user='your_user',
+            password='your_pass',
+            database='your_db'
+        )
+        cursor = conn.cursor()
+        cursor.execute("SELECT first_name FROM users WHERE id = %s", (user_id,))
+        result = cursor.fetchone()
+        if result:
+            first_name = result[0]
+        cursor.close()
+        conn.close()
+
+    return render_template('wheel.html', first_name=first_name)
 
 
 
