@@ -75,7 +75,7 @@ def register():
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
 
-            return redirect(url_for('welcome'))
+            return redirect(url_for('rock_paper_scissors'))
         else:
             error = result["message"]
 
