@@ -51,7 +51,21 @@ def determine_winner(player_choice, computer_choice):
 
 @app.route('/rock_paper_scissors')
 def rock_paper_scissors():
-      return render_template('rock_paper_scissors.html')
+    user_email = session.get('user_email')
+    first_name = "Adventurer"
+    if user_email:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT FirstName FROM User WHERE Email = %s", (user_email,))
+        result = cursor.fetchone()
+        if result:
+            first_name = result[0].capitalize()
+
+        cursor.close()
+        conn.close()
+
+    return render_template('rock_paper_scissors.html', first_name=first_name)
+
 
 
 @app.route('/rock_paper_scissors', methods=['POST'])
@@ -185,7 +199,7 @@ def wheel():
 
 @app.route('/mulan')
 def mulan_page():
-      return render_template('mulan.html')
+      return render_template('mulan.html', title_head="mulan's World", title_body="Whispers of Mulan's World.", subtitle='★ Enjoy a mystical retreat where destiny, beauty, and bravery meet ★')
 
 
 
