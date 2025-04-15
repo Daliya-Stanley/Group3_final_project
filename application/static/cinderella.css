@@ -1,11 +1,45 @@
-body {
-    font-family: 'Garamond', serif; /* Elegant serif font for a fairy tale feel */
-    margin: 0;
-    padding: 0;
-    background: #f9f6e7; /* Light, soft background */
-    color: #333; /* Dark text for readability */
+/* cinderella.css */
+
+/* Top Section Styles */
+.top-section {
+    background-image: url('{{ img }}');
+    height: 100vh;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    position: relative;
 }
 
+/* Header Image Styles */
+.header-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* About Section Image Styles */
+.about-image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* General Body Styles */
+body {
+    font-family: 'sans-serif', serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f6e7;
+    color: #333;
+}
+
+/* Card Styles */
 .card {
     margin: 20px;
     border: none;
@@ -24,16 +58,21 @@ body {
 
 .card-title {
     font-size: 1.5em;
-    color: #6b5bff; /* Deep purple for titles */
+    color: #6b5bff;
 }
 
 .card-text {
     font-size: 1.2em;
-    color: #4b4b4b; /* Dark gray for text */
+    color: #4b4b4b;
 }
 
-/* Responsive styles */
+/* Responsive Styles */
 @media (max-width: 768px) {
+    .header-image,
+    .about-image {
+        max-height: 200px;
+    }
+
     .card {
         margin-bottom: 20px;
     }
