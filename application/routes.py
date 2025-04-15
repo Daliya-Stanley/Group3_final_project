@@ -1,5 +1,4 @@
 from flask import render_template, url_for, request, redirect,jsonify, flash, session
-from mysql.connector import cursor
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
 from application.data_access import *
@@ -34,51 +33,31 @@ def home_page():
 
 @app.route('/wheel_of_fortune')
 def wheel_of_fortune_game():
-    user_email= session.get('user_email')
-    first_name = "Traveller"
-    if user_email:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT FirstName FROM User WHERE Email = %s", (user_email,))
-        result = cursor.fetchone()
-        if result:
-            first_name = result[0].capitalize()
-
-        cursor.close()
-        conn.close()
-
+    user_email = session.get('user_email')
+    first_name = get_first_name_by_email(user_email) if user_email else "Traveller"
     return render_template('wheel_of_fortune.html', first_name=first_name)
 
-
-
+@app.route('/wheel')
+def wheel():
+    user_id = session.get('user_id')
+    first_name = get_first_name_by_id(user_id) if user_id else "Traveller"
+    return render_template('wheel.html', first_name=first_name)
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:
-        return "Draw!"
+        return "Draw"
     elif (player_choice == "rock" and computer_choice == "scissors") or \
          (player_choice == "paper" and computer_choice == "rock") or \
          (player_choice == "scissors" and computer_choice == "paper"):
         return "You win!"
     else:
         return "Computer wins!"
-    
+
 @app.route('/rock_paper_scissors')
 def rock_paper_scissors():
     user_email = session.get('user_email')
-    first_name = "Adventurer"
-    if user_email:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT FirstName FROM User WHERE Email = %s", (user_email,))
-        result = cursor.fetchone()
-        if result:
-            first_name = result[0].capitalize()
-
-        cursor.close()
-        conn.close()
-
+    first_name = get_first_name_by_email(user_email) if user_email else "Adventurer"
     return render_template('rock_paper_scissors.html', first_name=first_name)
-
 
 
 @app.route('/rock_paper_scissors', methods=['POST'])
@@ -91,7 +70,6 @@ def play():
                            title_body='Rock Paper Scissors!!',
                            subtitle='★ Rock Paper Scissors ★',
                            computer_choice=computer_choice,
-                           user_choice=player_choice,
                            result=result)
 
 
@@ -171,54 +149,9 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/welcome', methods=['GET', 'POST'])
-def welcome():
-    return render_template('welcome.html')
-
-@app.route('/game', methods=['GET', 'POST'])
-def game():
-    return render_template('game.html')
-
-@app.route('/wheel')
-def wheel():
-    user_id = session.get('user_id')  # Assuming you store user_id at login
-    first_name = "Traveller"
-
-    if user_id:
-        conn = mysql.connector.connect(
-            host='localhost',
-            user='your_user',
-            password='your_pass',
-            database='your_db'
-        )
-        cursor = conn.cursor()
-        cursor.execute("SELECT first_name FROM users WHERE id = %s", (user_id,))
-        result = cursor.fetchone()
-        if result:
-            first_name = result[0]
-        cursor.close()
-        conn.close()
-
-    return render_template('wheel.html', first_name=first_name)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/mulan')
 def mulan_page():
-      return render_template('mulan.html', title_head="mulan's World", title_body="Whispers of Mulan's World.", subtitle='★ Enjoy a mystical retreat where destiny, beauty, and bravery meet ★')
+      return render_template('mulan.html')
 
 
 
@@ -240,10 +173,6 @@ def mulan_page():
 @app.route('/Arendelle')
 def frozen_page():
     return render_template('frozen_fantasia.html', title_head='Arandelle holidays', title_body='The Frozen Magical Land of Arandelle!!', subtitle='★ Come and explore the known and unknown magical powers of Arandelle★', img="static/images/frozen_main.jpeg")
-
-# @app.route('/Experience')
-# def experience_page():
-#     return render_template('experience.html', title_head='Magical Experience', title_body='Do what you always wished for!', subtitle='★ What once was in your dreams in now coming true★', img="static/images/Experience_background.jpeg")
 
 @app.route('/Product')
 def product_page():
@@ -346,23 +275,13 @@ def add_to_cart_experience(experience_id):
     else:
         exp_cart[str(experience_id)] = 1
 
-    session['cart']['experiences']= exp_cart
-    print("Cart after adding", session['cart'])
+    session['cart']['experiences'] = exp_cart
 
-    experience_id = request.form['experience_id']
     booking_date = request.form['booking_date']
     booking_time = request.form['booking_time']
+    insert_experience_booking(experience_id, booking_date, booking_time)
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO BookingExperience ( ExperienceID, BookingDate, BookingTime)
-        VALUES (%s, %s, %s)
-    """, ( experience_id, booking_date, booking_time))
-    conn.commit()
-    flash("Booking successful!🪄 Magical Experience added to cart! Continue shopping or go to view your cart! ",
-          "success")
-
+    flash("Booking successful! Magical Experience added to cart! Continue shopping or go to view your cart!", "success")
     return redirect(url_for('experience_page'))
 
 @app.route('/remove_from_cart_experience/<int:experience_id>')
@@ -391,19 +310,10 @@ def remove_from_cart(item_type, item_id):
         del cart[item_type][item_id_str]
         session['cart'] = cart
         flash(f'{item_type.capitalize()} removed from cart!', 'info')
+
         if item_type == 'experiences':
             try:
-                conn = get_db_connection()
-                cursor = conn.cursor()
-                cursor.execute("""
-                            DELETE FROM BookingExperience
-                            WHERE ExperienceID = %s
-                            ORDER BY BookingID DESC
-                            LIMIT 1
-                        """, (item_id,))
-                conn.commit()
-                cursor.close()
-                conn.close()
+                delete_latest_booking(item_id)
             except Exception as e:
                 flash(f'Error deleting booking: {e}', 'danger')
     else:
