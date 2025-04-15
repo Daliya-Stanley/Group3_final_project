@@ -30,6 +30,7 @@
             background-size: cover;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            font-family: 'Pattaya', sans-serif;
             color: white;">
 
         <div class="container pt-5" >
@@ -58,7 +59,7 @@
 <section id ="product">
 <br>
   <br>
-<h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Products!!!</h4>
+<h2 style="text-align:center">Enchanted Holidays Presents Magical Products!!!</h2>
 <br>
   <div id = "product-carousel-container">
   <div id="customer-feedback" class="carousel slide">
@@ -116,26 +117,33 @@
   </button>
 </div>
 
+<section>
+  <br>
+  <br>
+  <h2 style="text-align:center">Choose one of our mesmerizing products or all of them 😉!!!</h2>
+  <br>
+  <br>
+{% for product in products %}
+  {% if loop.index0 % 3 == 0 %}
+    <div class="row g-4 justify-content-center mb-5">
+  {% endif %}
 
- {% for product in products %}
-
-  <!-- First Row: 3 Cards -->
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/' + product.productimage)}} " alt="{{product.productname}}">
-        <div class="card-body">
-          <h5 class="card-title">{{product.productname}}</h5>
-          <p class = "card-text">£{{product.productprice}}</p>
-          <a href="{{ url_for('add_to_cart', product_id=product.productid) }}" class="btn btn-primary"> <i class="fas fa-trash"></i>Buy</a>
-        </div>
+  <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="{{ url_for('static', filename='images/' + product.productimage) }}" alt="{{ product.productname }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.productname }}</h5>
+        <p class="card-text">£{{ product.productprice }}</p>
+        <a href="{{ url_for('add_to_cart', product_id=product.productid) }}" class="btn btn-primary">Buy</a>
       </div>
     </div>
   </div>
-    <br>
-    <br>
 
-     {% endfor %}
+  {% if loop.index % 3 == 0 or loop.last %}
+    </div>
+  {% endif %}
+{% endfor %}
+
 <!--&lt;!&ndash;    <div class="col-md-4 d-flex justify-content-center">&ndash;&gt;-->
 <!--&lt;!&ndash;      <div class="card" style="width: 18rem;">&ndash;&gt;-->
 <!--&lt;!&ndash;        <img class="card-img-top" src="{{url_for('static', filename='images/magical_wand.jpeg') }}" alt="Magic Wand">&ndash;&gt;-->
