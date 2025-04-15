@@ -108,7 +108,3 @@ def get_experience():
         experience_list.append({'experienceid': experience[0],'experiencename': experience[1], 'experienceprice': experience[2], 'experienceimage': experience[3], 'datereserved' :experience[4]})
         print(experience_list)
     return experience_list
-
-
-
-

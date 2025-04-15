@@ -12,18 +12,19 @@
       <th>Quantity</th>
       <th>Price</th>
       <th>Image</th>
+      <th></th>
       <th>Total</th>
     </tr>
     {% for product in products %}
     <tr>
       <td>{{ product.productname }}</td>
       <td>{{ product.quantity }}</td>
-      <td>£{{ product.productprice }}</td>
-       <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px">{{ product.productimage }}</td>
+      <td>£{{ product.total }}</td>
+       <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px"></td>
+      <td></td>
       <td><a href="{{ url_for('remove_from_cart',item_type='products', item_id=product.productid) }}" class="btn btn-danger btn-sm">
     Remove Items
   </a></td>
-      <td>£{{ product.total }}</td>
     </tr>
     {% endfor %}
   </table>
@@ -44,13 +45,12 @@
     <tr>
       <td>{{ experience.experiencename }}</td>
       <td>{{ experience.quantity }}</td>
-      <td>£{{ experience.experienceprice }}</td>
-       <td> <img  src="{{url_for('static', filename='images/' + experience.experienceimage)}}" height="100px" width="100px">{{ experience.experienceimage }}</td>
-      <td>{{ experience.experiencedate }}</td>
+      <td>£{{ experience.total}}</td>
+       <td> <img  src="{{url_for('static', filename='images/' + experience.experienceimage)}}" height="100px" width="100px"></td>
+      <td>{{ experience.datereserved}}</td>
       <td><a href="{{ url_for('remove_from_cart',item_type='experiences', item_id=experience.experienceid) }}" class="btn btn-danger btn-sm">
     Remove Items
   </a></td>
-      <td>£{{ experience.total }}</td>
     </tr>
     {% endfor %}
   </table>
