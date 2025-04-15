@@ -263,20 +263,28 @@ def view_cart():
 
 
     for experience_id,quantity in cart ['experiences'].items():
-        cursor.execute("Select ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences where ExperienceID = %s", (experience_id,))
+        cursor.execute("""SELECT
+            e.ExperienceName,
+            e.ExperiencePrice,
+            e.ExperienceImage,
+            b.BookingDate
+        FROM BookingExperience as b
+        INNER JOIN Experiences e ON b.ExperienceID = e.ExperienceID
+        WHERE b.ExperienceID = %s""", (experience_id,))
         experience =cursor.fetchone()
         if experience:
             name, price, image, date = experience
+            print(experience)
             total = quantity * price
             total_price += total
 
             experiences_in_cart.append(
-                {'experienceid': experience_id, 'experiencename': name, 'experienceprice': price, 'experienceimage': image, 'date':date,
+                {'experienceid': experience_id, 'experiencename': name, 'experienceprice': price, 'experienceimage': image, 'datereserved':date,
                 'quantity': quantity, 'total': total})
     conn.close()
     return render_template ('cart.html', products=products_in_cart, experiences= experiences_in_cart, total= total_price)
 
-@app.route('/add_to_cart_experience/<int:experience_id>')
+@app.route('/add_to_cart_experience/<int:experience_id>', methods=['POST'])
 def add_to_cart_experience(experience_id):
     if 'cart' not in session:
         session['cart'] = {'products': {}, 'experiences': {}}
@@ -290,7 +298,21 @@ def add_to_cart_experience(experience_id):
 
     session['cart']['experiences']= exp_cart
     print("Cart after adding", session['cart'])
-    flash("🪄 Magical Experience added to cart! Continue shopping or go to view your cart! ", "success")
+
+    experience_id = request.form['experience_id']
+    booking_date = request.form['booking_date']
+    booking_time = request.form['booking_time']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO BookingExperience ( ExperienceID, BookingDate, BookingTime)
+        VALUES (%s, %s, %s)
+    """, ( experience_id, booking_date, booking_time))
+    conn.commit()
+    flash("Booking successful!🪄 Magical Experience added to cart! Continue shopping or go to view your cart! ",
+          "success")
+
     return redirect(url_for('experience_page'))
 
 @app.route('/remove_from_cart_experience/<int:experience_id>')
@@ -319,6 +341,21 @@ def remove_from_cart(item_type, item_id):
         del cart[item_type][item_id_str]
         session['cart'] = cart
         flash(f'{item_type.capitalize()} removed from cart!', 'info')
+        if item_type == 'experiences':
+            try:
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute("""
+                            DELETE FROM BookingExperience
+                            WHERE ExperienceID = %s
+                            ORDER BY BookingID DESC
+                            LIMIT 1
+                        """, (item_id,))
+                conn.commit()
+                cursor.close()
+                conn.close()
+            except Exception as e:
+                flash(f'Error deleting booking: {e}', 'danger')
     else:
         flash(f'{item_type.capitalize()} not found in the cart.', 'warning')
 
