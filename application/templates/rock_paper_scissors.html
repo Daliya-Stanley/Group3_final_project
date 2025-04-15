@@ -25,9 +25,9 @@
     <p>
       <select id="user_choice" name="user_choice" required>
         <option value="">--Select--</option>
-        <option value="R">Rock</option>
-        <option value="P">Paper</option>
-        <option value="S">Scissors</option>
+        <option value="rock">Rock</option>
+        <option value="paper">Paper</option>
+        <option value="scissors">Scissors</option>
       </select>
     </p>
 
@@ -38,7 +38,8 @@
         <div id="result" class="result"></div>
         {% if computer_choice %}
     <h5>Computer's Choice: {{ computer_choice }}</h5>
-    <h5>{{ result }}</h5>
+    <h5>Your Choice: {{ user_choice }}</h5>
+    <h5>{{ result }} and your journey's just beginning... ✨<br><br>Explore our dreamy destinations, enchanting products, and unforgettable magical experiences!"</h5>
 {% endif %}
 
 

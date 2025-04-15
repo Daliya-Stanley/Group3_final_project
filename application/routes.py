@@ -41,14 +41,14 @@ def wheel_of_fortune_game():
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:
-        return "Draw"
+        return "Draw!"
     elif (player_choice == "rock" and computer_choice == "scissors") or \
          (player_choice == "paper" and computer_choice == "rock") or \
          (player_choice == "scissors" and computer_choice == "paper"):
         return "You win!"
     else:
         return "Computer wins!"
-
+    
 @app.route('/rock_paper_scissors')
 def rock_paper_scissors():
     user_email = session.get('user_email')
@@ -78,6 +78,7 @@ def play():
                            title_body='Rock Paper Scissors!!',
                            subtitle='★ Rock Paper Scissors ★',
                            computer_choice=computer_choice,
+                           user_choice=player_choice,
                            result=result)
 
 
