@@ -395,3 +395,5 @@ def wonderland():
 def aquariel():
     return render_template('aquariel.html', title_head='Aquariel', title_body='Aquariel', subtitle='Where tides whisper secrets beneath the sea foam')
 
+
+
