@@ -581,6 +581,27 @@ h2 {
   }
 
 
+@keyframes fadeInToast {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.toast {
+  animation: fadeInToast 1s ease-in-out;
+  border-radius: 10px; /* So the toast looks a little softer */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow for a subtle lift effect */
+}
+
+.toast-container {
+  z-index: 1050; /* Ensures it appears on top */
+}
+
 
 
 .container {

@@ -21,13 +21,13 @@ def get_products():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ProductName, ProductPrice, ProductImage from Product" # selecting the first name...
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product" # selecting the first name...
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     product_list = []
     for product in result_set:
-        product_list.append({'productname': product[0], 'productprice': product[1], 'productimage': product[2]})
+        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2], 'productimage': product[3]})
     # print(product_list)
     return product_list
 
@@ -99,14 +99,16 @@ def get_experience():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ExperienceName, ExperiencePrice, ExperienceImage from Experiences" # selecting the first name...
+    sql = "Select ExperienceID, ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences" # selecting the first name...
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     experience_list = []
     for experience in result_set:
-        experience_list.append({'experiencename': experience[0], 'experienceprice': experience[1], 'experienceimage': experience[2]})
+        experience_list.append({'experienceid': experience[0],'experiencename': experience[1], 'experienceprice': experience[2], 'experienceimage': experience[3], 'datereserved' :experience[4]})
         print(experience_list)
     return experience_list
+
+
 
 
