@@ -387,4 +387,4 @@ def aquariel():
 
 @app.route('/book_destination')
 def book_destination():
-    return render_template('book_magical_destination2.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
+    return render_template('book_magical_destination.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
