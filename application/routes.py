@@ -129,7 +129,6 @@ def login():
 
             if remember:
                 session.permanent = True  # Make the session persistent
-                app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
             return redirect(url_for('rock_paper_scissors'))
@@ -382,8 +381,12 @@ def cinderella_kingdom():
     )
 
 
-
-
+#context processor is used to inject the cart_count variable into the context of every template rendered by the application
+@app.context_processor
+def cart_item_count():
+    cart = session.get('cart', {'products': {}, 'experiences': {}})
+    count = sum(cart['products'].values()) + sum(cart['experiences'].values())
+    return dict(cart_count=count)
 
 
 
