@@ -117,7 +117,7 @@ def register():
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
 
-            return redirect(url_for('rock_paper_scissors'))
+            return redirect(url_for('home_page'))
         else:
             error = result["message"]
 
@@ -154,7 +154,7 @@ def login():
                 app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('rock_paper_scissors'))
+            return redirect(url_for('home_page'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -181,7 +181,7 @@ def game():
 
 @app.route('/wheel')
 def wheel():
-    user_id = session.get('user_id')  # Assuming you store user_id at login
+    user_id = session.get('user_id')
     first_name = "Traveller"
 
     if user_id:
