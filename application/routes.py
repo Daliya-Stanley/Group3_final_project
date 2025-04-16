@@ -385,3 +385,6 @@ def wonderland():
 def aquariel():
     return render_template('aquariel.html', title_head='Aquariel', title_body='Aquariel', subtitle='Where tides whisper secrets beneath the sea foam')
 
+@app.route('/book_destination')
+def book_destination():
+    return render_template('book_magical_destination.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
