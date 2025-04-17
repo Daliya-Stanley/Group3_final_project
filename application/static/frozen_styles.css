@@ -250,7 +250,8 @@ background-image: url("/static/images/Experience_background.")
 }
 
 #components {
-  margin-top: 50vh;  /* Starts the next section right after the video section */
+  margin-top: 50vh;
+
 }
 .offer{
 background-color:red;
