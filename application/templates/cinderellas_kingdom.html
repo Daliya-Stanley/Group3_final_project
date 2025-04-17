@@ -28,17 +28,19 @@
       </section>
 
 <!-- Welcome Header -->
+<section class ="bottom-section">
 <header class="text-center py-5">
     <div>
         <h1>Welcome to Cinderella's Kingdom</h1>
-        <p>Experience the magic of a fairy tale world where your wish becomes a reality!</p>
-        <p>Cinderella's Kingdom offers enchanting experiences for visitors of all ages. From magical ballrooms to charming gardens, your holiday here will be nothing short of spectacular</p>
+        <p> Enter a magical realm where dreams sparkle and fairy tales come alive! Experience grand ballrooms and enchanting gardens on your holiday in this wondrous kingdom!</p>
     </div>
 </header>
 
+
 <!-- Activities Section -->
+
 <section class="activities text-center py-5">
-    <h2>Fun Things To Do</h2>
+    <h2>Whimsical Adventures That Await You</h2>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <!-- Card for Grand Ball -->
@@ -83,15 +85,56 @@
     </div>
 </section>
 
-<!-- Plan Your Visit Section -->
-<section class="plan-visit text-center py-5">
-    <h2>Plan Your Visit</h2>
-    <p>Visit Cinderella's Kingdom and embrace the fairy tale life. Book your holiday now for an unforgettable experience that you and your family will cherish forever!</p>
+<section class="activities text-center py-5">
+    <h2>Enchanting Wonders to Behold</h2>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Card for Cinderella's Carriage -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/carriage3.jpg') }}"
+                         class="card-img-top"
+                         alt="Beautiful Carriage">
+                    <div class="card-body">
+                        <h5 class="card-title">The Original Cinderella Carriage</h5>
+                        <p class="card-text">Shimmering chariot woven from moonlight and magic, where dreams take flight. Cinderella rode on this to meet her Prince Charming beneath a canopy of starlit skies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Glass Slipper -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/glass_slippers.jpg') }}"
+                         class="card-img-top"
+                         alt="Beautiful Glass Slippers">
+                    <div class="card-body">
+                        <h5 class="card-title">The Glass Slippers</h5>
+                        <p class="card-text">Race against time with these exquisite glass slippers, shimmering with a magic all their own. Close your eyes and let your imagination transport you, for in them lies a fairy tale waiting to be awakened!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Cinderella's Dress -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/magic_dress.jpg') }}"
+                         class="card-img-top"
+                         alt="Cinderella's Dress on display">
+                    <div class="card-body">
+                        <h5 class="card-title">Magical Mystery Dress</h5>
+                        <p class="card-text">Adorned with sparkling gems and woven from twinkling fairy dust, this enchanting dress transformed a humble girl into a radiant Princess. It invites you to gaze upon its splendor and dream of the magic it once bestowed!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </section>
 
-<!-- Footer -->
-<footer class="text-center bg-purple text-white py-3">
-    <p>✨ Enchanting getaways for dreamers of all ages ✨</p>
-</footer>
+<!-- Plan Your Visit Section -->
+<section class="plan-visit text-center py-5">
+    <h4>✨Book your holiday now for an unforgettable experience that you and your family will cherish forever!✨</h4>
+</section>
 
 {% endblock %}
