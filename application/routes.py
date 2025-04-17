@@ -66,13 +66,7 @@ def play():
     choices = ["rock", "paper", "scissors"]
     computer_choice = random.choice(choices)
     result = determine_winner(player_choice, computer_choice)
-    return render_template('rock_paper_scissors.html', title_head='Rock Paper Scissors',
-                           title_body='Rock Paper Scissors!!',
-                           subtitle='★ Rock Paper Scissors ★',
-                           computer_choice=computer_choice,
-                           result=result)
-
-
+    return jsonify({'computer_choice': computer_choice, 'result': result})
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -139,7 +133,8 @@ def login():
     return render_template('login.html',
                            form=login_form,
                            message=error,
-                           title_head='Login')
+                           title_head='Login',
+                           next=next_page)
 
 @app.route('/logout')
 def logout():
@@ -252,7 +247,6 @@ def view_cart():
         experience =cursor.fetchone()
         if experience:
             name, price, image, date = experience
-            print(experience)
             total = quantity * price
             total_price += total
 
@@ -398,5 +392,8 @@ def wonderland():
 def aquariel():
     return render_template('aquariel.html', title_head='Aquariel', title_body='Aquariel', subtitle='Where tides whisper secrets beneath the sea foam')
 
+@app.route('/book_destination')
+def book_destination():
+    return render_template('book_magical_destination.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
 
 

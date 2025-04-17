@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title_head}}</title>
+    <title>Enchanted Getaway | {% block title%} {% endblock%}</title>
+    <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'styles.css') }}">
      <link rel="stylesheet" href="{{ url_for('static', filename= 'frozen_styles.css') }}">
@@ -31,6 +32,7 @@
 
   </div>
 </div>
+  <audio id="toast-sound" src="{{ url_for('static', filename='sounds/ding.mp3') }}" preload="auto"></audio>
 
 
 <nav class="navbar navbar-expand-lg align-items-end sticky-top">
@@ -47,6 +49,7 @@
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{url_for('home_page')}}">Home</a>
       </li>
+
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,8 +69,8 @@
           {% if request.path != '/aquariel 3'%}
           <li><a class="dropdown-item" href="aquariel">Aquariel</a></li>
           {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Destination 3</a></li>
-          {% endif %}
+          <li><a href="#" class="dropdown-item nav-link disabled">Aquariel</a></li>
+           {% endif %}
           {% if request.path != '/Arendelle'%}
           <li><a class="dropdown-item" href="Arendelle">Magical Land of Arandelle</a></li>
           {% else %}
@@ -78,8 +81,17 @@
           {% else %}
           <li><a href="#" class="dropdown-item nav-link disabled">Mulan's World</a></li>
           {% endif %}
-        </ul>
       </li>
+        <li><a href="#"  class = "drop-item nav-link disabled">Destination 5</a></li>
+             {% endif %}
+             <li><hr class="dropdown-divider"></li>
+            {% if request.path != '/book_destination'%}
+            <li><a class="dropdown-item" href="book_destination">Book Magical Destination</a></li>
+          {% else %}
+          <li><a href="#"  class = "drop-item nav-link disabled">Book Magical Destination</a></li>
+          {% endif %}
+        </ul>
+
 
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{url_for('product_page')}}">Our Magical Products</a>
@@ -96,10 +108,13 @@
       <li class="nav-item">
         <a class="nav-link" href="#">About Us</a>
       </li>
-
-<!--      <li class="nav-item">-->
-<!--        <a class="nav-link active" aria-current="page" href="#">Book Here</a>-->
-<!--      </li>-->
+    </ul>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('view_cart')}}">Your Cart!</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About Us</a>
+      </li>
     </ul>
 
       <div class="ms-auto d-flex align-self-start gap-2">
