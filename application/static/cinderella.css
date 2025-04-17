@@ -1,68 +1,74 @@
-/* cinderella.css */
+/* General Styles */
+body {
+    font-family: 'Garamond', serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    color: #333;
+}
+
+h1, h2, h4 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
 /* Top Section Styles */
 .top-section {
-    background-image: url('{{ img }}');
-    height: 100vh;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
-    color: white;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
 }
 
-/* Header Image Styles */
-.header-image {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    display: block;
-    margin: 0 auto;
-    background-size: 100% 100%;
+.top-section h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* About Section Image Styles */
-.about-image {
-    background-image: url('{{img}}');
-    width: 100%;
-    height: auto;
-    margin-top: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-size: 100% 100%;
-
+.top-section h4 {
+    font-size: 1.5rem;
+    margin-top: 0;
 }
 
-/* General Body Styles */
-body {
-    font-family: 'sans-serif', serif;
-    margin: 0;
-    padding: 0;
-    background: #f9f6e7;
-    color: #333;
+/* Bottom Section & Welcome Header */
+.bottom-section {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-section p {
+    font-size: 1.2rem;
+}
+
+/* Activities Section */
+.activities {
+    background-color: #e0f7fa;
+    padding: 40px 0;
+    border-radius: 15px;
+}
+
+.activities h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 /* Card Styles */
 .card {
-    margin: 20px;
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card-img-top {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-title {
-    font-size: 1.5em;
-    color: #6b5bff;
+    border-bottom: 5px solid #ff6f61;
 }
 
 .card-text {
@@ -80,4 +86,16 @@ body {
     .card {
         margin-bottom: 20px;
     }
+}
+.plan-visit h4 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #d32f2f;
+}
+/* Plan Your Visit Section */
+.plan-visit {
+    background-color: #ffeb3b;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
