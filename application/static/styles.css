@@ -323,6 +323,7 @@ main {
 
 #components{
 background-color: #DAD9D9;
+font-family: "Pattaya", sans-serif;
 }
 #feedback{
 background-color: #DAD9D9;
@@ -361,6 +362,7 @@ height: 100vh;
     max-height: 500px;
     margin: 0 auto;
     border: 15px solid #ffffff;
+    font-family: "Pattaya", sans-serif;
 }
 #customer-feedback .carousel-inner {
     position: relative;
@@ -368,6 +370,7 @@ height: 100vh;
     max-height: 500px;
     align-items: center;
     padding-top: 100%;
+    font-family: "Pattaya", sans-serif;
 }
 #customer-feedback .carousel-item {
     position: absolute;
