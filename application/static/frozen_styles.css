@@ -121,3 +121,78 @@ background-image: url("/static/images/Experience_background.")
           {% endif %}
         </ul>
       </li>
+
+/* --------------------- Booking Page ----------------------- */
+
+#bookdestinaton .card {
+    font-family: "Pattaya", sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 8px;
+    padding: 16px;
+    text-align: center;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#bookdestinaton .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#bookdestinaton .card .container {
+    padding: 16px;
+}
+
+#bookdestinaton .card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#bookdestinaton .card .title {
+    font-size: 1rem;
+    color: #bc6ff4;
+    margin-bottom: 8px;
+}
+
+#bookdestinaton .card .button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    background-color: #bc6ff4;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px #d13e7d;
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+#bookdestinaton .card .button:hover {
+    background-color: #d264b6ff;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#message h2 {
+    font-family: 'Bagel Fat One', sans-serif;
+    letter-spacing: 0.5px;
+    word-spacing: 2px;
+    color: rgb(221, 0, 103)
+
+}
+
+@media screen and (max-width: 650px) {
+    #bookdestinaton .column {
+        width: 100%;
+        display: block;
+    }
+    #bookdestinaton .card {
+        width: 80%;
+    }
+}
