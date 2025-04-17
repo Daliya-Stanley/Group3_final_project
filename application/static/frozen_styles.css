@@ -8,6 +8,7 @@ background-color:#73C2FB;
 
 .product-mid-section{
 background-color:#E6CCFE;
+font-family: 'Pattaya', sans-serif;
 }
 
 #product {
@@ -64,12 +65,15 @@ border: 2px solid #A82993;
 
 #experience{
 background-color:#E6CCFE;
+font-family: 'Pattaya', sans-serif;
 }
 
 background-image: url("/static/images/Experience_background.")
 
 
-
+.d-inline-block align-text-top me-2{
+border-radius: 50%;
+}
 
 
 

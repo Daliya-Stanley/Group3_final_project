@@ -22,12 +22,16 @@ title {
     font-weight: 550;
     color: black;
     padding-top: 5px;
+    text-decoration: none;
+}
+
+.navbar-brand h4{
+    text-decoration: none;
 }
 
 body {
   padding-top: 0px; /* Adjust this value to match your navbar height */
 }
-
 
 main {
   padding-top: 30px;
@@ -35,7 +39,7 @@ main {
 
 .navbar-brand {
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 10px;
 }
 
@@ -561,24 +565,7 @@ h2 {
     border-bottom: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.container-fluid bg-4 text-center" {
+.container-fluid bg-4 text-center {
       background-color: red /* Charcoal */
       color: #fff;
   }
@@ -605,3 +592,15 @@ h2 {
   z-index: 1050; /* Ensures it appears on top */
 }
 
+
+
+.container {
+    background-image: url('static/images/wheel.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}

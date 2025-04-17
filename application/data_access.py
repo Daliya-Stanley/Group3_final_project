@@ -57,7 +57,7 @@ def register_person(fname, lname, email, password):
         cursor.execute(sql_insert_user, val)
         conn.commit()
 
-        return {"success": True, "message": "User registered successfully"}
+        return {"success": True, "message": "User registered successfully", "email" : email}
 
     except Exception as e:
         return {"success": False, "message": f"Unexpected error: {str(e)}"}
@@ -109,6 +109,55 @@ def get_experience():
         print(experience_list)
     return experience_list
 
+def get_first_name_by_email(email):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT FirstName FROM User WHERE Email = %s", (email,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result[0].capitalize() if result else "Traveller"
+
+def get_first_name_by_id(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT first_name FROM users WHERE id = %s", (user_id,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result[0] if result else "Traveller"
+
+def get_product_details(product_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT ProductName, ProductPrice, ProductImage FROM Product WHERE ProductID = %s", (product_id,))
+    product = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return product
 
 
+def insert_experience_booking(experience_id, booking_date, booking_time):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime)
+        VALUES (%s, %s, %s)
+    """, (experience_id, booking_date, booking_time))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def delete_latest_booking(experience_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        DELETE FROM BookingExperience
+        WHERE ExperienceID = %s
+        ORDER BY BookingID DESC
+        LIMIT 1
+    """, (experience_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
 

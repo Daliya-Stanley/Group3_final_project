@@ -1,5 +1,4 @@
-from flask import render_template, url_for, request, redirect,jsonify, flash,session
-from mysql.connector import cursor
+from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
 from application.data_access import *
@@ -34,9 +33,15 @@ def home_page():
 
 @app.route('/wheel_of_fortune')
 def wheel_of_fortune_game():
-    return render_template('wheel_of_fortune.html')
+    user_email = session.get('user_email')
+    first_name = get_first_name_by_email(user_email) if user_email else "Traveller"
+    return render_template('wheel_of_fortune.html', first_name=first_name)
 
-
+@app.route('/wheel')
+def wheel():
+    user_id = session.get('user_id')
+    first_name = get_first_name_by_id(user_id) if user_id else "Traveller"
+    return render_template('wheel.html', first_name=first_name)
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:
@@ -50,12 +55,14 @@ def determine_winner(player_choice, computer_choice):
 
 @app.route('/rock_paper_scissors')
 def rock_paper_scissors():
-      return render_template('rock_paper_scissors.html')
+    user_email = session.get('user_email')
+    first_name = get_first_name_by_email(user_email) if user_email else "Adventurer"
+    return render_template('rock_paper_scissors.html', first_name=first_name)
 
 
-@app.route('/play', methods=['POST'])
+@app.route('/rock_paper_scissors', methods=['POST'])
 def play():
-    player_choice = request.form['choice']
+    player_choice = request.form['user_choice']
     choices = ["rock", "paper", "scissors"]
     computer_choice = random.choice(choices)
     result = determine_winner(player_choice, computer_choice)
@@ -76,7 +83,13 @@ def register():
 
         if result["success"]:
             flash(result["message"], "success")
-            return redirect(url_for('welcome'))
+
+            session['user_email'] = result["email"]
+
+            session.permanent = True  # Make the session persistent
+            app.permanent_session_lifetime = timedelta(days=30)
+
+            return redirect(url_for('rock_paper_scissors'))
         else:
             error = result["message"]
 
@@ -110,10 +123,9 @@ def login():
 
             if remember:
                 session.permanent = True  # Make the session persistent
-                app.permanent_session_lifetime = timedelta(days=30)
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(next_page or url_for('home_page'))
+            return redirect(url_for('rock_paper_scissors'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -131,31 +143,9 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/welcome', methods=['GET', 'POST'])
-def welcome():
-    return render_template('welcome.html')
-
-@app.route('/game', methods=['GET', 'POST'])
-def game():
-    return render_template('game.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@app.route('/mulan')
+def mulan_page():
+      return render_template('mulan.html')
 
 
 
@@ -177,10 +167,6 @@ def game():
 @app.route('/Arendelle')
 def frozen_page():
     return render_template('frozen_fantasia.html', title_head='Arandelle holidays', title_body='The Frozen Magical Land of Arandelle!!', subtitle='★ Come and explore the known and unknown magical powers of Arandelle★', img="static/images/frozen_main.jpeg")
-
-# @app.route('/Experience')
-# def experience_page():
-#     return render_template('experience.html', title_head='Magical Experience', title_body='Do what you always wished for!', subtitle='★ What once was in your dreams in now coming true★', img="static/images/Experience_background.jpeg")
 
 @app.route('/Product')
 def product_page():
@@ -250,7 +236,14 @@ def view_cart():
 
 
     for experience_id,quantity in cart ['experiences'].items():
-        cursor.execute("Select ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences where ExperienceID = %s", (experience_id,))
+        cursor.execute("""SELECT
+            e.ExperienceName,
+            e.ExperiencePrice,
+            e.ExperienceImage,
+            b.BookingDate
+        FROM BookingExperience as b
+        INNER JOIN Experiences e ON b.ExperienceID = e.ExperienceID
+        WHERE b.ExperienceID = %s""", (experience_id,))
         experience =cursor.fetchone()
         if experience:
             name, price, image, date = experience
@@ -258,12 +251,12 @@ def view_cart():
             total_price += total
 
             experiences_in_cart.append(
-                {'experienceid': experience_id, 'experiencename': name, 'experienceprice': price, 'experienceimage': image, 'date':date,
+                {'experienceid': experience_id, 'experiencename': name, 'experienceprice': price, 'experienceimage': image, 'datereserved':date,
                 'quantity': quantity, 'total': total})
     conn.close()
     return render_template ('cart.html', products=products_in_cart, experiences= experiences_in_cart, total= total_price)
 
-@app.route('/add_to_cart_experience/<int:experience_id>')
+@app.route('/add_to_cart_experience/<int:experience_id>', methods=['POST'])
 def add_to_cart_experience(experience_id):
     if 'cart' not in session:
         session['cart'] = {'products': {}, 'experiences': {}}
@@ -275,9 +268,13 @@ def add_to_cart_experience(experience_id):
     else:
         exp_cart[str(experience_id)] = 1
 
-    session['cart']['experiences']= exp_cart
-    print("Cart after adding", session['cart'])
-    flash("🪄 Magical Experience added to cart! Continue shopping or go to view your cart! ", "success")
+    session['cart']['experiences'] = exp_cart
+
+    booking_date = request.form['booking_date']
+    booking_time = request.form['booking_time']
+    insert_experience_booking(experience_id, booking_date, booking_time)
+
+    flash("Booking successful! Magical Experience added to cart! Continue shopping or go to view your cart!", "success")
     return redirect(url_for('experience_page'))
 
 @app.route('/remove_from_cart_experience/<int:experience_id>')
@@ -306,6 +303,12 @@ def remove_from_cart(item_type, item_id):
         del cart[item_type][item_id_str]
         session['cart'] = cart
         flash(f'{item_type.capitalize()} removed from cart!', 'info')
+
+        if item_type == 'experiences':
+            try:
+                delete_latest_booking(item_id)
+            except Exception as e:
+                flash(f'Error deleting booking: {e}', 'danger')
     else:
         flash(f'{item_type.capitalize()} not found in the cart.', 'warning')
 
@@ -372,8 +375,12 @@ def cinderella_kingdom():
     )
 
 
-
-
+#context processor is used to inject the cart_count variable into the context of every template rendered by the application
+@app.context_processor
+def cart_item_count():
+    cart = session.get('cart', {'products': {}, 'experiences': {}})
+    count = sum(cart['products'].values()) + sum(cart['experiences'].values())
+    return dict(cart_count=count)
 
 
 
@@ -388,3 +395,5 @@ def aquariel():
 @app.route('/book_destination')
 def book_destination():
     return render_template('book_magical_destination.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
+
+

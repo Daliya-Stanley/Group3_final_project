@@ -30,6 +30,7 @@
             background-size: cover;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            font-family: 'Pattaya', sans-serif;
             color: white;">
 
         <div class="container pt-5" >
@@ -57,7 +58,7 @@
   {% if  'user_email'  in session %}
 <br>
   <br>
-<h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Experiences!!!</h4>
+<h2 style="text-align:center">Enchanted Holidays Presents Magical Experiences!!!</h2>
 <br>
   <div id = "experience-carousel-container">
   <div id="customer-feedback" class="carousel slide">
@@ -127,26 +128,57 @@
 
 
   <section class="product-mid-section">
+    <br>
+    <h2 style="text-align:center">Choose one of our fascinating experience or all of them 😉!!!</h2>
+
 <br>
     <br>
-{% for experience in experiences %}
-  <!-- First Row: 3 Cards -->
-  <div class="row g-4 justify-content-center">
-    <div class="col-md-4 d-flex justify-content-center">
+<div class="container">
+  {% for experience in experiences %}
+    {% if loop.index0 % 3 == 0 %}
+      <div class="row g-4 justify-content-center mb-5">
+    {% endif %}
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{url_for('static', filename='images/' + experience.experienceimage)}} "  alt="Magic Carpet">
+        <img class="card-img-top" src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" alt="Experience Image">
         <div class="card-body">
-          <h5 class="card-title">{{experience.experiencename}}</h5>
-          <p class="card-text">£{{experience.experienceprice }}</p>
-          <a href="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}" class="btn btn-primary"> <i class="fas fa-trash"></i>Buy</a>
+          <h5 class="card-title">{{ experience.experiencename }}</h5>
+          <p class="card-text">£{{ experience.experienceprice }}</p>
+          <button class="btn btn-success" data-bs-toggle="collapse" data-bs-target="#bookingForm{{ loop.index }}">Book Now</button>
+
+          <div class="collapse mt-3" id="bookingForm{{ loop.index }}">
+            <form method="POST" action="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}">
+              <input type="hidden" name="experience_id" value="{{ experience.experienceid }}">
+
+              <div class="mb-2">
+                <label for="booking_date_{{ loop.index }}">Date:</label>
+                <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" required>
+              </div>
+
+              <div class="mb-2">
+                <label for="booking_time_{{ loop.index }}">Time:</label>
+                <select class="form-control" id="booking_time_{{ loop.index }}" name="booking_time" required>
+                  {% for hour in range(9, 15) %}
+                    <option value="{{ "%02d:00" % hour }}">{{ "%02d:00" % hour }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">Confirm Booking</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-    <br>
-    <br>
 
-     {% endfor %}
+    {% if loop.index0 % 3 == 2 or loop.last %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
 <!--    <div class="col-md-4 d-flex justify-content-center">-->
 <!--      <div class="card" style="width: 18rem;">-->
 <!--        <img class="card-img-top" src="{{url_for('static', filename='images/Experience-carpet.jpeg') }}" alt="Magic Wand">-->
@@ -206,5 +238,15 @@
 
     {% endif %}
 </section>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    flatpickr(".flatpickr", {
+      minDate: "today",
+      dateFormat: "Y-m-d"
+    });
+  });
+</script>
 {% endblock %}

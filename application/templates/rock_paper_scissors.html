@@ -1,24 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock, Paper, Scissors</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Rock, Paper, Scissors</h1>
+{% extends "layout.html" %}
+{% block body_content %}
 
-        <div class="choices">
-            <button onclick="playGame('rock')">Rock</button>
-            <button onclick="playGame('paper')">Paper</button>
-            <button onclick="playGame('scissors')">Scissors</button>
-        </div>
+<section class="top-section"
+        style="
+            background-image: url('static/images/rps.png');
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+    <div class="container">
+        <h1>Welcome, {{first_name}}!!</h1>
+         <p>Your enchanted journey awaits. Let's
+             play Rock Paper Scissors to discover your magical getaway.</p>
+
+
+        <form action="/rock_paper_scissors" method="POST">
+    <p><label for="user_choice">Your Choice:</label></p>
+    <p>
+      <select id="user_choice" name="user_choice" required>
+        <option value="">--Select--</option>
+        <option value="rock">Rock</option>
+        <option value="paper">Paper</option>
+        <option value="scissors">Scissors</option>
+      </select>
+    </p>
+
+    <p><input type="submit" value="Play Game" /></p>
+  </form>
+
 
         <div id="result" class="result"></div>
+        {% if computer_choice %}
+    <h5>Computer's Choice: {{ computer_choice }}</h5>
+    <h5>Your Choice: {{ user_choice }}</h5>
+    <h5>{{ result }} </h5>
+{% endif %}
 
-        <h2>Game History</h2>
+
         <ul id="history">
             {% for game in history %}
                 <li>You chose: {{ game[0] }}, Computer chose: {{ game[1] }}, Result: {{ game[2] }} ({{ game[3] }})</li>
@@ -27,5 +51,5 @@
     </div>
 
     <script src="{{ url_for('static', filename='static/rps.js') }}"></script>
-</body>
-</html>
+</section>
+{% endblock %}
