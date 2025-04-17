@@ -7,40 +7,38 @@
 {% block body_content %}
 
 <!-- Top Section -->
-<section class="top-section">
-    <div class="container pt-5">
-        <h1>{{ title_body }}</h1>
-        <h4>{{ subtitle }}</h4>
-    </div>
-</section>
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+
+        <div class="container pt-5" >
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
 
 <!-- Welcome Header -->
 <header class="text-center py-5">
     <div>
-        <img src="{{ url_for('static', filename='images/cinderella_logo.jpg') }}"
-             alt="Cinderella's Kingdom logo"
-             class="header-image mb-3">
         <h1>Welcome to Cinderella's Kingdom</h1>
-        <p>Experience the magic of a fairy tale world where dreams come true!</p>
+        <p>Experience the magic of a fairy tale world where your wish becomes a reality!</p>
+        <p>Cinderella's Kingdom offers enchanting experiences for visitors of all ages. From magical ballrooms to charming gardens, your holiday here will be nothing short of spectacular</p>
     </div>
 </header>
 
-<!-- About Section -->
-<section class="intro text-center py-5">
-    <div class="container">
-        <h2>Discover the Enchantment</h2>
-        <p>
-            Step into a realm of wonder where fairy tales flourish and adventures await at every corner. Cinderella's Kingdom offers enchanting experiences for visitors of all ages. From magical ballrooms to charming gardens, your holiday here will be nothing short of spectacular.
-        </p>
-        <img src="{{ url_for('static', filename='images/enchantment.jpg') }}"
-             alt="Enchanting scenery from Cinderella's Kingdom"
-             class="about-image mt-3">
-    </div>
-</section>
-
 <!-- Activities Section -->
 <section class="activities text-center py-5">
-    <h2>Fun Things to Do</h2>
+    <h2>Fun Things To Do</h2>
     <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <!-- Card for Grand Ball -->
