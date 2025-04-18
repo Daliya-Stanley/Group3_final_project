@@ -121,6 +121,7 @@ def login():
         if result["success"]:
             # Login success: store session info and redirect
             session['user_email'] = result["email"]
+            session['user_id'] = result["user_id"]
 
             if remember:
                 session.permanent = True  # Make the session persistent
@@ -261,6 +262,17 @@ def view_cart():
 
 @app.route('/add_to_cart_experience/<int:experience_id>', methods=['POST'])
 def add_to_cart_experience(experience_id):
+    guests = int(request.form['guests'])
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    # Fetch max group size
+    cursor.execute("SELECT ExperienceGroupSize FROM Experiences WHERE ExperienceID = %s", (experience_id,))
+    max_guests = cursor.fetchone()[0]
+
+    if guests > max_guests:
+        flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.")
+        return redirect(url_for('experience_page'))
+
     if 'cart' not in session:
         session['cart'] = {'products': {}, 'experiences': {}}
     cart = session['cart']
@@ -275,10 +287,21 @@ def add_to_cart_experience(experience_id):
 
     booking_date = request.form['booking_date']
     booking_time = request.form['booking_time']
-    insert_experience_booking(experience_id, booking_date, booking_time)
+    user_id = request.form['user_id']
+    guests = int(request.form['guests'])
+    insert_experience_booking(experience_id, booking_date, booking_time, user_id, guests)
 
     flash("Booking successful! Magical Experience added to cart! Continue shopping or go to view your cart!", "success")
     return redirect(url_for('experience_page'))
+
+@app.route('/availability', methods=['POST'])
+def check_availability():
+    data = request.get_json()
+    experience_id = data['experience_id']
+    booking_date = data['booking_date']
+    remaining = get_remaining_spots(experience_id, booking_date)
+    return jsonify({"remaining_spots": remaining})
+
 
 @app.route('/remove_from_cart_experience/<int:experience_id>')
 # def remove_from_cart_experience(experience_id):

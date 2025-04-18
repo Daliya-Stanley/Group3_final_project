@@ -73,14 +73,14 @@ def authenticate_user(email, password):
         cursor = conn.cursor()
 
         # Look up user by email
-        sql = "SELECT email, password FROM User WHERE email = %s"
+        sql = "SELECT UserID, Email, Password FROM User WHERE Email = %s"
         cursor.execute(sql, (email,))
         user = cursor.fetchone()
 
         if user:
-            stored_email, stored_password = user
+            user_id, stored_email, stored_password = user
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
-                return {"success": True, "message": "Login successful", "email": stored_email}
+                return {"success": True, "message": "Login successful", "email": stored_email, "user_id": user_id}
             else:
                 return {"success": False, "message": "Incorrect password"}
         else:
@@ -99,14 +99,47 @@ def get_experience():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ExperienceID, ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences" # selecting the first name...
+    sql = ("""
+            SELECT 
+                    e.ExperienceID,
+                    e.ExperienceName,
+                    e.ExperiencePrice,
+                    e.ExperienceImage,
+                    e.ExperienceDescription,
+                    e.ExperienceDuration,
+                    el.ExperienceLevelKey,
+                    e.ExperienceMinAge,
+                    e.ExperienceGroupSize,
+                    GROUP_CONCAT(be.ReviewText SEPARATOR '||'),
+                    GROUP_CONCAT(be.Rating SEPARATOR '||')
+                FROM Experiences e
+                JOIN ExperienceLevel el ON e.ExperienceLevelID = el.ExperienceLevelID
+                LEFT JOIN BookingExperience be ON be.ExperienceID = e.ExperienceID AND be.ReviewText IS NOT NULL
+                GROUP BY e.ExperienceID
+            """)
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     experience_list = []
-    for experience in result_set:
-        experience_list.append({'experienceid': experience[0],'experiencename': experience[1], 'experienceprice': experience[2], 'experienceimage': experience[3], 'datereserved' :experience[4]})
-        print(experience_list)
+    for row in result_set:
+        reviews = []
+        if row[9]:
+            texts = row[9].split('||')
+            ratings = row[10].split('||') if row[10] else []
+            reviews = [{"text": t, "author": "Guest", "rating": r} for t, r in zip(texts, ratings)]
+
+        experience_list.append({
+            "experienceid": row[0],
+            "experiencename": row[1],
+            "experienceprice": row[2],
+            "experienceimage": row[3],
+            "experiencedescription": row[4],
+            "experienceduration": row[5],
+            "experiencelevelkey": row[6],
+            "experienceminage": row[7],
+            "experiencegroupsize": row[8],
+            "reviews": reviews
+        })
     return experience_list
 
 def get_first_name_by_email(email):
@@ -137,13 +170,13 @@ def get_product_details(product_id):
     return product
 
 
-def insert_experience_booking(experience_id, booking_date, booking_time):
+def insert_experience_booking(experience_id, booking_date, booking_time, user_id, guests):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime)
-        VALUES (%s, %s, %s)
-    """, (experience_id, booking_date, booking_time))
+        INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime, UserID, Guests)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (experience_id, booking_date, booking_time, user_id, guests))
     conn.commit()
     cursor.close()
     conn.close()
@@ -160,4 +193,30 @@ def delete_latest_booking(experience_id):
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_remaining_spots(experience_id, booking_date):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+            SELECT IFNULL(SUM(Guests), 0) 
+            FROM BookingExperience 
+            WHERE ExperienceID = %s AND BookingDate = %s
+        """, (experience_id, booking_date))
+    total_booked_guests = cursor.fetchone()[0]
+
+    cursor.execute("""
+            SELECT ExperienceGroupSize 
+            FROM Experiences 
+            WHERE ExperienceID = %s
+        """, (experience_id,))
+    max_group_size = cursor.fetchone()[0]
+
+    cursor.close()
+    conn.close()
+
+    remaining = max_group_size - total_booked_guests
+    return max(remaining, 0)
+
+
 

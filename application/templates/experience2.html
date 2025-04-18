@@ -43,6 +43,7 @@
   </div>
 </div>
 
+{% if 'user_email' in session %}
 <!-- Experience Overview & Booking Section -->
 <section class="container my-5">
   <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -62,7 +63,7 @@
               <!-- Overview Details -->
               <ul class="list-unstyled small">
                 <li><strong>Duration:</strong> {{ experience.experienceduration or 'N/A' }}</li>
-                <li><strong>Fitness Level:</strong> {{ experience.experiencefitness or 'Moderate' }}</li>
+                <li><strong>Fitness Level:</strong> {{ experience.experiencelevelkey or 'Moderate' }}</li>
                 <li><strong>Minimum Age:</strong> {{ experience.experienceminage or '12 years old' }}</li>
                 <li><strong>Group Size:</strong> {{ experience.experiencegroupsize or 'Max 12' }}</li>
               </ul>
@@ -70,10 +71,11 @@
               <!-- Booking Form -->
               <form method="POST" action="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}">
                 <input type="hidden" name="experience_id" value="{{ experience.experienceid }}">
+                <input type="hidden" name="user_id" value="{{ session.user_id }}">
 
                 <div class="mb-2">
                   <label for="booking_date_{{ loop.index }}" class="form-label">Date</label>
-                  <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" required>
+                  <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" data-experience-id="{{ experience.experienceid }}" required>
                 </div>
 
                 <div class="mb-2">
@@ -87,7 +89,8 @@
 
                 <div class="mb-3">
                   <label for="guests_{{ loop.index }}" class="form-label">Guests</label>
-                  <input type="number" class="form-control" name="guests" id="guests_{{ loop.index }}" value="1" min="1" required>
+                  <input type="number" class="form-control" name="guests" id="guests_{{ loop.index }}" value="1" min="1" max="{{ experience.experiencegroupsize }}" required>
+                  <small class="form-text text-muted" id="availability_{{ loop.index }}">Max group size: {{ experience.experiencegroupsize }}</small>
                 </div>
 
                 <button type="submit" class="btn btn-success w-100">Book Now</button>
@@ -114,6 +117,11 @@
     {% endfor %}
   </div>
 </section>
+{% else %}
+  <div class="container text-center my-5">
+    <p class="lead">Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</p>
+  </div>
+{% endif %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -121,7 +129,30 @@
   document.addEventListener("DOMContentLoaded", function () {
     flatpickr(".flatpickr", {
       minDate: "today",
-      dateFormat: "Y-m-d"
+      dateFormat: "Y-m-d",
+      onChange: function(selectedDates, dateStr, instance) {
+        const input = instance.input;
+        const experienceId = input.dataset.experienceId;
+        const container = input.closest("form");
+        const guestsInput = container.querySelector("input[name='guests']");
+        const availabilityMsg = container.querySelector("small.form-text");
+
+        fetch("/availability", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            experience_id: experienceId,
+            booking_date: dateStr
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          guestsInput.max = data.remaining_spots;
+          availabilityMsg.innerText = `Remaining spots: ${data.remaining_spots}`;
+        });
+      }
     });
   });
 </script>
