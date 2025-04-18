@@ -7,10 +7,9 @@
 <section id="bookdestinaton">
   <div class="container py-5">
     <h2 class="text-center mb-5" style="font-family: 'Lilita One', cursive; color: #9954BA;">Book Your Magical Destination</h2>
-    <div class="row g-4 justify-content-center">
+    <div class="card-container">
 
-      <div class="col-md-4">
-        <div class="flip-card">
+      <div class="flip-card card-animate">
           <div class="flip-card-inner">
             <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
             <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/WT.jpg') }}'); background-size: cover; background-position: center;">
@@ -19,11 +18,9 @@
               <a href="{{ url_for('wonderland') }}" class="btn btn-light">Book Here!</a>
             </div>
           </div>
-        </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="flip-card">
+      <div class="flip-card card-animate">
           <div class="flip-card-inner">
             <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
             <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/cinderella.jpg') }}'); background-size: cover; background-position: center;">
@@ -32,11 +29,9 @@
               <a href="{{ url_for('cinderella_kingdom') }}" class="btn btn-light">Book Here!</a>
             </div>
           </div>
-        </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="flip-card">
+      <div class="flip-card card-animate">
           <div class="flip-card-inner">
             <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
             <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/ariel_topsection.jpg') }}'); background-size: cover; background-position: center;">
@@ -45,11 +40,9 @@
               <a href="{{ url_for('aquariel') }}" class="btn btn-light">Book Here!</a>
             </div>
           </div>
-        </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="flip-card">
+      <div class="flip-card card-animate">
           <div class="flip-card-inner">
             <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
             <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/frozen_main.jpeg') }}'); background-size: cover; background-position: center;">
@@ -58,20 +51,17 @@
               <a href="{{ url_for('frozen_page') }}" class="btn btn-light">Book Here!</a>
             </div>
           </div>
-        </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="flip-card">
+      <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: cover; background-position: center;"></div>
             <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/mulan.png') }}'); background-size: cover; background-position: center;">
               <h4>Land of Mulan</h4>
               <p>Discover honor, bravery, and a legendary journey.</p>
               <a href="#" class="btn btn-light">Book Here!</a>
             </div>
           </div>
-        </div>
       </div>
 
     </div>

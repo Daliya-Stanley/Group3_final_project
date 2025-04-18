@@ -1,106 +1,101 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 {% block title %} Aquariel {% endblock %}
 {% block body_content %}
-<link rel="stylesheet" href="{{ url_for('static', filename= 'aquariel.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='aquariel.css') }}">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
 
+<!-- Hero Section -->
 <section class="top-section">
   <div class="overlay"></div>
   <div class="top-content container">
+    <a href="#booking-form" class="book-now-btn">Book Now</a>
     <h1 class="main-title">Welcome to Aquariel</h1>
     <h3 class="subtitle">Dive into a world where wonder glows beneath the waves</h3>
   </div>
 </section>
 
+<!-- Booking Form -->
+<div id="booking-form" class="scroll-anchor"></div>
+<section class="booking-bar"  >
+  <form class="booking-form">
+    <input type="date" name="checkin" placeholder="Check-in" />
+    <input type="date" name="checkout" placeholder="Check-out" />
+    <input type="number" name="guests" placeholder="Guests" min="1" />
+    <button type="submit" class="btn btn-primary">Check Availability</button>
+  </form>
+</section>
 
-<h1 id="title"> Follow Ariel into a realm where curiosity reigns and sea stars guide your way</span></h1>
+<!-- Intro headline -->
+<h1 id="title">Follow Ariel into a realm where curiosity reigns and sea stars guide your way!</h1>
 
-<section class="aquariel tighter-top">
-    <div class="aquariel no-top-padding">
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <img src="{{ url_for('static', filename='images/coral_palace.jpg') }}" alt="Underwater palace" class="img-fluid shadow rounded mb-3">
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <img src="{{ url_for('static', filename='images/whirlpool.jpg') }}" alt="Magical whirlpool" class="img-fluid shadow rounded mb-3">
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <img src="{{ url_for('static', filename='images/mermaid_garden.jpg') }}" alt="Mermaid garden" class="img-fluid shadow rounded mb-3">
-            </div>
-        </div>
-    </div>
+<!-- Flip Card Section -->
+{% set cards = [
+  {
+    "title": "Dive into Ariel’s World",
+    "short_text": "Swirl through a glowing whirlpool and glide past singing seahorses.",
+    "text": "Begin your adventure by swirling through a glowing whirlpool and arriving in Aquariel. Glide past colorful reefs and singing seahorses as you discover the ocean’s most magical secrets.",
+    "img": "whirlpool_dive.jpg",
+    "alt": "Whirlpool Dive"
+  },
+  {
+    "title": "Rest like royalty in the Pearl Palace",
+    "short_text": "Sleep beneath pearlescent domes and wake to coral melodies.",
+    "text": "Sleep beneath pearlescent domes, lulled by the lullabies of the sea. The Pearl Palace in Aquariel offers serene beauty, with soft coral beds and gentle currents outside your window.",
+    "img": "coral_room.jpg",
+    "alt": "Undersea Room"
+  },
+  {
+    "title": "Dine under the sea with magical flavors",
+    "short_text": "Taste sea blossom soufflés and starfruit sushi beneath the waves.",
+    "text": "Taste the wonders of Aquariel—sea blossom soufflés, starfruit sushi, and mermaid-made desserts. Every bite is a spell, every dish a dream.",
+    "img": "undersea_feast.jpg",
+    "alt": "Underwater Feast"
+  },
+  {
+    "title": "Explore the glittering Aquariel Bazaar",
+    "short_text": "Find charms, sea stones, and sunken wonders from the deep.",
+    "text": "Discover treasures from sunken ships, enchanted sea stones, and hand-crafted mermaid charms. The Aquariel Bazaar is where magic meets memory.",
+    "img": "undersea_market.jpg",
+    "alt": "Undersea Market"
+  },
+  {
+    "title": "Celebrate Aquariel's oceanic wonders",
+    "short_text": "Join jellyfish lantern parades and the Shell Symphony.",
+    "text": "Join the Festival of Tides, the Shell Symphony, and glowing jellyfish lantern parades. Aquariel's culture is a dance of joy, melody, and color beneath the waves.",
+    "img": "festival_of_tides.jpg",
+    "alt": "Undersea Festival"
+  },
+  {
+    "title": "Embrace enchantment in every bubble",
+    "short_text": "Follow ancient sea runes and befriend dolphins of legend.",
+    "text": "Follow shimmering currents, discover ancient sea runes, and chat with dolphins who know the secrets of the deep. Aquariel is where imagination breathes through every ripple.",
+    "img": "undersea_exploration.jpg",
+    "alt": "Mystical Exploration"
+  }
+] %}
 
-<div class="accordion" id="useAccordion">
-
-  {% set accordion_items = [
-    {
-      "title": "Dive into Ariel’s World...",
-      "text": "Begin your adventure by swirling through a glowing whirlpool and arriving in Aquariel. Glide past colorful reefs and singing seahorses as you discover the ocean’s most magical secrets.",
-      "img": "whirlpool_dive.jpg",
-      "alt": "Whirlpool Dive"
-    },
-    {
-      "title": "Rest like royalty in the Pearl Palace...",
-      "text": "Sleep beneath pearlescent domes, lulled by the lullabies of the sea. The Pearl Palace in Aquariel offers serene beauty, with soft coral beds and gentle currents outside your window.",
-      "img": "coral_room.jpg",
-      "alt": "Undersea Room"
-    },
-    {
-      "title": "Dine under the sea with magical flavors...",
-      "text": "Taste the wonders of Aquariel—sea blossom soufflés, starfruit sushi, and mermaid-made desserts. Every bite is a spell, every dish a dream.",
-      "img": "undersea_feast.jpg",
-      "alt": "Underwater Feast"
-    },
-    {
-      "title": "Explore the glittering Aquariel Bazaar...",
-      "text": "Discover treasures from sunken ships, enchanted sea stones, and hand-crafted mermaid charms. The Aquariel Bazaar is where magic meets memory.",
-      "img": "undersea_market.jpg",
-      "alt": "Undersea Market"
-    },
-    {
-      "title": "Celebrate Aquariel's oceanic wonders...",
-      "text": "Join the Festival of Tides, the Shell Symphony, and glowing jellyfish lantern parades. Aquariel's culture is a dance of joy, melody, and color beneath the waves.",
-      "img": "festival_of_tides.jpg",
-      "alt": "Undersea Festival"
-    },
-    {
-      "title": "Embrace enchantment in every bubble...",
-      "text": "Follow shimmering currents, discover ancient sea runes, and chat with dolphins who know the secrets of the deep. Aquariel is where imagination breathes through every ripple.",
-      "img": "undersea_exploration.jpg",
-      "alt": "Mystical Exploration"
-    }
-  ] %}
-
-  {% for item in accordion_items %}
-  <div class="accordion-item">
-    <h3 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index }}" aria-controls="collapse-{{ loop.index }}">
-        &#9733 {{ item.title }}
-      </button>
-    </h3>
-    <div id="collapse-{{ loop.index }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}">
-      <div class="accordion-body">
-        {{ item.text }}
-        <div class="accordion-image-wrapper">
-          <img src="{{ url_for('static', filename='images/' ~ item.img) }}"
-               alt="{{ item.alt }}"
-               class="accordion-img zoom-img"
-               loading="lazy"
-               data-aos="fade-up"
-               data-aos-duration="1000" />
-        </div>
+<div class="feature-grid-full">
+  {% for card in cards %}
+  <div class="feature-card" data-aos="fade-up">
+    <div class="image-wrapper">
+      <img src="{{ url_for('static', filename='images/' ~ card.img) }}" alt="{{ card.alt }}" class="feature-img">
+      <div class="flip-title-overlay">
+        <h3>{{ card.title }}</h3>
+        <p class="short-text">{{ card.short_text }}</p>
       </div>
+    </div>
+    <div class="card-hover-text">
+      <p>{{ card.text }}</p>
     </div>
   </div>
   {% endfor %}
-
 </div>
 
 
-
+<!-- AOS Animation -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init();
 </script>
-
 {% endblock %}

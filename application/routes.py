@@ -386,11 +386,63 @@ def cart_item_count():
 
 @app.route('/wonderland')
 def wonderland():
-    return render_template('destination1.html', title_head='Wonderland', title_body='Wonderland', subtitle='Want to wander in Wonderland?', img='static/images/WT.jpg')
+    return render_template('wonderland.html', title_head='Wonderland', title_body='Wonderland', subtitle='Want to wander in Wonderland?', img='static/images/WT.jpg')
+
 
 @app.route('/aquariel')
 def aquariel():
-    return render_template('aquariel.html', title_head='Aquariel', title_body='Aquariel', subtitle='Where tides whisper secrets beneath the sea foam')
+    cards = [
+  {
+    "title": "Dive into Ariel’s World",
+    "short_text": "Swirl through a glowing whirlpool and glide past singing seahorses.",
+    "text": "Begin your adventure by swirling through a glowing whirlpool and arriving in Aquariel. Glide past colorful reefs and singing seahorses as you discover the ocean’s most magical secrets.",
+    "img": "whirlpool_dive.jpg",
+    "alt": "Whirlpool Dive"
+  },
+  {
+    "title": "Rest like royalty in the Pearl Palace",
+    "short_text": "Sleep beneath pearlescent domes and wake to coral melodies.",
+    "text": "Sleep beneath pearlescent domes, lulled by the lullabies of the sea. The Pearl Palace in Aquariel offers serene beauty, with soft coral beds and gentle currents outside your window.",
+    "img": "coral_room.jpg",
+    "alt": "Undersea Room"
+  },
+  {
+    "title": "Dine under the sea with magical flavors",
+    "short_text": "Taste sea blossom soufflés and starfruit sushi beneath the waves.",
+    "text": "Taste the wonders of Aquariel—sea blossom soufflés, starfruit sushi, and mermaid-made desserts. Every bite is a spell, every dish a dream.",
+    "img": "undersea_feast.jpg",
+    "alt": "Underwater Feast"
+  },
+  {
+    "title": "Explore the glittering Aquariel Bazaar",
+    "short_text": "Find charms, sea stones, and sunken wonders from the deep.",
+    "text": "Discover treasures from sunken ships, enchanted sea stones, and hand-crafted mermaid charms. The Aquariel Bazaar is where magic meets memory.",
+    "img": "undersea_market.jpg",
+    "alt": "Undersea Market"
+  },
+  {
+    "title": "Celebrate Aquariel's oceanic wonders",
+    "short_text": "Join jellyfish lantern parades and the Shell Symphony.",
+    "text": "Join the Festival of Tides, the Shell Symphony, and glowing jellyfish lantern parades. Aquariel's culture is a dance of joy, melody, and color beneath the waves.",
+    "img": "festival_of_tides.jpg",
+    "alt": "Undersea Festival"
+  },
+  {
+    "title": "Embrace enchantment in every bubble",
+    "short_text": "Follow ancient sea runes and befriend dolphins of legend.",
+    "text": "Follow shimmering currents, discover ancient sea runes, and chat with dolphins who know the secrets of the deep. Aquariel is where imagination breathes through every ripple.",
+    "img": "undersea_exploration.jpg",
+    "alt": "Mystical Exploration"
+  }]
+    return render_template(
+        'aquariel.html',
+        cards=cards,
+        hero_title="Welcome to Aquariel",
+        hero_subtitle="Dive into a world where wonder glows beneath the waves",
+        intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way!",
+        css_file="aquariel.css"
+    )
+
 
 @app.route('/book_destination')
 def book_destination():

@@ -12,8 +12,6 @@ h2, h3 {
     font-family: 'Playfair Display', serif;
 }
 
-
-
 a {
   color: #d7a3f5;
   text-decoration: none;
@@ -92,7 +90,6 @@ a:hover {
   animation: fadeInUp 1.4s ease forwards;
 }
 
-/* Section Styling */
 section {
   padding: 80px 20px;
   position: relative;
@@ -103,8 +100,7 @@ section {
 h1#title {
   font-size: 2.5rem;
   text-align: center;
-  margin-bottom: 1rem;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   color: #d2f1fa;
 }
 
@@ -117,123 +113,192 @@ h1#title {
   padding-top: 30px;
 }
 
-/* Image Grid */
-.wonderland .img-fluid {
-  border-radius: 1.5rem;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  transition: transform 0.3s ease;
+.feature-grid-full {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
 }
 
-.wonderland .img-fluid:hover {
-  transform: scale(1.05);
-}
-
-/* Accordion Styling */
-.accordion {
-  background: transparent;
-  border: none;
-  margin-top: 2rem;
-  font-family: 'Cinzel Decorative', cursive;
-}
-
-.accordion-item {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 20px rgba(186, 85, 211, 0.2); /* light purple glow */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
   overflow: hidden;
-  transition: all 0.4s ease-in-out;
-}
-
-.accordion-header h3 {
-  margin: 0;
-}
-
-.accordion-button {
-  font-size: 1.1rem;
-  font-weight: 600;
-  background: linear-gradient(90deg, #472e8c, #8342a5);
-  color: #fff;
-  padding: 1rem 1.5rem;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  transition: all 0.3s ease;
-}
-
-.accordion-button::after {
-  content: '⮞';
-  float: right;
-  transform: rotate(90deg);
   transition: transform 0.3s ease;
 }
 
-.accordion-button.collapsed::after {
-  transform: rotate(0deg);
-}
-
-.accordion-button:hover {
-  background: linear-gradient(
-    to right,
-    rgba(216, 112, 214, 0.5),
-    rgba(255, 182, 193, 0.4)
-  );
-  box-shadow: 0 0 18px rgba(255, 182, 255, 0.5);
+.feature-card:hover {
   transform: scale(1.01);
 }
 
-.accordion-collapse {
-  background: rgba(75, 0, 130, 0.2); /* deep purple overlay */
-  padding: 1rem 1.5rem;
-  color: #f8e9ff;
-  font-size: 1rem;
-  line-height: 1.6;
-  transition: all 0.4s ease-in-out;
+.image-wrapper {
+   position: relative;
+  border-radius: 24px;
+  overflow: hidden;
 }
 
-.accordion-body {
-  animation: fadeIn 0.6s ease forwards;
-  text-align: center;
-}
-
-.accordion-body img.accordion-img {
+.feature-img {
   width: 100%;
   height: auto;
-  margin-top: 1rem;
-  border-radius: 1rem;
-  display: block;
-  box-shadow: 0 0 12px rgba(221, 160, 221, 0.4);
   object-fit: cover;
-}
-
-.accordion-img {
-  width: 95%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 1rem;
-  margin: 1.5rem auto 0;
   display: block;
-  box-shadow: 0 0 20px rgba(255, 180, 255, 0.2);
+  border-radius: 24px;
+  filter: brightness(0.85);
 }
 
-.accordion-img.zoom-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 182, 255, 0.6);
+.flip-title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.5rem;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  backdrop-filter: blur(2px);
+  color: white;
+  box-sizing: border-box;
 }
 
-/* Soft fade animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.flip-title-overlay h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
 }
 
-.accordion-image-wrapper {
+.flip-title-overlay .short-text {
+  font-size: 0.9rem;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+.card-hover-text {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  margin-top: 0;
+  padding: 0 0.5rem;
+}
+
+.feature-card:hover .card-hover-text {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.card-hover-text p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #f6ebfa;
+  font-family: 'Raleway', sans-serif;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+
+/* === Responsive grid === */
+@media (max-width: 1024px) {
+  .feature-grid-full {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-grid-full {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.book-now-btn {
+  position: absolute;
+  top: -390px;
+  right: -290px;
+  background-color: #fff;
+  color: #000;
+  padding: 1rem 4rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.book-now-btn:hover {
+  background-color: #f2f2f2;
+  text-decoration:none;
+  color: #111;
+}
+
+.scroll-anchor {
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+}
+
+.booking-bar {
+  width: 100%;
+  background-color: #ffffff05;
+  padding: 2rem 2rem 1rem;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  padding: 0.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 2rem;
 }
+
+.booking-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.booking-form input,
+.booking-form button {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: none;
+  min-width: 160px;
+}
+
+.booking-form input {
+  background-color: #ffffffee;
+  color: #000;
+}
+
+.btn-submit {
+  background-color: #00bcd4;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #0097a7;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
 
