@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% block title %} Magical Experiences! {% endblock %}
+{% block body_content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='experience.css') }}">
+
+<!-- Hero Gallery -->
+<section class="container mt-5">
+  <div class="gallery-grid">
+    {% for img in gallery_images[:6] %}
+    <div class="gallery-item">
+      <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="Experience Photo">
+      {% if loop.index == 6 %}
+      <button class="btn btn-outline-light overlay-button" data-bs-toggle="modal" data-bs-target="#galleryModal">Show All Photos</button>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Modal with Grid of All Photos using Lightbox -->
+<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-lg-custom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="galleryModalLabel">All Photos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          {% for img in gallery_images %}
+          <a href="{{ url_for('static', filename='images/' ~ img) }}" data-lightbox="gallery" data-title="Photo {{ loop.index }}">
+            <img src="{{ url_for('static', filename='images/' ~ img) }}" alt="Gallery Image">
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Experience Overview & Booking Section -->
+<section class="container my-5">
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for experience in experiences[:5] %}
+    <div class="col {% if loop.last and loop.length is odd %}mx-auto{% endif %}">
+      <div class="card h-100 shadow-lg">
+        <div class="row g-0">
+          <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" class="img-fluid rounded-start h-100 w-100 object-fit-cover" alt="Experience Image">
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">{{ experience.experiencename }}</h5>
+              <p class="text-muted mb-1">£{{ experience.experienceprice }}</p>
+              <p class="mb-2">{{ experience.experiencedescription or "No description available." }}</p>
+
+              <!-- Overview Details -->
+              <ul class="list-unstyled small">
+                <li><strong>Duration:</strong> {{ experience.experienceduration or 'N/A' }}</li>
+                <li><strong>Fitness Level:</strong> {{ experience.experiencefitness or 'Moderate' }}</li>
+                <li><strong>Minimum Age:</strong> {{ experience.experienceminage or '12 years old' }}</li>
+                <li><strong>Group Size:</strong> {{ experience.experiencegroupsize or 'Max 12' }}</li>
+              </ul>
+
+              <!-- Booking Form -->
+              <form method="POST" action="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}">
+                <input type="hidden" name="experience_id" value="{{ experience.experienceid }}">
+
+                <div class="mb-2">
+                  <label for="booking_date_{{ loop.index }}" class="form-label">Date</label>
+                  <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" required>
+                </div>
+
+                <div class="mb-2">
+                  <label for="booking_time_{{ loop.index }}" class="form-label">Time</label>
+                  <select class="form-select" id="booking_time_{{ loop.index }}" name="booking_time" required>
+                    {% for hour in range(9, 15) %}
+                    <option value="{{ "%02d:00" % hour }}">{{ "%02d:00" % hour }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="guests_{{ loop.index }}" class="form-label">Guests</label>
+                  <input type="number" class="form-control" name="guests" id="guests_{{ loop.index }}" value="1" min="1" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Book Now</button>
+              </form>
+
+              <!-- What Our Clients Say -->
+              <div class="mt-4">
+                <h6 class="fw-bold">What Our Clients Say</h6>
+                {% if experience.reviews %}
+                  <blockquote class="blockquote border-start ps-3 fst-italic">
+                    <p>"{{ experience.reviews[0].text }}"</p>
+                    <footer class="blockquote-footer">{{ experience.reviews[0].author }}</footer>
+                  </blockquote>
+                {% else %}
+                  <p class="fst-italic text-muted">No reviews yet.</p>
+                {% endif %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    flatpickr(".flatpickr", {
+      minDate: "today",
+      dateFormat: "Y-m-d"
+    });
+  });
+</script>
+
+{% endblock %}

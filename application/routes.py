@@ -4,6 +4,7 @@ from application.forms.login_form import LoginForm
 from application.data_access import *
 from application import app
 from datetime import timedelta
+import os
 
 app.permanent_session_lifetime = timedelta(days=30)
 
@@ -176,7 +177,12 @@ def product_page():
 @app.route('/Experience')
 def experience_page():
     experience_list = get_experience()
-    return render_template('experience.html', title_head='Magical Experience', title_body='Our Splendid Magical Experience', subtitle='★ What once was in your dreams in now coming true★', img="static/images/Experience_background.jpeg", experiences = experience_list)
+    image_dir = os.path.join(app.static_folder, "images")
+    gallery_images = sorted([
+        filename for filename in os.listdir(image_dir)
+        if filename.startswith("gallery") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
+    ])
+    return render_template('experience2.html', title_head='Magical Experience', experiences = experience_list,gallery_images=gallery_images)
 
 
 @app.route('/add_to_cart/<int:product_id>')
