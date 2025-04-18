@@ -91,6 +91,16 @@ BookingDate date NOT NULL,
 BookingTime time NOT NULL
 );
 
+create table BookingExperienceTable
+(
+BookingID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+UserID INT NOT NULL,
+foreign key (UserID) references User(UserID),
+ExperienceID INT NOT NULL,
+foreign key (ExperienceID) references Experiences(ExperienceID),
+BookingDate date NOT NULL,
+BookingTime time NOT NULL
+);
 create table Shopping
 (
 ShoppingID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
