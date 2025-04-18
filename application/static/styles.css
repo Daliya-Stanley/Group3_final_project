@@ -22,12 +22,16 @@ title {
     font-weight: 550;
     color: black;
     padding-top: 5px;
+    text-decoration: none;
+}
+
+.navbar-brand h4{
+    text-decoration: none;
 }
 
 body {
   padding-top: 0px; /* Adjust this value to match your navbar height */
 }
-
 
 main {
   padding-top: 30px;
@@ -35,7 +39,7 @@ main {
 
 .navbar-brand {
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 10px;
 }
 
@@ -323,6 +327,7 @@ main {
 
 #components{
 background-color: #DAD9D9;
+font-family: "Pattaya", sans-serif;
 }
 #feedback{
 background-color: #DAD9D9;
@@ -361,6 +366,7 @@ height: 100vh;
     max-height: 500px;
     margin: 0 auto;
     border: 15px solid #ffffff;
+    font-family: "Pattaya", sans-serif;
 }
 #customer-feedback .carousel-inner {
     position: relative;
@@ -368,6 +374,7 @@ height: 100vh;
     max-height: 500px;
     align-items: center;
     padding-top: 100%;
+    font-family: "Pattaya", sans-serif;
 }
 #customer-feedback .carousel-item {
     position: absolute;
@@ -558,24 +565,7 @@ h2 {
     border-bottom: none;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.container-fluid bg-4 text-center" {
+.container-fluid bg-4 text-center {
       background-color: red /* Charcoal */
       color: #fff;
   }
@@ -613,3 +603,8 @@ h2 {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+html {
+  scroll-behavior: smooth;
+}

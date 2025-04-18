@@ -1,0 +1,171 @@
+{% extends "layout.html" %}
+{% block title %} Wonderland {% endblock %}
+{% block body_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'wonderland.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+
+<section class="top-section"
+        style="
+            background-image: url('{{ img }}');
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;">
+        <div class="container pt-5" >
+          <br>
+          <br>
+          <br>
+          <br>
+            <h1>{{ title_body }}</h1>
+            <h4>{{ subtitle }}</h4>
+        </div>
+      </section>
+<h1 id="title"> Ever dreamt of falling down the rabbit hole into the whimsical world of <span class="highlight">Wonderland?</span>  </h1>
+
+
+
+<section class="wonderland">
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <img src="{{ url_for('static', filename='images/maze2.jpg') }}" alt="A woodland" class="img-fluid shadow rounded mb-3">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <img src="{{ url_for('static', filename='images/rabbithole.jpg') }}" alt="A maze" class="img-fluid shadow rounded mb-3">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <img src="{{ url_for('static', filename='images/WT.jpg') }}" alt="A wonderland" class="img-fluid shadow rounded mb-3">
+            </div>
+
+        </div>
+    </div>
+
+<div class="accordion">
+
+                    <div class="accordion-item" id="useAccordion">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-controls="collapse-1" aria-expanded="false">&#9733 Spark your curiosity and begin your journey to Wonderland....</button>
+                        </h3>
+                        <div id="collapse-1" class="accordion-collapse show" aria-labelledby="heading-1" data-bs-parent="#useAccordion">
+                            <div class="accordion-body">
+                                Embark on an adventure as you descend a twisting, dizzying rabbit hole, plunging into the heart of Wonderland. Through a blend of immersive tunnels and captivating projections, you'll feel yourself falling right alongside Alice into a world of wonder and whimsy. How else would you expect to begin your adventure?
+                                <img src="static/images/teacup.png" alt="Teacup" class="drop" data-aos="fade-up" data-aos-duration="1000"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-controls="collapse-2" aria-expanded="false">&#9733 Settle your well-rested head at the White Queen's castle...</button>
+                            </h3>
+                        </div>
+                        <div id="collapse-2" class="accordion-collapse collapse" aria-labelledby="heading-2" data-bs-parent="useAccordion">
+                            <div class="accordion-body">
+                               Indulge in regal splendor at the White Queen's Castle, where royal comfort blends with whimsical charm in a dreamlike escape. Drift off to sleep in a teacup, with the comforting thought that your head remains safely attached...
+                            </div>
+                            <img src="static/images/room.png" alt="Room"  class="drop" data-aos="fade-up" data-aos-duration="1000"/>
+                        </div>
+                    </div>
+                </div>
+<div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-controls="collapse-3" aria-expanded="false">&#9733 Indulge in a Wonderland feast where every bite is a magical experience... </button>
+                            </h3>
+                        </div>
+                        <div id="collapse-3" class="accordion-collapse collapse" aria-labelledby="heading-3" data-bs-parent="useAccordion">
+                            <div class="accordion-body">
+                                In Wonderland, food isn’t just sustenance—it’s an experience. Every dish, drink, and dessert tells a story, sparking your imagination and inviting you to explore the wonders of this fantastical land. Let your senses guide you through an unforgettable culinary journey where the rules of dining are as twisted and playful as Wonderland itself.
+                            </div>
+                          <img src="static/images/food2.png" alt="Food"  class="drop" data-aos="fade-up" data-aos-duration="1000"/>
+                        </div>
+                    </div>
+</div>
+
+<div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-controls="collapse-4" aria-expanded="false">&#9733 A shopping adventure fit for a queen... (or a knave!)
+                                </button>
+                            </h3>
+                        </div>
+                        <div id="collapse-4" class="accordion-collapse collapse" aria-labelledby="heading-4" data-bs-parent="useAccordion">
+                            <div class="accordion-body">
+                                Discover a treasure trove of shopping delights as you wander along winding paths through enchanted forests, explore vibrant, whimsically designed buildings, and uncover hidden gems in every charming corner. With 10 unique shops to explore, you'll be spoilt for choice with an enchanting array of treasures and unforgettable discoveries from your Wonderland adventure.
+                            </div>
+                          <img src="static/images/CCshop2.jpg" alt="Shop"  class="drop" data-aos="fade-up" data-aos-duration="1000"/>
+                        </div>
+                    </div>
+</div>
+    <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-5" aria-controls="collapse-5" aria-expanded="false">&#9733 Immerse yourself in the curious culture of Wonderland...</button>
+                            </h3>
+                        </div>
+                        <div id="collapse-5" class="accordion-collapse collapse" aria-labelledby="heading-5" data-bs-parent="useAccordion">
+                            <div class="accordion-body">
+                                A culture of muchness, enshrined in curiosity and brimming with wonder at every whimsical turn. From the Mad Hatter's Never-Ending Tea Party, the Queen of Hearts' Croquet Tournament to the Floating Tea Cup races.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3>
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-6" aria-controls="collapse-6" aria-expanded="false">&#9733 Experience the magic and mystery that is Wonderland...</button>
+                            </h3>
+                        </div>
+                        <div id="collapse-6" class="accordion-collapse collapse" aria-labelledby="heading-6" data-bs-parent="useAccordion">
+                            <div class="accordion-body">
+                                Step into a world where the extraordinary is ordinary — Wonderland's entertainment is a spellbinding mix of immersive theatre, curious encounters, and playful surprises around every corner. Every moment is an experience, and every experience, a story waiting to unfold.
+                            </div>
+                        </div>
+                    </div>
+</section>
+
+<!-- <div class="card mb-3" style="max-width: 700px;">-->
+<!--  <div class="row g-0">-->
+<!--    <div class="col-md-4">-->
+<!--      <img id="teacup" src="static/images/teacup.png" class="img-fluid rounded-start" alt="teacup ride">-->
+<!--    </div>-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card-body">-->
+<!--        <p class="card-text">Embark on an adventure as you descend a twisting, dizzying rabbit hole, plunging into the heart of Wonderland. Through a blend of immersive tunnels and captivating projections, you'll feel yourself falling right alongside Alice into a world of wonder and whimsy. How else would you expect to begin your adventure?</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--    <div class="card mb-3" style="max-width: 700px;">-->
+<!--  <div class="row g-0">-->
+<!--    <div class="col-md-4">-->
+<!--      <img id="teaparty" src="static/images/teaparty.jpg" class="img-fluid rounded-start" alt="teaparty">-->
+<!--    </div>-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card-body">-->
+<!--        <p class="card-text">We're all mad here! Indulge in a delightfully chaotic tea party with the Mad Hatter and his eccentric friends. Expect the unexpected... and maybe a riddle or two!</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+{% endblock %}
