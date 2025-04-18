@@ -164,9 +164,6 @@ def mulan_page():
 
 
 
-@app.route('/Arendelle')
-def frozen_page():
-    return render_template('frozen_fantasia.html', title_head='Arandelle holidays', title_body='The Frozen Magical Land of Arandelle!!', subtitle='★ Come and explore the known and unknown magical powers of Arandelle★', img="static/images/frozen_main.jpeg")
 
 @app.route('/Product')
 def product_page():
@@ -440,7 +437,7 @@ def aquariel():
         hero_title="Welcome to Aquariel",
         hero_subtitle="Dive into a world where wonder glows beneath the waves",
         intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way!",
-        css_file="aquariel.css"
+        css_file="aquariel.css",
     )
 
 
@@ -448,4 +445,63 @@ def aquariel():
 def book_destination():
     return render_template('book_magical_destination.html', title_head='Book Your Holiday', title_body='Ready to Book you Magical Adventure!', subtitle='This is where your dreams come true!')
 
+# @app.route('/Arendelle')
+# def frozen_page():
+#     return render_template('frozen_fantasia.html', title_head='Arandelle holidays', title_body='The Frozen Magical Land of Arandelle!!', subtitle='★ Come and explore the known and unknown magical powers of Arandelle★', img="static/images/frozen_main.jpeg")
 
+
+
+@app.route('/Arendelle')
+def frozen_page():
+    cards = [
+  {
+    "title": "Our Luxurious Rooms",
+    "short_text": "",
+    "text": "A lavish, Frozen-themed castle chamber adorned with icy elegance and a crackling fireplace, blending royal comfort with enchanting beauty.",
+    "img": "frozen_luxury.jpeg",
+    "alt": "Frozen room"
+  },
+  {
+    "title": "Our Magnificent Views",
+    "short_text": "",
+    "text": "The palace offers a breathtaking view of the shimmering sea and a glistening ice ring, sparkling under the sky like a scene from a winter fairytale.",
+    "img": "frozen_skating.jpeg",
+    "alt": "Castle View"
+  },
+  {
+    "title": "Our Succulent and Luscious Spread",
+    "short_text": "",
+    "text": "The castle delights guests with exquisite cuisine, enchanting desserts, magical drinks, and impeccable royal service fit for a fairytale.",
+    "img": "frozen_food.jpeg",
+    "alt": "Arendalle Feast"
+  },
+  {
+    "title": "Our beautiful Markets",
+    "short_text": "",
+    "text": "Discover the enchanting Winter Market, a beautiful and amazing wonderland filled with twinkling lights, festive stalls, seasonal treats, and heartwarming holiday charm.",
+    "img": "frozen_market.jpeg",
+    "alt": "Winter Market"
+  },
+  {
+    "title": "Our World Class Entertainment",
+    "short_text": "",
+    "text": "Step into the Frozen Theme Castle where fun, dance, culture, and dazzling entertainment come to life in a magical celebration!",
+    "img": "frozen_entertainment.jpeg",
+    "alt": "Undersea Festival"
+  },
+  {
+    "title": "Magical Experience",
+    "short_text": "",
+    "text": " Experience winter magic at the Frozen Theme Resort with snowman building and thrilling sledging adventures for all ages!",
+    "img": "frozen_experience.jpeg",
+    "alt": "Mystical Exploration"
+  }]
+    return render_template(
+        'frozen_fantasia.html',
+        cards=cards,
+        video="/video/frozen_main.mp4",
+        hero_title="Arandelle holidays",
+        hero_subtitle="The Frozen Magical Land of Arandelle!!",
+        intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
+        css_file="frozen_styles.css"
+    )
