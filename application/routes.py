@@ -541,3 +541,75 @@ def frozen_page():
         intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
         css_file="frozen_styles.css"
     )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/about_us')
+def about_us():
+    return render_template('about_us_page.html', title_head='EGT Magical Team',
+                           title_body='Magical Team of Enchanted Getaways! ',
+                           subtitle='★ We make your dreams come true★',
+                           img="static/images/wallpaper_home.jpeg")

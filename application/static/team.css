@@ -1,0 +1,113 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* TEAM SECTION */
+.team-section {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+.team-section .header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.team-section .header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.team-section .header em {
+  color: #555;
+  font-style: italic;
+}
+
+.team-section .header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* FILTER BUTTONS */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.filters button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #555;
+  transition: background-color 0.2s, color 0.2s;
+  border: 1px solid #ccc;
+}
+
+.filters button.active,
+.filters button:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* GRID LAYOUT */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CARD STYLE */
+.card {
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #eee;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.card p {
+  color: #888;
+  font-size: 0.9rem;
+}
+nav {
+  all: revert;
+}
+nav {
+    all: revert;
+    font-family: initial;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
