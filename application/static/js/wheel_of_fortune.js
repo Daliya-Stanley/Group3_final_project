@@ -3,17 +3,23 @@ const ctx = canvas.getContext("2d");
 const spinButton = document.getElementById("spinButton");
 const resultText = document.getElementById("result");
 
-const prizes = [
-    "A Magic Wand",
+const prizes = promotional_products.map(p => ({
+    id:    p.productid,
+    // remove the trailing " - Free" just for the label
+    label: p.productname.replace(/\s*-\s*Free$/, "")
+  }));
+
+console.log("prizes now: ", prizes )
+
+const noPrizeLabels = [
     "No Prize - Try Again",
-    "A Flying Carpet",
     "Not This Time",
-    "One dress - No mess",
-    "No Prize",
-    "A Magic Potion",
-    "A Suitcase",
-    "Extra Spin",
-];
+    "Extra Spin"
+  ];
+
+console.log("prizes now: ", prizes )
+
+noPrizeLabels.forEach(lbl => prizes.push({ id: null, label: lbl }));
 
 const colors = ["#fe2712", "#fc600a", "#fb9902"];
 
@@ -52,7 +58,7 @@ function drawWheel() {
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
         ctx.font = "14px Arial";
-        ctx.fillText(prizes[i], 180, 10);
+        ctx.fillText(prizes[i].label, 180, 10);
         ctx.restore();
     }
 }
@@ -63,21 +69,23 @@ function getPrizeIndex(finalAngle) {
     return Math.floor((360 - degrees + sliceDegrees / 2) % 360 / sliceDegrees);
 }
 
-//const resultText = document.getElementById("result");
 
 // This function will be called when the wheel stops spinning
 function showPrize(prize) {
     const noPrizeOptions = ["No Prize", "No Prize - Try Again", "Not This Time", "Extra Spin"];
 
     // Check if the prize is one of the "no prize" types
-    if (noPrizeOptions.includes(prize)) {
-        resultText.innerHTML = `<p>You won: ${prize}</p>`;
+    if (noPrizeOptions.includes(prize.label)) {
+        resultText.innerHTML = `<p>Sorry: ${prize.label}</p>`;
     } else {
 
-        // Replace with your actual product page or link structure
-        const link = `/add_to_cart/${urlPrize}`;  // e.g., /product/a-magic-wand
+        // Get productid of the prize won
+        productid = prize.id
 
-        resultText.innerHTML = `<p>You won: <a href="${link}">${prize}</a></p>`;
+        // Replace with your actual product page or link structure
+        const link = `/add_to_cart/${productid}`;  // e.g., /product/a-magic-wand
+
+        resultText.innerHTML = `<p>You won: <a href="${link}">${prize.label}</a></p>`;
     }
 }
 
@@ -87,7 +95,7 @@ function spinWheel() {
     spinning = true;
     let spinAngle = Math.floor(3600 + Math.random() * 1000);
     //The number of seconds the wheel spins for 500 = 0.5 seconds
-    let spinTime = 3000;
+    let spinTime = 500;
     let start = null;
 
     function animateWheel(timestamp) {
