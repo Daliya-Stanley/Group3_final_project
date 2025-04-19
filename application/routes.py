@@ -34,14 +34,10 @@ def home_page():
 @app.route('/wheel_of_fortune')
 def wheel_of_fortune_game():
     user_email = session.get('user_email')
+    promotional_products = get_promotional_products()
     first_name = get_first_name_by_email(user_email) if user_email else "Traveller"
-    return render_template('wheel_of_fortune.html', first_name=first_name)
+    return render_template('wheel_of_fortune.html', first_name=first_name, promotional_products = promotional_products) #html=python variable
 
-@app.route('/wheel')
-def wheel():
-    user_id = session.get('user_id')
-    first_name = get_first_name_by_id(user_id) if user_id else "Traveller"
-    return render_template('wheel.html', first_name=first_name)
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:

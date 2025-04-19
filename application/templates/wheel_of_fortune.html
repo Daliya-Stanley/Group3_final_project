@@ -1,10 +1,12 @@
 {% extends "layout.html" %}
-{% block body_content %}
 {% block title %} Wheel of Fortune {% endblock %}
+{% block body_content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='wheel_of_fortune.css') }}">
 
 <section class="login-wrapper wheel-wrapper">
     <div class="login-card login-fade wheel-card">
-        <div class="content">
+        <div class="wheel-content">
             <h1>Hi {{first_name}}!</h1>
             <h3>Spin and Win a prize!</h3>
             <p id="result"></p>
@@ -16,8 +18,12 @@
         </div>
     </div>
 
+    <script>
+     // Inject promotional_products from Flask into global JS variable
+        const promotional_products = {{ promotional_products | tojson }};
+    </script>
 
-   <script src="{{ url_for('static', filename='js/wheel_of_fortune.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/wheel_of_fortune.js') }}"></script>
 
 </section>
 
