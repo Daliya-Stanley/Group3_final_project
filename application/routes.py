@@ -127,7 +127,9 @@ def login():
                 session.permanent = True  # Make the session persistent
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('rock_paper_scissors'))
+            if not next_page or next_page == 'None':
+                next_page = url_for('rock_paper_scissors')
+            return redirect(next_page)
         else:
             # Login failed: show error message
             error = result["message"]
@@ -151,22 +153,6 @@ def mulan_page():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @app.route('/Product')
 def product_page():
     product_list = get_products()
@@ -183,10 +169,10 @@ def experience_page():
     return render_template('experience2.html', title_head='Magical Experience', experiences = experience_list,gallery_images=gallery_images)
 
 
-@app.route('/add_to_cart/<int:product_id>')
-def add_to_cart(product_id):
+@app.route('/add_product_to_cart/<int:product_id>')
+def add_product_to_cart(product_id):
     if 'cart' not in session:
-        session['cart'] = {'products': {}, 'experiences': {}}
+        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
     cart = session['cart']
     product_cart = cart['products']
 
@@ -196,85 +182,97 @@ def add_to_cart(product_id):
         product_cart[str(product_id)] = 1
 
     session['cart']['products']= product_cart
+
+
+    if 'product_cart' not in session:
+        session['product_cart'] = []
+
+    product = get_product_details(product_id)
+    user_id = session.get('user_id')
+    session['product_cart'].append({
+        'product_id': int(product_id),
+        'quantity': 1,
+        'user_id': user_id,
+        'productname': product[0],
+        'productprice': product[1],
+        'productimage': product[2],
+    })
+
+    session.modified = True
+
     print("Cart after adding", session['cart'])
-    flash("🪄 Product added to cart! Continue shopping or go to view your cart! ", "success")
+    flash("Product added to cart! Continue shopping or go to view your cart! ", "success")
     return redirect(url_for('product_page'))
-
-
-# @app.route('/remove_from_cart/<int:product_id>')
-# def remove_from_cart(product_id):
-#     product_cart = session.get('cart', {})
-#
-#     if str(product_id) in product_cart:
-#         del product_cart[str(product_id)]
-#         session['cart']['products'] = product_cart
-#         flash('Product removed from cart!', 'info')
-#
-#     return redirect(url_for('view_cart'))
 
 
 @app.route('/cart')
 def view_cart():
-    cart = session.get("cart", {})
+    experience_cart = session.get("experience_cart", [])
+    product_cart = session.get("product_cart", [])
+
+
     products_in_cart = []
     experiences_in_cart = []
     total_price = 0
 
-    if not cart or (not cart.get('products') and not cart.get('experiences')):
-        return render_template('cart.html', products=[], experiences=[], total=0)
-
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    total_price = 0
+    for item in product_cart:
+        total = item['quantity'] * item['productprice']
+        item['total'] = total
+        products_in_cart.append(item)
+        total_price += total
 
-    for product_id, quantity in cart['products'].items():
-        cursor.execute("Select ProductName, ProductPrice, ProductImage from Product Where ProductID =  %s",(product_id,))
-        product=cursor.fetchone()
-        if product:
-            name, price,image = product
-            total = quantity * price
-            total_price += total
+    for item in experience_cart:
+        total = item['guests'] * item['experienceprice']
+        item['total'] = total
+        item['quantity'] = item['guests']
+        item['datereserved'] = item['booking_date']
+        experiences_in_cart.append(item)
+        total_price += total
 
-            products_in_cart.append({'productid': product_id, 'productname': name, 'productprice': price,'productimage': image, 'quantity': quantity, 'total': total})
-
-
-    for experience_id,quantity in cart ['experiences'].items():
-        cursor.execute("""SELECT
-            e.ExperienceName,
-            e.ExperiencePrice,
-            e.ExperienceImage,
-            b.BookingDate
-        FROM BookingExperience as b
-        INNER JOIN Experiences e ON b.ExperienceID = e.ExperienceID
-        WHERE b.ExperienceID = %s""", (experience_id,))
-        experience =cursor.fetchone()
-        if experience:
-            name, price, image, date = experience
-            total = quantity * price
-            total_price += total
-
-            experiences_in_cart.append(
-                {'experienceid': experience_id, 'experiencename': name, 'experienceprice': price, 'experienceimage': image, 'datereserved':date,
-                'quantity': quantity, 'total': total})
+    cursor.close()
     conn.close()
-    return render_template ('cart.html', products=products_in_cart, experiences= experiences_in_cart, total= total_price)
+
+    return render_template(
+        'cart.html',
+        products=products_in_cart,
+        experiences=experiences_in_cart,
+        total=total_price
+    )
+
 
 @app.route('/add_to_cart_experience/<int:experience_id>', methods=['POST'])
 def add_to_cart_experience(experience_id):
     guests = int(request.form['guests'])
+    booking_date = request.form['booking_date']
+    booking_time = request.form['booking_time']
+    user_id = request.form['user_id']
+
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Fetch max group size
-    cursor.execute("SELECT ExperienceGroupSize FROM Experiences WHERE ExperienceID = %s", (experience_id,))
-    max_guests = cursor.fetchone()[0]
 
-    if guests > max_guests:
-        flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.")
+    cursor.execute("""
+        SELECT ExperienceName, ExperiencePrice, ExperienceImage, ExperienceGroupSize 
+        FROM Experiences WHERE ExperienceID = %s
+    """, (experience_id,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not result:
+        flash("Experience not found.", "danger")
+        return redirect(url_for('experience_page'))
+
+    experiencename, experienceprice, experienceimage, group_size = result
+
+    if guests > group_size:
+        flash(f"Max group size for this experience is {group_size}. You tried to book {guests}.")
         return redirect(url_for('experience_page'))
 
     if 'cart' not in session:
-        session['cart'] = {'products': {}, 'experiences': {}}
+        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
     cart = session['cart']
     exp_cart = cart['experiences']
 
@@ -285,14 +283,73 @@ def add_to_cart_experience(experience_id):
 
     session['cart']['experiences'] = exp_cart
 
-    booking_date = request.form['booking_date']
-    booking_time = request.form['booking_time']
-    user_id = request.form['user_id']
-    guests = int(request.form['guests'])
-    insert_experience_booking(experience_id, booking_date, booking_time, user_id, guests)
+    cart_item = {
+        'experience_id': int(experience_id),
+        'user_id': user_id,
+        'booking_date': booking_date,
+        'booking_time': booking_time,
+        'guests': guests,
+        'experiencename': experiencename,
+        'experienceprice': experienceprice,
+        'experienceimage': experienceimage
+    }
 
-    flash("Booking successful! Magical Experience added to cart! Continue shopping or go to view your cart!", "success")
+    if 'experience_cart' not in session:
+        session['experience_cart'] = []
+
+    session['experience_cart'].append(cart_item)
+    session.modified = True
+
+    flash("✨ Magical Experience added to cart!", "success")
     return redirect(url_for('experience_page'))
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    experience_cart = session.get('experience_cart', [])
+    product_cart = session.get('product_cart', [])
+
+    if not experience_cart and not product_cart:
+        flash("Cart is empty!", "warning")
+        return redirect(url_for('view_cart'))
+
+    user_id = session.get('user_id')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("INSERT INTO Orders (UserID) VALUES (%s)", (user_id,))
+        order_id = cursor.lastrowid
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        process_order_items(order_id, product_cart, experience_cart, user_id)
+
+        # Clear the cart
+        session['product_cart'] = []
+        session['experience_cart'] = []
+        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
+
+        flash("Your magical order has been placed! 🎉", "success")
+        return redirect(url_for('order_receipt', order_id=order_id))
+
+    except Exception as e:
+        flash(f"Checkout failed: {str(e)}", "danger")
+        return redirect(url_for('view_cart'))
+
+@app.route('/order_receipt/<int:order_id>')
+def order_receipt(order_id):
+    order_info = get_order_info(order_id)
+    products = get_ordered_products(order_id)
+    experiences = get_ordered_experiences(order_id)
+
+    return render_template('order_receipt.html',
+                           order=order_info,
+                           products=products,
+                           experiences=experiences,
+                           order_id=order_id)
+
+
 
 @app.route('/availability', methods=['POST'])
 def check_availability():
@@ -304,75 +361,24 @@ def check_availability():
     return jsonify({"remaining_spots": remaining})
 
 
-@app.route('/remove_from_cart_experience/<int:experience_id>')
-# def remove_from_cart_experience(experience_id):
-#     exp_cart = session.get('cart', {})
-#
-#     if str(experience_id) in exp_cart:
-#         del exp_cart[str(experience_id)]
-#         session['cart']['experiences'] = exp_cart
-#         flash('Magical Experience removed from cart!', 'info')
-#
-#     return redirect(url_for('view_cart'))
-
 @app.route('/remove_from_cart/<item_type>/<int:item_id>')
 def remove_from_cart(item_type, item_id):
     cart = session.get('cart', {'products': {}, 'experiences': {}})
-
-    # Convert item_id to string to match the cart key format
     item_id_str = str(item_id)
 
-    if item_type not in cart:
-        flash('Invalid item type', 'danger')
-        return redirect(url_for('view_cart'))
-
-    if item_id_str in cart[item_type]:
+    # Remove from main cart dictionary
+    if item_type in cart and item_id_str in cart[item_type]:
         del cart[item_type][item_id_str]
         session['cart'] = cart
-        flash(f'{item_type.capitalize()} removed from cart!', 'info')
 
-        if item_type == 'experiences':
-            try:
-                delete_latest_booking(item_id)
-            except Exception as e:
-                flash(f'Error deleting booking: {e}', 'danger')
-    else:
-        flash(f'{item_type.capitalize()} not found in the cart.', 'warning')
+    # Remove from detailed session cart
+    if item_type == 'products':
+        session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('product_id') != item_id]
+    elif item_type == 'experiences':
+        session['experience_cart'] = [item for item in session.get('experience_cart', []) if item.get('experience_id') != item_id]
 
+    flash(f'{item_type.capitalize()} removed from cart!', 'info')
     return redirect(url_for('view_cart'))
-
-# @app.route('/cart')
-# def view_cart_experience():
-#     cart = session.get("cart", {})
-#     experience_in_cart = []
-#
-#     if not cart:
-#         return render_template('cart.html',experiences= [], total=0)
-#
-#     conn = get_db_connection()
-#     cursor = conn.cursor()
-#
-#     total_price = 0
-#     for experience_id, quantity in cart.items():
-#         cursor.execute("Select ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences Where ExperienceID =  %s",(experience_id,))
-#         experience=cursor.fetchone()
-#         if experience:
-#             name, price,image, date = experience
-#             total = quantity * price
-#             total_price += total
-#
-#             experience_in_cart.append({'experienceid': experience_id, 'experiencename': name, 'experienceprice': price,'experienceimage': image, 'datereserved' : date, 'quantity': quantity, 'total': total})
-#     return render_template ('cart.html', experiences=experience_in_cart, total= total_price)
-
-# @app.route('/remove_from_cart/<item_type>/<int:item_id>')
-# def remove_from_cart(item_type, item_id):
-#     cart = session.get('cart', {})
-#     item_key = str(item_id)
-#     if item_key in cart:
-#         del cart[item_key]
-#         session['cart'] = cart
-#         flash(f"{item_type.title()} removed from cart.", "info")
-#     return redirect(url_for('view_cart_experience'))
 
 @app.route('/product_sale')
 def product_sale():

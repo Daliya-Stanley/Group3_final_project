@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block title %}Order Receipt{% endblock %}
+{% block body_content %}
+<div class="container mt-5">
+  <h2 class="mb-4">🧾 Your Order Receipt</h2>
+
+  {% if order %}
+  <p><strong>Order Date:</strong> {{ order[0] }}</p>
+  {% endif %}
+
+  {% set totals = namespace(products=0, experiences=0) %}
+
+  {% if products %}
+  <h4 class="mt-4">🛍️ Magical Products</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      {% set product_total = product.quantity * product.productprice %}
+      {% set totals.products = totals.products + product_total %}
+      <tr>
+        <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>
+        <td>{{ product.productname }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>£{{ product.productprice }}</td>
+        <td>£{{ product_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% if experiences %}
+  <h4 class="mt-5">✨ Enchanted Experiences</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Experience</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Guests</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for experience in experiences %}
+      {% set experience_total = experience.guests * experience.experienceprice %}
+      {% set totals.experiences = totals.experiences + experience_total %}
+      <tr>
+        <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>
+        <td>{{ experience.experiencename }}</td>
+        <td>{{ experience.bookingdate }}</td>
+        <td>{{ experience.bookingtime }}</td>
+        <td>{{ experience.guests }}</td>
+        <td>£{{ experience.experienceprice }}</td>
+        <td>£{{ experience_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% set grand_total = totals.products + totals.experiences %}
+  <p class="fw-bold mt-4">Grand Total: £{{ grand_total }}</p>
+
+  <a href="{{ url_for('home_page') }}" class="btn btn-primary mt-3">Return to Home</a>
+</div>
+{% endblock %}

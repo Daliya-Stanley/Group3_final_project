@@ -40,6 +40,27 @@ VALUES
 ('Magic Wand', 50, 1,'magical_wand.jpeg'),
 ('Spectacular One Dress - No Mess', 100, 1, 'product_clothes.jpeg');
 
+CREATE TABLE Orders (
+  OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  UserID INT NOT NULL,
+  FOREIGN KEY (UserID) REFERENCES User(UserID),
+  OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+);
+
+
+create table ProductOrders
+(
+	ProductOrdersID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    foreign key (ProductID) references Product(ProductID),
+	UserID INT NOT NULL,
+	foreign key (UserID) references User(UserID),
+    Quantity INT NOT NULL,
+    OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    OrderID INT NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+
 create table Inventory
 (
 InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -134,9 +155,13 @@ BookingTime time NOT NULL,
 UserID INT NOT NULL,
 foreign key (UserID) references User(UserID),
 Guests INT NOT NULL DEFAULT 1,
+OrderID INT NULL,
+FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
 ReviewText TEXT NULL,
 Rating INT NULL
 );
+
+
 
 create table Shopping
 (
@@ -168,4 +193,17 @@ Date date NOT NULL
 
 -- CALL GetExperienceDetails(2);
 SHOW COLUMNS FROM BookingExperience;
+select * from ProductOrders;
 select * from BookingExperience;
+select * from Orders;
+SELECT p.ProductName, po.Quantity, p.ProductPrice, p.ProductImage
+        FROM ProductOrders po
+        JOIN Product p ON p.ProductID = po.ProductID
+        WHERE po.OrderID = 10;
+SELECT OrderDate FROM Orders WHERE OrderID = 15;
+
+
+ SELECT e.ExperienceName, b.BookingDate, b.BookingTime, b.Guests, e.ExperiencePrice, e.ExperienceImage
+        FROM BookingExperience b
+        JOIN Experiences e ON e.ExperienceID = b.ExperienceID
+        WHERE b.OrderID = 15;

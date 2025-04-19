@@ -1,66 +1,75 @@
-  {% extends "layout.html" %}
-  {% block title %}Your Cart{% endblock %}
-  {% block body_content %}
+{% extends "layout.html" %}
+{% block title %}Your Cart{% endblock %}
+{% block body_content %}
+<div class="container mt-5">
   <h2>Your Cart</h2>
 
-  {% if products or experiences %}
+  {% if products or experiences or session.experience_cart %}
 
-  {% if products %}
-  <table class="table">
-    <tr>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Image</th>
-      <th></th>
-      <th>Total</th>
-    </tr>
-    {% for product in products %}
-    <tr>
-      <td>{{ product.productname }}</td>
-      <td>{{ product.quantity }}</td>
-      <td>£{{ product.total }}</td>
-       <td> <img  src="{{url_for('static', filename='images/' + product.productimage)}}" height="100px" width="100px"></td>
-      <td></td>
-      <td><a href="{{ url_for('remove_from_cart',item_type='products', item_id=product.productid) }}" class="btn btn-danger btn-sm">
-    Remove Items
-  </a></td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% endif %}
+    {% if products %}
+    <h4>Magical Products</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>
+          <td>{{ product.productname }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>£{{ product.productprice }}</td>
+          <td>£{{ product.total }}</td>
+          <td><a href="{{ url_for('remove_from_cart', item_type='products', item_id=product.product_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
 
+    {% if experiences %}
+    <h4>Enchanted Experiences</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Experience</th>
+          <th>Date Reserved</th>
+          <th>Guests</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for experience in experiences %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>
+          <td>{{ experience.experiencename }}</td>
+          <td>{{ experience.datereserved }}</td>
+          <td>{{ experience.quantity }}</td>
+          <td>£{{ experience.total }}</td>
+          <td><a href="{{ url_for('remove_from_cart', item_type='experiences', item_id=experience.experience_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
 
-  {% if experiences %}
-  <table class="table">
-    <tr>
-      <th>Experience</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Image</th>
-      <th>Date Reserved</th>
-      <th>Total</th>
-    </tr>
-    {% for experience in experiences %}
-    <tr>
-      <td>{{ experience.experiencename }}</td>
-      <td>{{ experience.quantity }}</td>
-      <td>£{{ experience.total}}</td>
-       <td> <img  src="{{url_for('static', filename='images/' + experience.experienceimage)}}" height="100px" width="100px"></td>
-      <td>{{ experience.datereserved}}</td>
-      <td><a href="{{ url_for('remove_from_cart',item_type='experiences', item_id=experience.experienceid) }}" class="btn btn-danger btn-sm">
-    Remove Items
-  </a></td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% endif %}
+    <form method="POST" action="{{ url_for('checkout') }}">
+      <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+    </form>
 
-  <p><strong>Total: £{{ total }}</strong></p>
+    <p class="mt-4 fw-bold">Total so far: £{{ total }}</p>
 
   {% else %}
-  <p>Your cart is empty.</p>
+    <p>Your cart is empty.</p>
   {% endif %}
-
-
-  {% endblock %}
+</div>
+{% endblock %}

@@ -134,7 +134,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ product.productname }}</h5>
         <p class="card-text">£{{ product.productprice }}</p>
-        <a href="{{ url_for('add_to_cart', product_id=product.productid) }}" class="btn btn-primary">Buy</a>
+        <a href="{{ url_for('add_product_to_cart', product_id=product.productid) }}" class="btn btn-primary">Buy</a>
       </div>
     </div>
   </div>
@@ -208,4 +208,3 @@
 </section>
 
 {% endblock %}
-
