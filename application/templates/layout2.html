@@ -2,6 +2,7 @@
 {% block title %}{% endblock %}
 
 {% block body_content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename= 'destinations.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
 {% if css_file %}
@@ -21,16 +22,16 @@
     <h3 class="subtitle">{{ hero_subtitle }}</h3>
   </div>
 </section>
-<!-- TEMP: debug output -->
+
 
 <!-- Booking Form (scroll target) -->
 <div id="booking-form" class="scroll-anchor"></div>
 <section class="booking-bar">
   <form class="booking-form">
-    <input type="date" name="checkin" placeholder="Start date" />
-    <input type="date" name="checkout" placeholder="End date" />
-    <input type="number" name="guests" placeholder="Guests" min="1" />
-    <button type="submit" class="btn-submit">Check Availability</button>
+    <input type="text" id="checkin" name="checkin" class="flatpickr-date" placeholder="Start date" required />
+    <input type="text" id="checkout" name="checkout" class="flatpickr-date" placeholder="End date" required />
+    <input type="number" name="guests" placeholder="Guests" min="1" required />
+    <button type="submit" class="btn btn-primary mt-3">Check Availability</button>
   </form>
 </section>
 
@@ -55,6 +56,15 @@
   {% endfor %}
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr(".flatpickr-date", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: "today"
+  });
+</script>
 {% endblock %}
 
 

@@ -73,14 +73,14 @@ def authenticate_user(email, password):
         cursor = conn.cursor()
 
         # Look up user by email
-        sql = "SELECT email, password FROM User WHERE email = %s"
+        sql = "SELECT UserID, Email, Password FROM User WHERE Email = %s"
         cursor.execute(sql, (email,))
         user = cursor.fetchone()
 
         if user:
-            stored_email, stored_password = user
+            user_id, stored_email, stored_password = user
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
-                return {"success": True, "message": "Login successful", "email": stored_email}
+                return {"success": True, "message": "Login successful", "email": stored_email, "user_id": user_id}
             else:
                 return {"success": False, "message": "Incorrect password"}
         else:
@@ -99,14 +99,47 @@ def get_experience():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ExperienceID, ExperienceName, ExperiencePrice, ExperienceImage, DateReserved from Experiences" # selecting the first name...
+    sql = ("""
+            SELECT 
+                    e.ExperienceID,
+                    e.ExperienceName,
+                    e.ExperiencePrice,
+                    e.ExperienceImage,
+                    e.ExperienceDescription,
+                    e.ExperienceDuration,
+                    el.ExperienceLevelKey,
+                    e.ExperienceMinAge,
+                    e.ExperienceGroupSize,
+                    GROUP_CONCAT(be.ReviewText SEPARATOR '||'),
+                    GROUP_CONCAT(be.Rating SEPARATOR '||')
+                FROM Experiences e
+                JOIN ExperienceLevel el ON e.ExperienceLevelID = el.ExperienceLevelID
+                LEFT JOIN BookingExperience be ON be.ExperienceID = e.ExperienceID AND be.ReviewText IS NOT NULL
+                GROUP BY e.ExperienceID
+            """)
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     experience_list = []
-    for experience in result_set:
-        experience_list.append({'experienceid': experience[0],'experiencename': experience[1], 'experienceprice': experience[2], 'experienceimage': experience[3], 'datereserved' :experience[4]})
-        print(experience_list)
+    for row in result_set:
+        reviews = []
+        if row[9]:
+            texts = row[9].split('||')
+            ratings = row[10].split('||') if row[10] else []
+            reviews = [{"text": t, "author": "Guest", "rating": r} for t, r in zip(texts, ratings)]
+
+        experience_list.append({
+            "experienceid": row[0],
+            "experiencename": row[1],
+            "experienceprice": row[2],
+            "experienceimage": row[3],
+            "experiencedescription": row[4],
+            "experienceduration": row[5],
+            "experiencelevelkey": row[6],
+            "experienceminage": row[7],
+            "experiencegroupsize": row[8],
+            "reviews": reviews
+        })
     return experience_list
 
 def get_first_name_by_email(email):
@@ -137,17 +170,6 @@ def get_product_details(product_id):
     return product
 
 
-def insert_experience_booking(experience_id, booking_date, booking_time):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime)
-        VALUES (%s, %s, %s)
-    """, (experience_id, booking_date, booking_time))
-    conn.commit()
-    cursor.close()
-    conn.close()
-
 def delete_latest_booking(experience_id):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -160,6 +182,99 @@ def delete_latest_booking(experience_id):
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_remaining_spots(experience_id, booking_date, booking_time):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+            SELECT IFNULL(SUM(Guests), 0) 
+            FROM BookingExperience 
+            WHERE ExperienceID = %s AND BookingDate = %s AND BookingTime =  %s 
+        """, (experience_id, booking_date, booking_time))
+    total_booked_guests = cursor.fetchone()[0]
+
+    cursor.execute("""
+            SELECT ExperienceGroupSize 
+            FROM Experiences 
+            WHERE ExperienceID = %s
+        """, (experience_id,))
+    max_group_size = cursor.fetchone()[0]
+
+    cursor.close()
+    conn.close()
+
+    remaining = max_group_size - total_booked_guests
+    return max(remaining, 0)
+
+
+def process_order_items(order_id, product_cart, experience_cart, default_user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        # Insert products
+        for item in product_cart:
+            product_id = item.get('product_id')
+            user_id = item.get('user_id') or default_user_id
+            quantity = item.get('quantity')
+            if not all([product_id, user_id, quantity]):
+                continue
+            cursor.execute("""
+                INSERT INTO ProductOrders (ProductID, UserID, Quantity, OrderID)
+                VALUES (%s, %s, %s, %s)
+            """, (product_id, user_id, quantity, order_id))
+
+        # Insert experiences
+        for item in experience_cart:
+            experience_id = item.get('experience_id')
+            user_id = item.get('user_id') or default_user_id
+            booking_date = item.get('booking_date')
+            booking_time = item.get('booking_time')
+            guests = item.get('guests')
+            if not all([experience_id, user_id, booking_date, booking_time, guests]):
+                continue
+            cursor.execute("""
+                INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime, UserID, Guests, OrderID)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (experience_id, booking_date, booking_time, user_id, guests, order_id))
+
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        cursor.close()
+        conn.close()
+
+def get_order_info(order_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT OrderDate FROM Orders WHERE OrderID = %s", (order_id,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result
+
+def get_ordered_products(order_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT p.ProductName, po.Quantity, p.ProductPrice, p.ProductImage
+        FROM ProductOrders po
+        JOIN Product p ON p.ProductID = po.ProductID
+        WHERE po.OrderID = %s
+    """, (order_id,))
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [
+        {
+            'productname': row[0],
+            'quantity': row[1],
+            'productprice': row[2],
+            'productimage': row[3]
+        } for row in rows
+    ]
 
 def get_promotional_products():
     conn = get_db_connection()  # establish connection with DB server and DB called ""
@@ -177,3 +292,25 @@ def get_promotional_products():
     # print(product_list)
     return product_list
 
+def get_ordered_experiences(order_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT e.ExperienceName, b.BookingDate, b.BookingTime, b.Guests, e.ExperiencePrice, e.ExperienceImage
+        FROM BookingExperience b
+        JOIN Experiences e ON e.ExperienceID = b.ExperienceID
+        WHERE b.OrderID = %s
+    """, (order_id,))
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [
+        {
+            'experiencename': row[0],
+            'bookingdate': row[1],
+            'bookingtime': row[2],
+            'guests': row[3],
+            'experienceprice': row[4],
+            'experienceimage': row[5]
+        } for row in rows
+    ]
