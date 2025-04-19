@@ -46,71 +46,65 @@
 {% if 'user_email' in session %}
 <!-- Experience Overview & Booking Section -->
 <section class="container my-5">
-  <div class="row row-cols-1 row-cols-md-2 g-4">
+  <div class="d-flex flex-column gap-4">
     {% for experience in experiences[:5] %}
-    <div class="col {% if loop.last and loop.length is odd %}mx-auto{% endif %}">
-      <div class="card h-100 shadow-lg">
-        <div class="row g-0">
-          <div class="col-md-6">
-            <img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" class="img-fluid rounded-start h-100 w-100 object-fit-cover" alt="Experience Image">
-          </div>
-          <div class="col-md-6">
-            <div class="card-body">
-              <h5 class="card-title fw-bold">{{ experience.experiencename }}</h5>
-              <p class="text-muted mb-1">£{{ experience.experienceprice }}</p>
-              <p class="mb-2">{{ experience.experiencedescription or "No description available." }}</p>
+    <div class="card shadow-lg experience-card flex-column flex-md-row">
+      <div class="w-100 w-md-50">
+        <img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" class="img-fluid rounded-start w-100 h-100 object-fit-cover" alt="Experience Image">
+      </div>
+      <div class="w-100 w-md-50 p-3">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ experience.experiencename }}</h5>
+          <p class="text-muted mb-1">£{{ experience.experienceprice }}</p>
+          <p class="mb-2">{{ experience.experiencedescription or "No description available." }}</p>
 
-              <!-- Overview Details -->
-              <ul class="list-unstyled small">
-                <li><strong>Duration:</strong> {{ experience.experienceduration or 'N/A' }}</li>
-                <li><strong>Fitness Level:</strong> {{ experience.experiencelevelkey or 'Moderate' }}</li>
-                <li><strong>Minimum Age:</strong> {{ experience.experienceminage or '12 years old' }}</li>
-                <li><strong>Group Size:</strong> {{ experience.experiencegroupsize or 'Max 12' }}</li>
-              </ul>
+          <!-- Overview Details -->
+          <ul class="list-unstyled small">
+            <li><strong>Duration:</strong> {{ experience.experienceduration or 'N/A' }} hours</li>
+            <li><strong>Fitness Level:</strong> {{ experience.experiencelevelkey or 'Moderate' }}</li>
+            <li><strong>Minimum Age:</strong> {{ experience.experienceminage or '12 years old' }} years old</li>
+          </ul>
 
-              <!-- Booking Form -->
-              <form method="POST" action="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}">
-                <input type="hidden" name="experience_id" value="{{ experience.experienceid }}">
-                <input type="hidden" name="user_id" value="{{ session.user_id }}">
+          <!-- Booking Form -->
+          <form method="POST" action="{{ url_for('add_to_cart_experience', experience_id=experience.experienceid) }}">
+            <input type="hidden" name="experience_id" value="{{ experience.experienceid }}">
+            <input type="hidden" name="user_id" value="{{ session.user_id }}">
 
-                <div class="mb-2">
-                  <label for="booking_date_{{ loop.index }}" class="form-label">Date</label>
-                  <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" data-experience-id="{{ experience.experienceid }}" required>
-                </div>
-
-                <div class="mb-2">
-                  <label for="booking_time_{{ loop.index }}" class="form-label">Time</label>
-                  <select class="form-select" id="booking_time_{{ loop.index }}" name="booking_time" required>
-                    {% for hour in range(9, 15) %}
-                    <option value="{{ "%02d:00" % hour }}">{{ "%02d:00" % hour }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-
-                <div class="mb-3">
-                  <label for="guests_{{ loop.index }}" class="form-label">Guests</label>
-                  <input type="number" class="form-control" name="guests" id="guests_{{ loop.index }}" value="1" min="1" max="{{ experience.experiencegroupsize }}" required>
-                  <small class="form-text text-muted" id="availability_{{ loop.index }}">Max group size: {{ experience.experiencegroupsize }}</small>
-                </div>
-
-                <button type="submit" class="btn btn-success w-100">Book Now</button>
-              </form>
-
-              <!-- What Our Clients Say -->
-              <div class="mt-4">
-                <h6 class="fw-bold">What Our Clients Say</h6>
-                {% if experience.reviews %}
-                  <blockquote class="blockquote border-start ps-3 fst-italic">
-                    <p>"{{ experience.reviews[0].text }}"</p>
-                    <footer class="blockquote-footer">{{ experience.reviews[0].author }}</footer>
-                  </blockquote>
-                {% else %}
-                  <p class="fst-italic text-muted">No reviews yet.</p>
-                {% endif %}
+            <div class="row">
+              <div class="col-sm-12 col-md-4 mb-2">
+                <label for="booking_date_{{ loop.index }}" class="form-label">Date</label>
+                <input type="text" class="form-control flatpickr" id="booking_date_{{ loop.index }}" name="booking_date" data-experience-id="{{ experience.experienceid }}" required>
               </div>
-
+              <div class="col-sm-12 col-md-4 mb-2">
+                <label for="booking_time_{{ loop.index }}" class="form-label">Time</label>
+                <select class="form-select" id="booking_time_{{ loop.index }}" name="booking_time" required>
+                  {% for hour in range(9, 15) %}
+                  <option value="{{ '%02d:00' % hour }}">{{ '%02d:00' % hour }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-sm-12 col-md-4 mb-3">
+                <label for="guests_{{ loop.index }}" class="form-label">Guests</label>
+                <input type="number" class="form-control" name="guests" id="guests_{{ loop.index }}" value="1" min="1" max="{{ experience.experiencegroupsize }}" required>
+                <small class="form-text text-muted" data-availability>Max group size: {{ experience.experiencegroupsize }}</small>
+              </div>
             </div>
+            <button type="submit" class="btn btn-success w-100">Book Now</button>
+          </form>
+
+          <!-- What Our Clients Say -->
+          <div class="mt-4">
+            <h6 class="fw-bold">What Our Clients Say</h6>
+            {% if experience.reviews %}
+              <blockquote class="blockquote border-start ps-3 fst-italic">
+                <p>"{{ experience.reviews[0].text }}"</p>
+                <footer class="blockquote-footer">{{ experience.reviews[0].author }}</footer>
+              </blockquote>
+            {% else %}
+              <p class="fst-italic text-muted">No reviews yet.</p>
+            {% endif %}
           </div>
+
         </div>
       </div>
     </div>
@@ -126,33 +120,59 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    flatpickr(".flatpickr", {
-      minDate: "today",
-      dateFormat: "Y-m-d",
-      onChange: function(selectedDates, dateStr, instance) {
-        const input = instance.input;
-        const experienceId = input.dataset.experienceId;
-        const container = input.closest("form");
-        const guestsInput = container.querySelector("input[name='guests']");
-        const availabilityMsg = container.querySelector("small.form-text");
+  function updateAvailability(container, dateStr) {
+    const experienceId = container.querySelector("input[name='experience_id']").value;
+    const timeSelect = container.querySelector("select[name='booking_time']");
+    const bookingTime = timeSelect.value;
+    const guestsInput = container.querySelector("input[name='guests']");
+    const availabilityMsg = container.querySelector("[data-availability]");
+    const submitBtn = container.querySelector("button[type='submit']");
 
-        fetch("/availability", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            experience_id: experienceId,
-            booking_date: dateStr
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          guestsInput.max = data.remaining_spots;
-          availabilityMsg.innerText = `Remaining spots: ${data.remaining_spots}`;
-        });
-      }
+    fetch("/availability", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        experience_id: experienceId,
+        booking_date: dateStr,
+        booking_time: bookingTime
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      guestsInput.max = data.remaining_spots;
+      availabilityMsg.innerText =
+        data.remaining_spots > 0
+          ? `Remaining spots: ${data.remaining_spots}`
+          : "⚠️ Fully booked for this time slot!";
+      availabilityMsg.classList.toggle("text-danger", data.remaining_spots === 0);
+      console.log("Submit button:", submitBtn);
+      console.log("Remaining spots:", data.remaining_spots);
+      submitBtn.disabled = data.remaining_spots === 0;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".flatpickr").forEach(input => {
+      flatpickr(input, {
+        minDate: "today",
+        dateFormat: "Y-m-d",
+        onChange: function(selectedDates, dateStr, instance) {
+          const container = input.closest("form");
+          updateAvailability(container, dateStr);
+        }
+      });
+    });
+
+    document.querySelectorAll("select[name='booking_time']").forEach(select => {
+      select.addEventListener("change", function () {
+        const container = select.closest("form");
+        const dateInput = container.querySelector(".flatpickr");
+        if (dateInput.value) {
+          updateAvailability(container, dateInput.value);
+        }
+      });
     });
   });
 </script>

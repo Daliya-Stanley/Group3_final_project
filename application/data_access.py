@@ -194,15 +194,15 @@ def delete_latest_booking(experience_id):
     cursor.close()
     conn.close()
 
-def get_remaining_spots(experience_id, booking_date):
+def get_remaining_spots(experience_id, booking_date, booking_time):
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
             SELECT IFNULL(SUM(Guests), 0) 
             FROM BookingExperience 
-            WHERE ExperienceID = %s AND BookingDate = %s
-        """, (experience_id, booking_date))
+            WHERE ExperienceID = %s AND BookingDate = %s AND BookingTime =  %s 
+        """, (experience_id, booking_date, booking_time))
     total_booked_guests = cursor.fetchone()[0]
 
     cursor.execute("""

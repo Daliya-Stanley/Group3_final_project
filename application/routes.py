@@ -299,7 +299,8 @@ def check_availability():
     data = request.get_json()
     experience_id = data['experience_id']
     booking_date = data['booking_date']
-    remaining = get_remaining_spots(experience_id, booking_date)
+    booking_time = data['booking_time']
+    remaining = get_remaining_spots(experience_id, booking_date, booking_time)
     return jsonify({"remaining_spots": remaining})
 
 
