@@ -1,28 +1,3 @@
-body {
-  font-family: 'Raleway', sans-serif;
-  color: #f6ebfa;
-  background-color: #1a0f2d;
-}
-
-h2, h3 {
-  font-family: 'Playfair Display', serif;
-}
-
-#title{
-    font-family: 'Playfair Display', serif;
-}
-
-
-
-a {
-  color: #d7a3f5;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  color: #f2c7ff;
-}
 
 /* Top Hero Section */
 .top-section {
@@ -51,14 +26,8 @@ a:hover {
   z-index: 1;
 }
 
-.top-section .container {
-  position: relative;
-  z-index: 2;
-}
 
 .top-section h1 {
-  font-size: 4.5rem;
-  font-weight: bold;
   color: #aee5f5;
   text-shadow: 0 0 10px #00ffff, 0 0 20px #0077ff;
 }
@@ -71,169 +40,28 @@ a:hover {
   text-shadow: 0 0 5px rgba(255, 215, 255, 0.3);
 }
 
-.top-content {
-  text-align: center;
-  padding: 0 15px;
-}
 
 .main-title {
-  font-size: 4rem;
-  font-weight: 700;
   color: #f6ebfa;
   text-shadow: 0 0 10px #bb86fc, 0 0 30px #9146ff;
-  animation: fadeInDown 1.2s ease forwards;
 }
 
 .subtitle {
-  font-size: 1.5rem;
   color: #e0ffff;
-  font-weight: 400;
-  margin-top: 0.5rem;
-  animation: fadeInUp 1.4s ease forwards;
 }
 
-/* Section Styling */
-section {
-  padding: 80px 20px;
-  position: relative;
-  background: linear-gradient(to bottom, #1a0f2d, #2a1045);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
 
 h1#title {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  padding-top: 1rem;
   color: #d2f1fa;
 }
 
-.highlight {
-  color: #e29cff;
-  font-weight: bold;
+.btn-submit {
+  background-color: #9954BA;
 }
 
-.tighter-top {
-  padding-top: 30px;
-}
 
-/* Image Grid */
-.wonderland .img-fluid {
-  border-radius: 1.5rem;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  transition: transform 0.3s ease;
-}
 
-.wonderland .img-fluid:hover {
-  transform: scale(1.05);
-}
 
-/* Accordion Styling */
-.accordion {
-  background: transparent;
-  border: none;
-  margin-top: 2rem;
-  font-family: 'Cinzel Decorative', cursive;
-}
 
-.accordion-item {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 1rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 20px rgba(186, 85, 211, 0.2); /* light purple glow */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  overflow: hidden;
-  transition: all 0.4s ease-in-out;
-}
 
-.accordion-header h3 {
-  margin: 0;
-}
-
-.accordion-button {
-  font-size: 1.1rem;
-  font-weight: 600;
-  background: linear-gradient(90deg, #472e8c, #8342a5);
-  color: #fff;
-  padding: 1rem 1.5rem;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  transition: all 0.3s ease;
-}
-
-.accordion-button::after {
-  content: '⮞';
-  float: right;
-  transform: rotate(90deg);
-  transition: transform 0.3s ease;
-}
-
-.accordion-button.collapsed::after {
-  transform: rotate(0deg);
-}
-
-.accordion-button:hover {
-  background: linear-gradient(
-    to right,
-    rgba(216, 112, 214, 0.5),
-    rgba(255, 182, 193, 0.4)
-  );
-  box-shadow: 0 0 18px rgba(255, 182, 255, 0.5);
-  transform: scale(1.01);
-}
-
-.accordion-collapse {
-  background: rgba(75, 0, 130, 0.2); /* deep purple overlay */
-  padding: 1rem 1.5rem;
-  color: #f8e9ff;
-  font-size: 1rem;
-  line-height: 1.6;
-  transition: all 0.4s ease-in-out;
-}
-
-.accordion-body {
-  animation: fadeIn 0.6s ease forwards;
-  text-align: center;
-}
-
-.accordion-body img.accordion-img {
-  width: 100%;
-  height: auto;
-  margin-top: 1rem;
-  border-radius: 1rem;
-  display: block;
-  box-shadow: 0 0 12px rgba(221, 160, 221, 0.4);
-  object-fit: cover;
-}
-
-.accordion-img {
-  width: 95%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 1rem;
-  margin: 1.5rem auto 0;
-  display: block;
-  box-shadow: 0 0 20px rgba(255, 180, 255, 0.2);
-}
-
-.accordion-img.zoom-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 182, 255, 0.6);
-}
-
-/* Soft fade animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.accordion-image-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  padding: 0.5rem;
-}
 

@@ -30,6 +30,7 @@
             background-size: cover;
             background-size: 100% 100%;
             background-repeat: no-repeat;
+            font-family: 'Pattaya', sans-serif;
             color: white;">
 
         <div class="container pt-5" >
@@ -58,7 +59,7 @@
 <section id ="product">
 <br>
   <br>
-<h4 style="text-align:center; font-family: 'Poppins', sans-serif;">Enchanted Holidays Presents Magical Products!!!</h4>
+<h2 style="text-align:center">Enchanted Holidays Presents Magical Products!!!</h2>
 <br>
   <div id = "product-carousel-container">
   <div id="customer-feedback" class="carousel slide">
@@ -116,7 +117,12 @@
   </button>
 </div>
 
-
+<section>
+  <br>
+  <br>
+  <h2 style="text-align:center">Choose one of our mesmerizing products or all of them 😉!!!</h2>
+  <br>
+  <br>
 {% for product in products %}
   {% if loop.index0 % 3 == 0 %}
     <div class="row g-4 justify-content-center mb-5">

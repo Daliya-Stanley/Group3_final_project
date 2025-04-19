@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}{% endblock %}
+
+{% block body_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'destinations.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
+{% if css_file %}
+<link rel="stylesheet" href="{{ url_for('static', filename=css_file) }}">
+{% endif %}
+<!-- Hero Section -->
+<section class="top-section">
+  <div class="video-container">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
+    </video>
+  </div>
+  <div class="overlay"></div>
+  <div class="top-content container">
+    <a href="#booking-form" class="book-now-btn">Book Now</a>
+    <h1 class="main-title">{{ hero_title }}</h1>
+    <h3 class="subtitle">{{ hero_subtitle }}</h3>
+  </div>
+</section>
+<!-- TEMP: debug output -->
+
+<!-- Booking Form (scroll target) -->
+<div id="booking-form" class="scroll-anchor"></div>
+<section class="booking-bar">
+  <form class="booking-form">
+    <input type="date" name="checkin" placeholder="Start date" />
+    <input type="date" name="checkout" placeholder="End date" />
+    <input type="number" name="guests" placeholder="Guests" min="1" />
+    <button type="submit" class="btn-submit">Check Availability</button>
+  </form>
+</section>
+
+<!-- Destination Headline -->
+<h1 id="title">{{ intro_title }}</h1>
+
+<!-- Feature Cards Grid -->
+<div class="feature-grid-full">
+  {% for card in cards %}
+  <div class="feature-card" data-aos="fade-up">
+    <div class="image-wrapper">
+      <img src="{{ url_for('static', filename='images/' ~ card.img) }}" alt="{{ card.alt }}" class="feature-img">
+      <div class="flip-title-overlay">
+        <h3>{{ card.title }}</h3>
+        <p class="short-text">{{ card.short_text }}</p>
+      </div>
+    </div>
+    <div class="card-hover-text">
+      <p>{{ card.text }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+

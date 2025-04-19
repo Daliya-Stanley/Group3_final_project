@@ -1,0 +1,262 @@
+body {
+  font-family: 'Raleway', sans-serif;
+  color: #f6ebfa;
+  background-color: #1a0f2d;
+}
+
+h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+#title{
+    font-family: 'Playfair Display', serif;
+}
+
+h1{
+  text-align: center;
+}
+
+h1#title {
+  font-size: 2.5rem;
+  padding-top: 1.5rem;
+}
+
+a {
+  color: #d7a3f5;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #f2c7ff;
+}
+
+.feature-grid-full {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.01);
+}
+
+.image-wrapper {
+   position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.feature-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 24px;
+  filter: brightness(0.85);
+}
+
+.flip-title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1rem 1.5rem;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  backdrop-filter: blur(2px);
+  color: white;
+  box-sizing: border-box;
+}
+
+.flip-title-overlay h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.flip-title-overlay .short-text {
+  font-size: 0.9rem;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+.card-hover-text {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  margin-top: 0;
+  padding: 0 0.5rem;
+}
+
+.feature-card:hover .card-hover-text {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.card-hover-text p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #f6ebfa;
+  font-family: 'Raleway', sans-serif;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+
+/* === Responsive grid === */
+@media (max-width: 1024px) {
+  .feature-grid-full {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .feature-grid-full {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.book-now-btn {
+  position: absolute;
+  top: -390px;
+  right: -290px;
+  background-color: #fff;
+  color: #000;
+  padding: 1rem 4rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  z-index: 20;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.book-now-btn:hover {
+  background-color: #f2f2f2;
+  text-decoration:none;
+  color: #111;
+}
+
+.scroll-anchor {
+  display: block;
+  height: 80px;
+  margin-top: -80px;
+  visibility: hidden;
+}
+
+.booking-bar {
+  width: 100%;
+  background-color: #ffffff05;
+  padding: 2rem 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 2rem;
+}
+
+.booking-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.booking-form input,
+.booking-form button {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: none;
+  min-width: 160px;
+}
+
+.booking-form input {
+  background-color: #ffffffee;
+  color: #000;
+}
+
+.btn-submit {
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #0097a7;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+.top-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.top-section h1 {
+  font-size: 4.5rem;
+  font-weight: bold;
+}
+
+.top-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.top-section h4 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.top-content {
+  text-align: center;
+  padding: 0 15px;
+}
+
+.main-title {
+  font-size: 4rem;
+  font-weight: 700;
+  animation: fadeInDown 1.2s ease forwards;
+}
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  animation: fadeInUp 1.4s ease forwards;
+}
+
+section {
+  padding: 80px 20px;
+  position: relative;
+  background: linear-gradient(to bottom, #1a0f2d, #2a1045);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+

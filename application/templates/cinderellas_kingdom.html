@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block title %} Cinderella's Kingdom {% endblock %}
 {% block head %}
-  <title>{{ title_head }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='cinderella.css') }}">
+    <title>{{ title_head }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cinderella.css') }}">
 {% endblock %}
 
 {% block body_content %}
 
+<!-- Top Section -->
 <section class="top-section"
         style="
             background-image: url('{{ img }}');
@@ -27,80 +28,114 @@
         </div>
       </section>
 
-
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-purple shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="#">Cinderella's Kingdom</a>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Activities to Do</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Attend the Royal Ball</a></li>
-            <li><a class="dropdown-item" href="#">Visit the Glass Slipper Spa</a></li>
-            <li><a class="dropdown-item" href="#">Pumpkin Carriage Ride</a></li>
-            <li><a class="dropdown-item" href="#">Dine in the Grand Hall</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Places to Visit</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Cinderella’s Castle</a></li>
-            <li><a class="dropdown-item" href="#">Enchanted Forest</a></li>
-            <li><a class="dropdown-item" href="#">Wishing Well</a></li>
-            <li><a class="dropdown-item" href="#">Midnight Garden</a></li>
-          </ul>
-        </li>
-      </ul>
+<!-- Welcome Header -->
+<section class ="bottom-section">
+<header class="text-center py-5">
+    <div>
+        <h1>Welcome to Cinderella's Kingdom</h1>
+        <p> Enter a magical realm where dreams sparkle and fairy tales come alive! Experience grand ballrooms and enchanting gardens on your holiday in this wondrous kingdom!</p>
     </div>
-  </div>
-</nav>
+</header>
 
-<!-- About Section -->
-<section class="about text-center py-5">
-  <div class="container">
-    <h2>About the Destination</h2>
-    <p>
-      Nestled beyond enchanted forests and glowing rivers, Cinderella’s Kingdom invites you to live your own fairy tale. From golden staircases to timeless romance, your fantasy vacation awaits.
-    </p>
-  </div>
+
+<!-- Activities Section -->
+
+<section class="activities text-center py-5">
+    <h2>Whimsical Adventures That Await You</h2>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Card for Grand Ball -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/grand_ball.jpg') }}"
+                         class="card-img-top"
+                         alt="Guests dancing at the Grand Ball">
+                    <div class="card-body">
+                        <h5 class="card-title">Attend the Grand Ball</h5>
+                        <p class="card-text">Dress in your finest attire and dance the night away at the Grand Ball. Join fellow guests for a night of enchanting music, delightful dances, and a chance to meet magical characters!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Enchanted Gardens -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/enchanted_gardens.jpg') }}"
+                         class="card-img-top"
+                         alt="Beautiful flowers in the Enchanted Gardens">
+                    <div class="card-body">
+                        <h5 class="card-title">Explore the Enchanted Gardens</h5>
+                        <p class="card-text">Wander through the beautiful Enchanted Gardens, where every flower tells a tale. Enjoy magical picnics or simply relax amidst the fragrant blooms filled with butterflies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card for Fairy Godmother -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/fairy_godmother.jpg') }}"
+                         class="card-img-top"
+                         alt="Fairy Godmother assisting guests">
+                    <div class="card-body">
+                        <h5 class="card-title">Meet the Fairy Godmother</h5>
+                        <p class="card-text">Don’t miss your chance to meet your very own Fairy Godmother. She’s ready to sprinkle a little magic into your life! Share your dreams and see them come to life with her help.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<!-- Image Gallery Section -->
-<section class="gallery text-center py-5">
-  <h2>Step into the storybook of dreams</h2>
-  <p>Take a drink and wish away! You just might be part of a fairy tale.</p>
-  <div class="container">
-    <!-- Gallery Item: Castle -->
-    <div class="gallery-item">
-      <img src="{{ url_for('static', filename='images/castle.jpg') }}" class="img-fluid" alt="Castle">
-    </div>
+<section class="activities text-center py-5">
+    <h2>Enchanting Wonders to Behold</h2>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Card for Cinderella's Carriage -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/carriage3.jpg') }}"
+                         class="card-img-top"
+                         alt="Beautiful Carriage">
+                    <div class="card-body">
+                        <h5 class="card-title">The Original Cinderella Carriage</h5>
+                        <p class="card-text">Shimmering chariot woven from moonlight and magic, where dreams take flight. Cinderella rode on this to meet her Prince Charming beneath a canopy of starlit skies.</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Gallery Item: Ballroom -->
-    <div class="gallery-item">
-      <div class="caption">
-        <h3>Dance at the Royal Ball</h3>
-        <p>Where midnight never comes too soon.</p>
-        <img src="{{ url_for('static', filename='images/ballroomjpg.jpg') }}" class="img-fluid" alt="Ballroom">
-      </div>
-    </div>
+            <!-- Card for Glass Slipper -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/glass_slippers.jpg') }}"
+                         class="card-img-top"
+                         alt="Beautiful Glass Slippers">
+                    <div class="card-body">
+                        <h5 class="card-title">The Glass Slippers</h5>
+                        <p class="card-text">Race against time with these exquisite glass slippers, shimmering with a magic all their own. Close your eyes and let your imagination transport you, for in them lies a fairy tale waiting to be awakened!</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Gallery Item: Carriage -->
-    <div class="gallery-item">
-      <div class="caption">
-        <h3>Ride in a Golden Carriage</h3>
-        <p>Travel like royalty through enchanted lands.</p>
-        <img src="{{ url_for('static', filename='images/carriage3.jpg') }}" class="img-fluid" alt="Carriage">
-      </div>
+            <!-- Card for Cinderella's Dress -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/magic_dress.jpg') }}"
+                         class="card-img-top"
+                         alt="Cinderella's Dress on display">
+                    <div class="card-body">
+                        <h5 class="card-title">Magical Mystery Dress</h5>
+                        <p class="card-text">Adorned with sparkling gems and woven from twinkling fairy dust, this enchanting dress transformed a humble girl into a radiant Princess. It invites you to gaze upon its splendor and dream of the magic it once bestowed!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
-<!-- Footer -->
-<footer class="text-center bg-purple text-white py-3">
-  <p>✨ Enchanting getaways for dreamers of all ages ✨</p>
-</footer>
+</section>
+
+<!-- Plan Your Visit Section -->
+<section class="plan-visit text-center py-5">
+    <h4>✨Book your holiday now for an unforgettable experience that you and your family will cherish forever!✨</h4>
+</section>
 
 {% endblock %}

@@ -1,104 +1,77 @@
 {% extends "layout.html" %}
- {% block title %}Book Magical Destination{% endblock %}
+{% block title %}Book Magical Destination{% endblock %}
+
 {% block body_content %}
-
-<section class="top-section"
-        style="
-height: 100vh;
-            position: relative;
-            top:0;
-            max-width: 1500px;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            color: white;">
-
-
-
+<link rel="stylesheet" href="{{ url_for('static', filename='booking.css') }}">
 
 <section id="bookdestinaton">
-    <div class="container pt-5">
-        <div class="row">
-            <div class="col6 col-md-4">
-                 <div class="card">
-                     <img >
-                     <div class="container">
-                         <h2>Wonderland</h2>
-                         <p class="title">Want to wander in Wonderland?</p>
-                         <p>Ever dreamt of falling down the rabbit hole into the whimsical world of Wonderland?</p>
-                         <p>This is your chance to have a luxurious holiday in the Wonderland!</p>
-                         <p><a href='#'><button class="button">Book Here!</button></a></p>
-                     </div>
-                 </div>
-             </div>
+  <div class="container py-5">
+    <h2 class="text-center mb-5" style="font-family: 'Lilita One', cursive; color: #9954BA;">Book Your Magical Destination</h2>
+    <div class="card-container">
 
-            <div class="col6 col-md-4">
-                <div class="card">
-                    <img>
-                    <div class="container">
-                        <h2>Cinderella's Kingdom!</h2>
-                        <p class="title">Welcome to the destination where wishes come true !</p>
-                        <p>Nestled beyond enchanted forests and glowing rivers, Cinderella’s Kingdom invites you to live your own fairy tale.</p>
-                        <p>From golden staircases to timeless romance, your fantasy vacation awaits/p>
-                        <p><a href="#"><button class="button">Book Here!</button></a></p>
-                    </div>
-                </div>
+      <div class="flip-card card-animate">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/WT.jpg') }}'); background-size: cover; background-position: center;">
+              <h4>Wonderland</h4>
+              <p>Fall into the whimsical rabbit hole adventure.</p>
+              <a href="{{ url_for('wonderland') }}" class="btn btn-light">Book Here!</a>
             </div>
+          </div>
+      </div>
 
-            <div class="col6 col-md-4">
-                <div class="card">
-                    <img>
-                    <div class="container">
-                        <h2>Aquariel World!</h2>
-                        <p class="title">Dive into a world where wonder glows beneath the waves</p>
-                        <p>Follow Ariel into a realm where curiosity reigns and sea stars guide your way.</p>
-                        <p>Glide past colorful reefs and singing seahorses as you discover the ocean’s most magical secrets.</p>
-                        <p><a href="#"><button class="button">Book Here!</button></a></p>
-                    </div>
-                </div>
+      <div class="flip-card card-animate">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/cinderella.jpg') }}'); background-size: cover; background-position: center;">
+              <h4>Cinderella’s Kingdom</h4>
+              <p>Live your fairytale — glass slippers included.</p>
+              <a href="{{ url_for('cinderella_kingdom') }}" class="btn btn-light">Book Here!</a>
             </div>
+          </div>
+      </div>
 
-
-
-         <div class="row">
-             <div class="col-sm-6">
-                 <div class="card">
-                         <img>
-                     <div class="container">
-                         <h2>Magical Land of Arandelle</h2>
-                         <p class="title">Come and explore the known and unknown magical powers of Arandelle.</p>
-                         <p>A holiday in the frozen land of Arandel feels like stepping into a shimmering snow globe where magic dances on every icy breeze.</p>
-                         <p>A holiday in the frozen land of Arandel is a magical escape into a world of glittering snow, enchanted silence, and timeless winter wonder.</p>
-                         <p><a href="#"><button class="button">Book Here!</button></a></p>
-                     </div>
-                 </div>
-             </div>
-
-             <div class="col-sm-6">
-                 <div class="card">
-                         <img>
-                     <div class="container">
-                         <h2>Land of Mulan</h2>
-                         <p class="title">£</p>
-                         <p>£</p>
-                         <p>@</p>
-                         <p><a href="/"><button class="button">Book Here!</button></a></p>
-                     </div>
-                 </div>
-             </div>
-
-             <div id="message" class="col-md-12 mx-auto">
-                <div class="container pt-5 text-center">
-                    <hr>
-                    <h2><i class='bx bxs-castle'></i><br>We're excited to take you on an amazing journey!!<br></h2>
-                    <hr>
-                </div>
+      <div class="flip-card card-animate">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/ariel_topsection.jpg') }}'); background-size: cover; background-position: center;">
+              <h4>Aquariel World</h4>
+              <p>Swim with magic under the sea.</p>
+              <a href="{{ url_for('aquariel') }}" class="btn btn-light">Book Here!</a>
             </div>
-         </div>
-        </div>
+          </div>
+      </div>
+
+      <div class="flip-card card-animate">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/frozen_main.jpeg') }}'); background-size: cover; background-position: center;">
+              <h4>Arandelle</h4>
+              <p>Winter wonders and icy enchantments.</p>
+              <a href="{{ url_for('frozen_page') }}" class="btn btn-light">Book Here!</a>
+            </div>
+          </div>
+      </div>
+
+      <div class="flip-card card-animate">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: cover; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/mulan.png') }}'); background-size: cover; background-position: center;">
+              <h4>Land of Mulan</h4>
+              <p>Discover honor, bravery, and a legendary journey.</p>
+              <a href="#" class="btn btn-light">Book Here!</a>
+            </div>
+          </div>
+      </div>
+
     </div>
+
+    <div class="text-center mt-5">
+      <hr>
+      <h2><i class='bx bxs-castle'></i><br>We're excited to take you on an amazing journey!!</h2>
+      <hr>
+    </div>
+  </div>
 </section>
 
 {% endblock %}
