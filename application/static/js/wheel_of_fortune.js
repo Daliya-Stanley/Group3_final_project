@@ -4,7 +4,8 @@ const spinButton = document.getElementById("spinButton");
 const resultText = document.getElementById("result");
 
 const prizes = [
-    "A Magic Wand", "No Prize - Try Again",
+    "A Magic Wand",
+    "No Prize - Try Again",
     "A Flying Carpet",
     "Not This Time",
     "One dress - No mess",
@@ -72,11 +73,9 @@ function showPrize(prize) {
     if (noPrizeOptions.includes(prize)) {
         resultText.innerHTML = `<p>You won: ${prize}</p>`;
     } else {
-        // Convert prize text to a URL-safe version (optional enhancement)
-        const urlPrize = encodeURIComponent(prize.toLowerCase().replace(/\s+/g, '-'));
 
         // Replace with your actual product page or link structure
-        const link = `/product/${urlPrize}`;  // e.g., /product/a-magic-wand
+        const link = `/add_to_cart/${urlPrize}`;  // e.g., /product/a-magic-wand
 
         resultText.innerHTML = `<p>You won: <a href="${link}">${prize}</a></p>`;
     }

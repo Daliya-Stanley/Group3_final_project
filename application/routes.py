@@ -248,7 +248,13 @@ def frozen_page():
 @app.route('/Product')
 def product_page():
     product_list = get_products()
-    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products = product_list)
+    return render_template('product.html',
+                           title_head='Magical Products',
+                           title_body='Our Splendid Magical Products',
+                           subtitle='★ The Magical Things Which You Always Wished For!★',
+                           img="static/images/product_background.jpeg",
+                           products = product_list
+                           )
 
 @app.route('/Experience')
 def experience_page():

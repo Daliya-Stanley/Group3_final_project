@@ -21,7 +21,7 @@ def get_products():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product" # selecting the first name...
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID = 3" # selecting the first name...#added where clause so it doesn't show the free products
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info

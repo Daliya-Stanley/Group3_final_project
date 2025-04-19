@@ -10,3 +10,4 @@ foreign key (ProductStatusID) references ProductStatus(ProductStatusID)
 );
 alter table Inventory 
 change column Inventory InventoryID INT;
+
