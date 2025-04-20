@@ -17,7 +17,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div class="toast align-items-center text-white bg-{{ category }} border-0 show mb-2"
+          <div class="toast align-self-start text-white bg-{{ category }} border-0 show mb-2"
                role="alert" aria-live="assertive" aria-atomic="true" style="animation: fadeInToast 1s ease-in-out;">
             <div class="d-flex">
               <div class="toast-body">
@@ -35,14 +35,11 @@
   <audio id="toast-sound" src="{{ url_for('static', filename='sounds/ding.mp3') }}" preload="auto"></audio>
 
 
-<nav class="navbar navbar-expand-lg align-items-end sticky-top">
+<nav class="navbar navbar-expand-lg align-items-end  sticky-top">
   <a href="/" class="navbar-brand">
     <img src="{{ url_for('static', filename='images/EG_logo_transparent.png') }}" alt="Enchanted Getaways" height="45px">
-    <h4 class="mb-0 text-decoration-none">Enchanted Getaways</h4>
+    <h4 class="mb-0">Enchanted Getaways</h4>
   </a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
   <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
     <ul class="navbar-nav">
@@ -131,7 +128,7 @@
 
             {% if cart_count > 0 %}
               <img src="{{ url_for('static', filename='images/cart_black.png') }}" alt="Cart" width="30" height="30">
-              <span class="position-absolute translate-left badge text-color-white" style="
+              <span class="position-absolute translate-left badge;" style="
                     right: 0px;
                     left: 0px;
                     bottom: 0px;
@@ -152,15 +149,20 @@
             {% endif %}
           </a>
 
-          {% if 'user_email' in session %}
-          <button class="login-btn">
-            <a href="{{ url_for('logout') }}"><i class='bx bxs-castle bx-burst-hover'></i>Logout</a>
-          </button>
-          {% else %}
-          <button class="login-btn align-self-end">
-            <a href="{{ url_for('login') }}"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
-          </button>
-          {% endif %}
+          <div class="dropdown align-self-end">
+              <a class="nav-link dropdown-toggle pe-2 d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class='bx bxs-castle castle-icon' style="font-size: 1.5rem;"></i>
+             </a>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                {% if 'user_email' in session %}
+                  <li><a class="dropdown-item" href="{{ url_for('home_page') }}">My Account</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                  <li><a class="dropdown-item" href="{{ url_for('login') }}">Login/Register</a></li>
+                {% endif %}
+              </ul>
+          </div>
       </div>
 
 
