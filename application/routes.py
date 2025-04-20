@@ -160,7 +160,7 @@ def product_page():
         product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
 
     return render_template(
-        'product.html',
+        'product1.html',
         title_head='Magical Products',
         title_body='Our Splendid Magical Products',
         subtitle='★ The Magical Things Which You Always Wished For!★',
@@ -196,7 +196,7 @@ def add_product_to_cart(product_id):
     # Enforce stock cap
     if current_qty + quantity_to_add > stock_remaining:
         flash(f"Only {stock_remaining - current_qty} items left in stock!", "warning")
-        return redirect(url_for('product_page'))
+        return redirect(url_for('product_page_new'))
 
     product_cart_dict[str(product_id)] = current_qty + quantity_to_add
     session['cart']['products'] = product_cart_dict
@@ -218,6 +218,7 @@ def add_product_to_cart(product_id):
             'productname': product[0],
             'productprice': product[1],
             'productimage': product[2],
+            'productdescription': product[3],
             'stockremaining': int(stock_remaining)
         })
 
@@ -653,3 +654,20 @@ def about_us():
                            title_body='Magical Team of Enchanted Getaways! ',
                            subtitle='★ We make your dreams come true★',
                            img="static/images/wallpaper_home.jpeg")
+
+
+@app.route('/Product1')
+def product_page_new():
+    product_list = get_products()
+    purchased = get_total_purchased_by_product()
+
+    for product in product_list:
+        pid = str(product['productid'])
+        product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
+        
+    image_dir = os.path.join(app.static_folder, "images")
+    magic_images = sorted([
+        filename for filename in os.listdir(image_dir)
+        if filename.startswith("magic") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
+    ])
+    return render_template('product1.html', title_head='Magical Products', products = product_list, magic_images=magic_images)
