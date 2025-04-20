@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}My Magical Account{% endblock %}
+{% block body_content %}
+
+<div class="container my-5">
+  <h2 class="text-center mb-4" style="font-family: 'Lilita One', cursive; color: #B57EDC;">Welcome back, {{ user_first_name }}</h2>
+
+  <!-- Ordered Products -->
+  <div class="mb-5">
+    <h3 class="mb-3">🧙‍♀️ Your Magical Products</h3>
+    {% if products %}
+      <div class="row g-4">
+        {% for product in products %}
+          <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="card shadow-sm h-100" style="font-size: 0.9rem;">
+                <img src="{{ url_for('static', filename='images/' ~ product.ProductImage) }}"
+                     class="card-img-top"
+                     alt="{{ product.ProductName }}"
+                     style="height: 120px; object-fit: cover;">
+                <div class="card-body py-2 px-3">
+                  <h6 class="fw-bold mb-1">{{ product.ProductName }}</h6>
+                  <p class="mb-1">£{{ product.ProductPrice }} × {{ product.Quantity }}</p>
+                  <p class="text-muted small mb-0">Ordered {{ product.OrderDate.strftime('%d %b %Y') }}</p>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted fst-italic">You haven't bought any products yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Booked Experiences -->
+  <div class="mb-5">
+    <h3 class="mb-3">🌟 Your Magical Experiences</h3>
+    {% if experiences %}
+      <div class="row g-4">
+        {% for exp in experiences %}
+          <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="{{ url_for('static', filename='images/' ~ exp.ExperienceImage) }}" class="img-fluid rounded-start" alt="{{ exp.ExperienceName }}">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ exp.ExperienceName }}</h5>
+                    <ul class="list-unstyled mb-2">
+                      <li><strong>Date:</strong> {{ exp.BookingDate.strftime('%d %b %Y') }}</li>
+                      <li><strong>Time:</strong> {{ exp.BookingTime }}</li>
+                      <li><strong>Guests:</strong> {{ exp.Guests }}</li>
+                      <li><strong>Price:</strong> £{{ exp.ExperiencePrice }}</li>
+                    </ul>
+                    <form method="POST" action="{{ url_for('my_account') }}">
+                      <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
+                      {% if not exp.CancelStatus %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
+                      {% else %}
+                        <p class="text-info small mt-2">❄️ Cancellation request submitted.</p>
+                      {% endif %}
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted fst-italic">No experiences booked yet. Go make some magical memories! ✨</p>
+    {% endif %}
+  </div>
+
+</div>
+
+{% endblock %}

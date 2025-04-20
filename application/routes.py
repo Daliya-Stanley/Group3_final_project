@@ -423,15 +423,51 @@ def product_sale():
     if 'user_email' in session:
         user_email= session['user_email']
         return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
-    return render_template('product_sale.html', user_email=False, title='Login Area')
 
 
+@app.route('/my_account', methods=['GET', 'POST'])
+def my_account():
+    if 'user_id' not in session:
+        flash("Please log in to access your account.", "warning")
+        return redirect(url_for('login', next=request.path))
 
+    user_id = session['user_id']
+    user_first_name = get_first_name_by_id(user_id)
 
+    # Handle cancellation request (POST)
+    if request.method == 'POST':
+        booking_id = request.form.get('booking_id')
 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
+        # Check if request already exists
+        cursor.execute("""
+            SELECT * FROM CancelExperienceRequests 
+            WHERE BookingID = %s AND UserID = %s
+        """, (booking_id, user_id))
+        existing = cursor.fetchone()
 
+        if not existing:
+            cursor.execute("""
+                INSERT INTO CancelExperienceRequests (BookingID, UserID)
+                VALUES (%s, %s)
+            """, (booking_id, user_id))
+            conn.commit()
 
+        cursor.close()
+        conn.close()
+
+    # Load data for display
+    orders = get_user_orders(user_id)
+    experiences = get_user_experiences(user_id)
+    products = get_user_ordered_products(user_id)
+
+    return render_template('my_account.html',
+                           user_first_name=user_first_name,
+                           orders=orders,
+                           experiences=experiences,
+                           products=products)
 
 
 

@@ -156,7 +156,7 @@
 
               <ul class="dropdown-menu dropdown-menu-end">
                 {% if 'user_email' in session %}
-                  <li><a class="dropdown-item" href="{{ url_for('home_page') }}">My Account</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('my_account') }}">My Account</a></li>
                   <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
                   <li><a class="dropdown-item" href="{{ url_for('login') }}">Login/Register</a></li>

@@ -154,7 +154,7 @@ def get_first_name_by_email(email):
 def get_first_name_by_id(user_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT first_name FROM users WHERE id = %s", (user_id,))
+    cursor.execute("SELECT FirstName FROM User WHERE UserId = %s", (user_id,))
     result = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -329,3 +329,47 @@ def get_total_purchased_by_product():
 
     return {str(row[0]): row[1] for row in result}
 
+def get_user_orders(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM Orders WHERE UserID = %s ORDER BY OrderDate DESC", (user_id,))
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return orders
+
+def get_user_ordered_products(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT P.ProductName, P.ProductImage, P.ProductPrice, OP.Quantity, O.OrderDate
+        FROM ProductOrders OP
+        JOIN Product P ON OP.ProductID = P.ProductID
+        JOIN Orders O ON OP.OrderID = O.OrderID
+        WHERE O.UserID = %s
+        ORDER BY O.OrderDate DESC
+    """, (user_id,))
+    products = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return products
+
+def get_user_experiences(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT 
+            E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
+            B.Guests, B.BookingDate, B.BookingTime, B.BookingID,
+            (SELECT Status FROM CancelExperienceRequests 
+             WHERE BookingID = B.BookingID AND UserID = %s LIMIT 1) AS CancelStatus
+        FROM BookingExperience B
+        JOIN Experiences E ON B.ExperienceID = E.ExperienceID
+        JOIN Orders O ON B.OrderID = O.OrderID
+        WHERE O.UserID = %s
+        ORDER BY B.BookingDate DESC
+    """, (user_id, user_id))
+    experiences = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return experiences
