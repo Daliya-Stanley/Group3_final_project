@@ -85,7 +85,7 @@ def register():
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
 
-            return redirect(url_for('rock_paper_scissors'))
+            return redirect(url_for('home_page'))
         else:
             error = result["message"]
 
@@ -121,7 +121,7 @@ def login():
                 session.permanent = True  # Make the session persistent
 
             flash("Login successful! Welcome back 🎉", "success")
-            return redirect(url_for('rock_paper_scissors'))
+            return redirect(url_for('home_page'))
         else:
             # Login failed: show error message
             error = result["message"]
@@ -141,7 +141,30 @@ def logout():
 
 @app.route('/mulan')
 def mulan_page():
-      return render_template('mulan.html')
+    cards = [
+        {"title": "Teatime with the Matchmaker",
+        "text":"Step into Mulan’s world and try your hand at the most delicate of arts — making tea under the watchful eye of the Matchmaker. Steady hands, graceful pours, and maybe a little chaos… just the way Mulan likes it.",
+         "img":"tea_making_experience.jpg",
+         "alt":"Tea with the matchmaker"
+         },
+        {"title": "Train like a Warrior at Captain Li Shang's Camp!",
+         "text": "Step into Mulan’s world and enter the legendary training grounds where heroes are forged. Learn discipline, strength, and maybe how to catch an arrow mid-air (no promises).",
+         "img": "learn_how_to_fight.jpg",
+         "alt": "Mulan with her sword"
+         },
+        {"title": "A tour of the Imperial Palace!",
+         "text": "Step into the world of Mulan and explore the majestic Emperor's Palace, a symbol of imperial power and grandeur. This magnificent palace, with its towering roofs, intricate carvings, and vibrant colors, offers a glimpse into the heart of ancient China.",
+         "img": "tour_emperor_castle.png",
+         "alt": "imperial_palace'"
+         },
+
+    ]
+    return render_template(
+        'mulan.html',
+        cards=cards,
+        hero_title="Welcome to Mulan's World",
+        hero_subtitle="★ A mystical retreat where destiny, beauty, and bravery meet ★",
+        css_file="mulan.css", )
 
 
 
