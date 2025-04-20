@@ -20,7 +20,8 @@ Status VARCHAR (20) NOT NULL
 INSERT INTO ProductStatus (Status)
 VALUES 
 ('Available'),
-('Not Available');
+('Not Available'),
+('Promotion');
 
 create table Product
 (
@@ -38,7 +39,12 @@ VALUES
 ('Magical Carpet', 500, 1, 'product_carpet.jpeg'),
 ('Magic Potion', 100, 1, 'product-magic bottle.jpeg'),
 ('Magic Wand', 50, 1,'magical_wand.jpeg'),
-('Spectacular One Dress - No Mess', 100, 1, 'product_clothes.jpeg');
+('Spectacular One Dress - No Mess', 100, 1, 'product_clothes.jpeg'),
+('All You Can Pack Suitcase - Free', 0, 3, 'product_suitcase.jpeg'),
+('Magical Carpet - Free', 0, 3, 'product_carpet.jpeg'),
+('Magic Potion - Free', 0, 3, 'product-magic bottle.jpeg'),
+('Magic Wand - Free', 0, 3,'magical_wand.jpeg'),
+('Spectacular One Dress - No Mess - Free', 0, 3, 'product_clothes.jpeg');
 
 CREATE TABLE Orders (
   OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

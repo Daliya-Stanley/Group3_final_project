@@ -21,13 +21,13 @@ def get_products():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product" # selecting the first name...
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID < 3" # selecting the first name...#added where clause so it doesn't show the free products
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     product_list = []
     for product in result_set:
-        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2], 'productimage': product[3]})
+        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2], 'productimage': product[3]}) #used to fetch the ...
     # print(product_list)
     return product_list
 
@@ -275,6 +275,22 @@ def get_ordered_products(order_id):
             'productimage': row[3]
         } for row in rows
     ]
+
+def get_promotional_products():
+    conn = get_db_connection()  # establish connection with DB server and DB called ""
+
+    cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
+
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID = 3" #added where clause so it shows the free products only.
+    cursor.execute(sql)  # and the executing them
+
+    result_set = cursor.fetchall()  # cursor object, to fetch all that info
+    product_list = []
+    for product in result_set:
+        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2],
+                             'productimage': product[3]})
+    # print(product_list)
+    return product_list
 
 def get_ordered_experiences(order_id):
     conn = get_db_connection()
