@@ -229,10 +229,12 @@ def add_product_to_cart(product_id):
 def view_cart():
     experience_cart = session.get("experience_cart", [])
     product_cart = session.get("product_cart", [])
+    destination_cart = session.get("destination_cart",[])
 
 
     products_in_cart = []
     experiences_in_cart = []
+    destination_in_cart = []
     total_price = 0
 
     conn = get_db_connection()
@@ -252,6 +254,14 @@ def view_cart():
         experiences_in_cart.append(item)
         total_price += total
 
+    for item in destination_cart:
+        total = item['guests'] * item['destinationprice']
+        item['total'] = total
+        item['quantity'] = item['guests']
+        item['datereserved'] = item['booking_StartDate']
+        destination_in_cart.append(item)
+        total_price += total
+
     cursor.close()
     conn.close()
 
@@ -259,6 +269,7 @@ def view_cart():
         'cart.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
+        destination=destination_in_cart,
         total=total_price
     )
 
@@ -327,8 +338,9 @@ def add_to_cart_experience(experience_id):
 def checkout():
     experience_cart = session.get('experience_cart', [])
     product_cart = session.get('product_cart', [])
+    destination_cart = session.get('destination_cart', [])
 
-    if not experience_cart and not product_cart:
+    if not experience_cart and not product_cart and not destination_cart:
         flash("Cart is empty!", "warning")
         return redirect(url_for('view_cart'))
 
@@ -343,11 +355,12 @@ def checkout():
         cursor.close()
         conn.close()
 
-        process_order_items(order_id, product_cart, experience_cart, user_id)
+        process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
 
         # Clear the cart
         session['product_cart'] = []
         session['experience_cart'] = []
+        session['destination_cart'] = []
         session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
 
         flash("Your magical order has been placed! 🎉", "success")
@@ -362,11 +375,13 @@ def order_receipt(order_id):
     order_info = get_order_info(order_id)
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
+    destinations = get_ordered_destinations(order_id)
 
     return render_template('order_receipt.html',
                            order=order_info,
                            products=products,
                            experiences=experiences,
+                           destinations=destinations,
                            order_id=order_id)
 
 
@@ -407,7 +422,65 @@ def product_sale():
         return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
     return render_template('product_sale.html', user_email=False, title='Login Area')
 
+@app.route('/add_to_destination_cart/<int:destination_id>', methods=['POST'])
+def add_to_destination_cart(destination_id):
+    guests = int(request.form['guests'])
+    booking_start_date = request.form['Start date']
+    booking_end_date= request.form['End date']
+    user_id = request.form['user_id']
 
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT DestinationName, DestinationPricePerNight, DestinationImage, 
+        FROM Destination WHERE DestinationID = %s
+    """, (destination_id,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if not result:
+        flash("Experience not found.", "danger")
+        return redirect(url_for('book_destination'))
+
+    destinationname, destinationprice, destinationimage, group_size = result
+
+    if guests > group_size:
+        flash(f"Max group size for this experience is {group_size}. You tried to book {guests}.")
+        return redirect(url_for('destination_page'))
+
+    if 'cart' not in session:
+        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
+    cart = session['cart']
+    des_cart = cart['destinations']
+
+    if str(destination_id) in des_cart:
+        des_cart[str(destination_id)] += 1
+    else:
+        des_cart[str(destination_id)] = 1
+
+    session['cart']['destination'] = des_cart
+
+    cart_item = {
+        'destination_id': int(destination_id),
+        'user_id': user_id,
+        'booking_startdate': booking_start_date,
+        'booking_enddate': booking_end_date,
+        'guests': guests,
+        'destinationname': destinationname,
+        'destinationprice': destinationprice,
+        'destinationimage': destinationimage
+    }
+
+    if 'destination_cart' not in session:
+        session['destination_cart'] = []
+
+    session['destination_cart'].append(cart_item)
+    session.modified = True
+
+    flash("✨ Magical destination added to cart!", "success")
+    return redirect(url_for('book_destination'))
 
 
 

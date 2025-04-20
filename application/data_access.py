@@ -21,7 +21,7 @@ def get_products():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID < 3" # selecting the first name...#added where clause so it doesn't show the free products
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID < 3" #added where clause so it doesn't show the free products
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
@@ -208,7 +208,7 @@ def get_remaining_spots(experience_id, booking_date, booking_time):
     return max(remaining, 0)
 
 
-def process_order_items(order_id, product_cart, experience_cart, default_user_id):
+def process_order_items(order_id, product_cart, experience_cart, destination_cart, default_user_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -237,6 +237,20 @@ def process_order_items(order_id, product_cart, experience_cart, default_user_id
                 INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime, UserID, Guests, OrderID)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, (experience_id, booking_date, booking_time, user_id, guests, order_id))
+
+            # Insert destination
+        for item in destination_cart:
+            destination_id = item.get('destination_id')
+            user_id = item.get('user_id') or default_user_id
+            booking_date = item.get('booking_date')
+            booking_time = item.get('booking_time')
+            guests = item.get('guests')
+            if not all([destination_id, user_id, booking_date, booking_time, guests]):
+                continue
+            cursor.execute("""
+                INSERT INTO BookingDestination (DestinationID, BookingDate, BookingTime, UserID, Guests, OrderID)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (destination_id, booking_date, booking_time, user_id, guests, order_id))
 
         conn.commit()
     except Exception as e:
@@ -312,5 +326,28 @@ def get_ordered_experiences(order_id):
             'guests': row[3],
             'experienceprice': row[4],
             'experienceimage': row[5]
+        } for row in rows
+    ]
+
+def get_ordered_destinations(order_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT e.DestinationName, b.BookingStartDate, b.BookingEndDate, b.Guests, e.DestinationPrice, e.DestinationImage
+        FROM BookingDestination b
+        JOIN Destination e ON e.DestinationID = b.DestinationID
+        WHERE b.OrderID = %s
+    """, (order_id,))
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [
+        {
+            'destinationname': row[0],
+            'bookingstartdate': row[1],
+            'bookingenddate': row[2],
+            'guests': row[3],
+            'destinationprice': row[4],
+            'destinationimage': row[5]
         } for row in rows
     ]

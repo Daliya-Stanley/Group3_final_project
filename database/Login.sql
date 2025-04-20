@@ -82,16 +82,33 @@ create table Destination
 (
 DestinationID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 DestinationName VARCHAR (25) NOT NULL,
-DestinationPricePerNight INT NOT NULL
+DestinationPricePerNight INT NOT NULL,
+DestinationImage VARCHAR(100)
 );
 
-INSERT INTO Destination (DestinationName, DestinationPricePerNight)
+INSERT INTO Destination (DestinationName, DestinationPricePerNight, DestinationImage)
 VALUES 
-('Wonderland','100'),
-('Cinderella','125'),
-('Aquariel','100'),
-('Frozen','100'),
-("Mulan's World",'150');
+('Wonderland','100','WT.JPG'),
+('Cinderella','125','cinderella.jpg'),
+('Aquariel','100','ariel_topsection.jpg'),
+('Frozen','100','frozen_main.jpeg'),
+("Mulan's World",'150','mulan.png');
+
+create table BookingDestination
+(
+BookingDestinationID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+DestinationID INT NOT NULL,
+foreign key (DestinationID) references Destination(DestinationID),
+BookingStartDate date NOT NULL,
+BookingEndDate date NOT NULL,
+UserID INT NOT NULL,
+foreign key (UserID) references User(UserID),
+Guests INT NOT NULL DEFAULT 1,
+OrderID INT NULL,
+FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+ReviewText TEXT NULL,
+Rating INT NULL
+);
 
 create table ExperienceLevel
 (

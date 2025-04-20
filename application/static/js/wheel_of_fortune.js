@@ -83,7 +83,7 @@ function showPrize(prize) {
         productid = prize.id
 
         // Replace with your actual product page or link structure
-        const link = `/add_to_cart/${productid}`;  // e.g., /product/a-magic-wand
+        const link = `/add_product_to_cart/${productid}`;  // e.g., /product/a-magic-wand
 
         resultText.innerHTML = `<p>You won: <a href="${link}">${prize.label}</a></p>`;
     }

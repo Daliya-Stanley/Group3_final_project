@@ -62,6 +62,34 @@
     </table>
     {% endif %}
 
+    {% if destination %}
+    <h4>Magical Destinations</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Destination</th>
+          <th>Date Reserved</th>
+          <th>Guests</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for destination in destinations %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='images/' + destination.destinationimage) }}" height="60"></td>
+          <td>{{ destination.destinationname }}</td>
+          <td>{{ destination.datereserved }}</td>
+          <td>{{ destination.quantity }}</td>
+          <td>£{{ destination.total }}</td>
+          <td><a href="{{ url_for('remove_from_cart', item_type='destinations', item_id=destination.destination_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
     <form method="POST" action="{{ url_for('checkout') }}">
       <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
     </form>
