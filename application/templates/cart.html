@@ -59,6 +59,7 @@
           <th>Image</th>
           <th>Experience</th>
           <th>Date Reserved</th>
+          <th> Time </th>
           <th>Guests</th>
           <th>Total</th>
           <th></th>
@@ -70,6 +71,7 @@
           <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>
           <td>{{ experience.experiencename }}</td>
           <td>{{ experience.datereserved }}</td>
+          <td>{{ experience.booking_time }}</td>
           <td>{{ experience.quantity }}</td>
           <td>£{{ experience.total }}</td>
           <td><a href="{{ url_for('remove_from_cart', item_type='experiences', item_id=experience.experience_id) }}" class="btn btn-danger btn-sm">Remove</a></td>

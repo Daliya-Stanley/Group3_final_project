@@ -315,58 +315,50 @@ def add_to_cart_experience(experience_id):
     booking_time = request.form['booking_time']
     user_id = request.form['user_id']
 
+    # Fetch max group size
     conn = get_db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT ExperienceGroupSize FROM Experiences WHERE ExperienceID = %s", (experience_id,))
+    max_guests = cursor.fetchone()[0]
 
-    cursor.execute("""
-        SELECT ExperienceName, ExperiencePrice, ExperienceImage, ExperienceGroupSize 
-        FROM Experiences WHERE ExperienceID = %s
-    """, (experience_id,))
-    result = cursor.fetchone()
-    cursor.close()
-    conn.close()
-
-    if not result:
-        flash("Experience not found.", "danger")
+    if guests > max_guests:
+        flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.", "warning")
         return redirect(url_for('experience_page'))
 
-    experiencename, experienceprice, experienceimage, group_size = result
+    # Initialize carts
+    session.setdefault('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    session.setdefault('experience_cart', [])
 
-    if guests > group_size:
-        flash(f"Max group size for this experience is {group_size}. You tried to book {guests}.")
-        return redirect(url_for('experience_page'))
+    # Check if this experience is already booked by user
+    for item in session['experience_cart']:
+        if item['experience_id'] == experience_id and str(item['user_id']) == str(user_id):
+            flash("⚠️ You’ve already booked this magical experience!", "warning")
+            return redirect(url_for('experience_page'))
 
-    if 'cart' not in session:
-        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
-    cart = session['cart']
-    exp_cart = cart['experiences']
+    # Add to simple cart
+    session['cart']['experiences'][str(experience_id)] = 1
 
-    if str(experience_id) in exp_cart:
-        exp_cart[str(experience_id)] += 1
-    else:
-        exp_cart[str(experience_id)] = 1
+    # Get experience info
+    cursor.execute("SELECT ExperienceName, ExperiencePrice, ExperienceImage FROM Experiences WHERE ExperienceID = %s", (experience_id,))
+    experience = cursor.fetchone()
+    name, price, image = experience
 
-    session['cart']['experiences'] = exp_cart
-
-    cart_item = {
-        'experience_id': int(experience_id),
+    # Add to detailed cart
+    session['experience_cart'].append({
+        'experience_id': experience_id,
         'user_id': user_id,
         'booking_date': booking_date,
         'booking_time': booking_time,
         'guests': guests,
-        'experiencename': experiencename,
-        'experienceprice': experienceprice,
-        'experienceimage': experienceimage
-    }
+        'experiencename': name,
+        'experienceprice': price,
+        'experienceimage': image
+    })
 
-    if 'experience_cart' not in session:
-        session['experience_cart'] = []
-
-    session['experience_cart'].append(cart_item)
     session.modified = True
-
-    flash("✨ Magical Experience added to cart!", "success")
+    flash("Magical Experience added to cart! 🪄", "success")
     return redirect(url_for('experience_page'))
+
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
