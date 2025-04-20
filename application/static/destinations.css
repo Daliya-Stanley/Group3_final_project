@@ -1,15 +1,15 @@
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   color: #f6ebfa;
   background-color: #1a0f2d;
 }
 
 h2, h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: "Pattaya", san-serif;
 }
 
 #title{
-    font-family: 'Playfair Display', serif;
+    font-family: 'Pattaya', san-serif;
 }
 
 h1{
@@ -17,6 +17,7 @@ h1{
 }
 
 h1#title {
+  font-family: "Pattaya", san-serif;
   font-size: 2.5rem;
   padding-top: 1.5rem;
 }
@@ -82,7 +83,7 @@ a:hover {
 }
 
 .flip-title-overlay h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Pattaya', san-serif;
   font-size: 1.1rem;
   margin-bottom: 0.3rem;
 }
@@ -90,7 +91,7 @@ a:hover {
 .flip-title-overlay .short-text {
   font-size: 0.9rem;
   margin: 0;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .card-hover-text {
@@ -112,7 +113,7 @@ a:hover {
   font-size: 0.95rem;
   line-height: 1.5;
   color: #f6ebfa;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1rem;
   border-radius: 12px;

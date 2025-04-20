@@ -1,0 +1,63 @@
+
+/* Top Hero Section */
+.top-section {
+      background-image: url('../static/images/W-mainpic.jpg');
+  height: 100vh;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.top-section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(64, 0, 128, 0.5), rgba(48, 0, 90, 0.7));
+  z-index: 1;
+}
+
+
+.top-section h1 {
+  color: #ffcccc;
+  text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a1a;
+}
+
+.main-title {
+  color: #f6ebfa;
+  text-shadow: 0 0 10px #bb86fc, 0 0 30px #9146ff;
+}
+
+.subtitle {
+  color: #e0ffff;
+}
+
+
+h1#title {
+  color: #ffcccc;
+
+}
+
+.btn-submit {
+  background-color: #9954BA;
+}
+
+.card-title {
+  font-family: 'Pattaya', sans-serif;
+}
+
+
+
+
+
+
+

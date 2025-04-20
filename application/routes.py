@@ -39,6 +39,11 @@ def wheel_of_fortune_game():
     first_name = get_first_name_by_email(user_email) if user_email else "Traveller"
     return render_template('wheel_of_fortune.html', first_name=first_name, promotional_products = promotional_products) #html=python variable
 
+@app.route('/wheel')
+def wheel():
+    user_id = session.get('user_id')
+    first_name = get_first_name_by_id(user_id) if user_id else "Traveller"
+    return render_template('wheel.html', first_name=first_name)
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:
@@ -197,7 +202,7 @@ def add_product_to_cart(product_id):
     session.modified = True
 
     print("Cart after adding", session['cart'])
-    flash("Product added to cart! Continue shopping or go to view your cart! ", "success")
+    flash("🪄 Product added to cart! Continue shopping or go to view your cart! ", "success")
     return redirect(url_for('product_page'))
 
 
@@ -415,7 +420,57 @@ def cart_item_count():
 
 @app.route('/wonderland')
 def wonderland():
-    return render_template('wonderland.html', title_head='Wonderland', title_body='Wonderland', subtitle='Want to wander in Wonderland?', img='static/images/WT.jpg')
+    cards = [
+        {
+            "title": "Embark on a journey where curiosity is your guide",
+            "short_text": "Take your first steps towards Wonderland and tumble down the rabbit hole into the unexpected...",
+            "text": "Begin your journey to Wonderland by tumbling down the rabbit hole, where the elusive 'Drink Me' potion awaits, ready to shrink you through a tiny door. What lies on the other side? A world of secrets, magic, and endless wonder — waiting to be discovered",
+            "img": "W-rabbithole.jpg",
+            "alt": "Rabbit Hole"
+        },
+        {
+            "title": "Sleep like a dormouse in whimsical luxury",
+            "short_text": "This enchanting hotel room immerses you in the magic of Alice’s adventures, with every corner brimming with playful charm. ",
+            'text':'Soft, glowing lanterns cast a warm, purple-hued light across the room, creating a cozy atmosphere that feels both fantastical and serene. The Queen of Hearts might rule the garden, but in here, you’ll rest easy—far from her watchful eye. Whether you’re seeking adventure or simply a whimsical retreat, this room offers a perfect blend of luxury and playful wonder.',
+            "img": "W-bedroom.jpg",
+            "alt": "Wonderland Room"
+        },
+        {
+            "title": "Dining in Wonderland is anything but ordinary",
+            "short_text": "Step into a surreal setting where teacups float mid-air, cakes are stacked impossibly high, and menus come with riddles instead of descriptions.",
+            "text": "Every meal is a mad celebration of flavor, fantasy, and fun. From enchanted garden picnics to candlelit feasts beneath glowing toadstools, each dining space is a feast for the senses. Expect playful presentations, surprise bites, and flavors that spark your curiosity. One thing’s for sure, in Wonderland, dining is a delicious kind of madness.",
+            "img": "W-food2.jpg",
+            "alt": "Wonderland Feast"
+        },
+        {
+            "title": "Step into the curiously charming shopping quarter of Wonderland",
+            "short_text": "Meander through cobbled paths lined with crooked chimneys and signs that change when you're not looking.",
+            "text": "Peek into the Mad Hatter’s Hat Emporium for eccentric headwear, or pick up enchanted trinkets and 'Drink Me' bottles that glow softly on the shelves. At the Queen of Hearts’ Boutique, find heart-shaped accessories and red velvet treasures fit for a royal tantrum, while the White Rabbit’s Clock Stop offers curious timepieces that run forward, backward, and sometimes sideways. Potion shops bubble with mysterious concoctions, and whimsical bakeries serve edible souvenirs too pretty to eat (but too tempting not to)",
+            "img": "W-shop2.jpg",
+            "alt": "Wonderland Shops"
+        },
+        {
+            "title": "Witness the Spring Bloom Parade and dance at The Twilight Toadstool Ball",
+            "short_text": "Wonderland’s celebrations invite you to step out of the ordinary and into the extraordinary — where laughter is loud and the party never ends. Curiosity required. Sense of time? Optional.",
+            "text": "Join the Spring Bloom Parade and watch flowers march with confetti falling from the sky, or indulge in the whimsical chaos of the Mad Hatter’s Unbirthday Bash, complete with endless tea and cake. Experience royal elegance at the Queen’s Royal Jubilee, where flamingo croquet and red roses abound, or dance the night away at the Twilight Toadstool Ball, surrounded by glowing mushrooms and starlit desserts. Finally, embrace the playful mystery of the Midnight Mischief Festival, following the Cheshire Cat through a maze of glowing riddles and trickster performances. ",
+            "img": "W-twilight.jpg",
+            "alt": "Twilight Toadstool Ball"
+        },
+        {
+            "title": "Play the day away in Wonderland",
+            "short_text": "Lose your logic and find your fun in a delightfully upside down world",
+            "text": "From the moment you arrive, reality takes a backseat and imagination takes the wheel. The air hums with mischief and marvel. Teacups spin midair, flowers whisper secrets, and music seems to come from the trees themselves. Whether you're exploring glowing mushroom forests or solving riddles to unlock hidden doors, every moment is interactive and immersive. Time doesn’t matter here; tea is served all day, it’s always someone’s unbirthday, and spontaneity reigns.",
+            "img": "W-vibe.jpg",
+            "alt": "Wonderland Vibes"
+        }]
+    return render_template(
+        'wonderland2.html',
+        cards=cards,
+        hero_title="Welcome to Wonderland",
+        hero_subtitle="Down the rabbit hole you go, into a world where magic and curiosity collide!",
+        intro_title="Ready to tumble into tea parties, talking cats, and total nonsense?",
+        css_file="wonderland2.css"
+    )
 
 
 @app.route('/aquariel')
