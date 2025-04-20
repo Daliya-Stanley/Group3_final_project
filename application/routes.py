@@ -138,6 +138,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     session.pop('user_email', None)  # remove the user from the session
     flash("You've been logged out 👋", "info")
     return redirect(url_for('login'))
@@ -197,7 +198,6 @@ def add_product_to_cart(product_id):
         flash(f"Only {stock_remaining - current_qty} items left in stock!", "warning")
         return redirect(url_for('product_page'))
 
-    # Update simple cart
     product_cart_dict[str(product_id)] = current_qty + quantity_to_add
     session['cart']['products'] = product_cart_dict
 
@@ -226,8 +226,6 @@ def add_product_to_cart(product_id):
     return redirect(url_for('product_page') + "#product-cards")
 
 
-
-
 @app.route('/update_quantity/<int:product_id>', methods=['POST'])
 def update_quantity(product_id):
     new_quantity = int(request.form.get('quantity'))
@@ -244,31 +242,14 @@ def update_quantity(product_id):
     session['cart']['products'][product_id_str] = new_quantity
 
     # Update quantity in detailed product_cart
-    updated = False
     for item in session.get('product_cart', []):
         if item['productid'] == product_id:
             item['quantity'] = new_quantity
-            updated = True
             break
-
-    if not updated:
-        # If not found, add it (fallback)
-        product = get_product_details(product_id)
-        user_id = session.get('user_id')
-        session['product_cart'].append({
-            'productid': product_id,
-            'quantity': new_quantity,
-            'user_id': user_id,
-            'productname': product[0],
-            'productprice': product[1],
-            'productimage': product[2],
-        })
 
     session.modified = True
     flash("Quantity updated!", "success")
     return redirect(url_for('view_cart'))
-
-
 
 @app.route('/cart')
 def view_cart():
@@ -356,7 +337,7 @@ def add_to_cart_experience(experience_id):
     })
 
     session.modified = True
-    flash("Magical Experience added to cart! 🪄", "success")
+    flash("Magical Experience added to cart!", "success")
     return redirect(url_for('experience_page'))
 
 

@@ -214,7 +214,7 @@ def process_order_items(order_id, product_cart, experience_cart, default_user_id
     try:
         # Insert products
         for item in product_cart:
-            product_id = item.get('product_id')
+            product_id = item.get('productid')
             user_id = item.get('user_id') or default_user_id
             quantity = item.get('quantity')
             if not all([product_id, user_id, quantity]):
