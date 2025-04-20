@@ -9,6 +9,11 @@
 {% endif %}
 <!-- Hero Section -->
 <section class="top-section">
+  <div class="video-container">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="{{ url_for('static', filename=video) }}" type="video/mp4">
+    </video>
+  </div>
   <div class="overlay"></div>
   <div class="top-content container">
     <a href="#booking-form" class="book-now-btn">Book Now</a>

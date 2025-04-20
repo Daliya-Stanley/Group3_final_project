@@ -351,15 +351,20 @@ height: 100vh;
             background-repeat: no-repeat;
             color: white;
             font-family: "Pattaya", sans-serif;
-    height: 100vh;
-    position: relative;
-    top:0;
-    max-width: auto;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: auto;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+}
 }
 
 #customer-feedback {
