@@ -260,4 +260,23 @@ section {
   background: linear-gradient(to bottom, #1a0f2d, #2a1045);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
+.booking-form input,
+.booking-form button {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: none;
+  min-width: 160px;
+}
+
+.booking-form {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 10px;
+  align-items: center; /* This handles vertical alignment in Grid as well */
+}
+
+.booking-form input[type="text"],
+.booking-form input[type="number"] {
+}
 

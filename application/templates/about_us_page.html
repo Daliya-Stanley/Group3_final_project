@@ -2,91 +2,160 @@
 {% block title %} About Us {% endblock %}
 
 {% block body_content%}
-<link rel="stylesheet" href="{{ url_for('static', filename='team.css') }}">
-<style>
 
-</style>
-<div id="team-wrapper" style="all: unset">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <div class="bg-gray-50 text-gray-800 px-4 py-16 max-w-7xl mx-auto">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'team.css') }}">
 
-    <body class="bg-gray-50 text-gray-800">
-  <div class="max-w-7xl mx-auto px-4 py-16">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-serif font-semibold">Meet the team that makes the <span class="italic">magic</span> happen</h1>
-      <p class="mt-4 text-gray-600">Meet our diverse team of world-class creators, designers, and problem solvers.</p>
-    </div>
-
-
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-
-      <!-- Example Team Member Card -->
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Emmy Rosum" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Emmy Rosum</h3>
-        <p class="text-sm text-gray-500">Co-Founder and CEO</p>
-      </div>
-
-      <!-- Duplicate and replace info for other team members -->
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-      <div class="bg-white rounded-xl shadow p-6 text-center">
-        <img src="https://via.placeholder.com/150" alt="Orlando Diggs" class="w-24 h-24 mx-auto rounded-full mb-4" />
-        <h3 class="text-lg font-semibold">Orlando Diggs</h3>
-        <p class="text-sm text-gray-500">Co-Founder and COO</p>
-      </div>
-
-      <!-- Add more cards as needed following this pattern... -->
-    </div>
-  </div>
-</body>
-
-
-
-  </div>
+<section>
+<div class="about-section">
+  <div class="about-section animated-background">
+  <h1 style="color: black">Meet the team of Enchanted Getaways!</h1>
+  <h2>We are a dedicated team who work to make your dream come true!!</h2>
+  <h2>Book an experience of a holidays and let us take you to the enchanted world of magic!</h2>
+</div>
 </div>
 
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+  <div class="column" style="--index: 1;">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/daphne_amp.jpeg') }}" alt="Daphne" style="width:100%">
+      <div class="container">
+        <h2>Daphne</h2>
+        <p class="title">Guide- Cinderella Land</p>
+        <p>Meet your guide, a resident of Cinderella's Land, ready to unveil the magic behind the fairytale.</p>
+        <p>Daphne@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
 
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/emma_amp.jpeg') }}" alt="Emma" style="width:100%">
+      <div class="container">
+        <h2>Emma</h2>
+        <p class="title">Guide- Wonderland</p>
+        <p>Embark on a whimsical journey through Wonderland with your knowledgeable local guide.</p>
+        <p>emma@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/anna_amp.jpeg') }}" alt="Anna" style="width:100%">
+      <div class="container">
+        <h2>Anna</h2>
+        <p class="title">Guide- Aquariel</p>
+        <p>Dive into Atlantica with your guide, a denizen of Ariel's enchanting underwater realm.</p>
+        <p>anna@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/titi_amp.jpeg') }}"  alt="Titi" style="width:100%">
+      <div class="container">
+        <h2>Titi</h2>
+        <p class="title">Guide- World of Mulan</p>
+        <p>Explore the heroic landscapes and traditions of Mulan's kingdom with your experienced guide.</p>
+        <p>titi@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/daliya_amp.jpeg') }}" alt="Daliya" style="width:100%">
+      <div class="container">
+        <h2>Daliya</h2>
+        <p class="title">Guide- Arandelle</p>
+        <p>Brave the enchanting, icy landscapes of Disney's Frozen Kingdom with your friendly guide.</p>
+        <p>daliya@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/cinderalla_amp.jpeg') }}" alt="Cindy" style="width:100%">
+      <div class="container">
+        <h2>Cinderalla</h2>
+        <p class="title">Resource Person- Cinderalla Land</p>
+        <p>Cinderella, Chief Resource Person Cinderalla Land, ensures every visitor's fairytale journey is seamless and magical.</p>
+        <p>cindy@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/alice_amp.jpeg') }}" alt="alice"  style="width:100%">
+      <div class="container">
+        <h2>Alice</h2>
+        <p class="title">Resource Person- Wonderland</p>
+        <p>Endlessly curious Resource Person in Wonderland, expertly guides visitors through its bizarre wonders.</p>
+        <p>alice@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/ariel_amp.jpeg') }}" alt="ariel" style="width:100%">
+      <div class="container">
+        <h2>Ariel</h2>
+        <p class="title">Resource Person- Aquariel</p>
+        <p>Ariel, the spirited resource person in Atlanta, brings her adventurous perspective to helping visitors explore the city.</p>
+        <p>ariel@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/frozen_amp.jpeg') }}" alt="Mike" style="width:100%">
+      <div class="container">
+        <h2>Anna-A</h2>
+        <p class="title">Resource Person- Arandelle</p>
+        <p>Anna, the warm and determined resource person in Arendelle, helps visitors discover the kingdom's heartfelt charm..</p>
+        <p>annaA@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/mulan_amp.jpeg') }}"alt="John" style="width:100%">
+      <div class="container">
+        <h2>Mulan</h2>
+        <p class="title">Resource Person- China</p>
+        <p>Mulan, the courageous and resourceful guide in her kingdom, shares its heroic history and vibrant culture with visitors.</p>
+        <p>mulan@EGT.magic</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<script>
+const aboutSection = document.querySelector('.about-section');
+
+window.addEventListener('scroll', () => {
+  const scrollPosition = window.scrollY;
+  // Adjust the multiplier to control the speed of the color change
+  const colorIntensity = Math.min(0.2, scrollPosition / 500);
+  const newBackgroundColor = `rgba(153, 102, 204, ${1 - colorIntensity})`; // Fade out the color slightly
+
+  if (aboutSection) {
+    aboutSection.style.backgroundColor = newBackgroundColor;
+  }
+});
+</script>
 
 
 {% endblock %}

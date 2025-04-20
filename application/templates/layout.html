@@ -121,7 +121,7 @@
       </li
 
       <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
+        <a class="nav-link" href="{{url_for('about_us')}}">About Us</a>
       </li>
     </ul>
     </ul>
@@ -197,8 +197,18 @@
   });
 });
 </script>
-
-<audio id="toast-sound" src="{{ url_for('static', filename='sounds/ding.mp3') }}" preload="auto"></audio>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.location.hash === "#product-cards") {
+    const target = document.querySelector("#product-cards");
+    if (target) {
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 500); // Adjust delay in ms if needed
+    }
+  }
+});
+</script>
 </body>
 
 </html>

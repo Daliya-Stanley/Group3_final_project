@@ -1,113 +1,184 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9fafb;
-  color: #333;
-  line-height: 1.6;
+  font-family: font-family: "Pattaya", sans-serif;
+  margin: 0;
 }
 
-/* TEAM SECTION */
-.team-section {
-  max-width: 1200px;
-  margin: 4rem auto;
-  padding: 0 1rem;
+html {
+  box-sizing: border-box;
 }
 
-.team-section .header {
-  text-align: center;
-  margin-bottom: 2rem;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
-.team-section .header h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+.column {
+  float: left;
+  width: 25%;
+  margin-bottom: 16px;
+  padding: 0 8px;
 }
 
-.team-section .header em {
-  color: #555;
-  font-style: italic;
-}
 
-.team-section .header p {
-  color: #666;
-  font-size: 1rem;
-}
-
-/* FILTER BUTTONS */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-.filters button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: transparent;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #555;
-  transition: background-color 0.2s, color 0.2s;
-  border: 1px solid #ccc;
-}
-
-.filters button.active,
-.filters button:hover {
-  background-color: #000;
-  color: #fff;
-  border-color: #000;
-}
-
-/* GRID LAYOUT */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-}
-
-/* CARD STYLE */
 .card {
-  background-color: #fff;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+  font-family: "Pattaya", sans-serif;
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out; /* Add transitions */
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
+  transform: scale(1.02); /* Slight scale up on hover */
 }
 
-.card img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  border: 3px solid #eee;
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #9966CC;
+  font-family: "Pattaya", sans-serif;
+  color: white;
 }
 
-.card h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+.container {
+  padding: 0 16px;
 }
 
-.card p {
-  color: #888;
-  font-size: 0.9rem;
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  font-family: "Pattaya", sans-serif;
+  display: table;
 }
-nav {
-  all: revert;
+
+.title {
+  color: grey;
 }
-nav {
-    all: revert;
-    font-family: initial;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
   }
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* This line centers the items horizontally */
+}
+
+.column {
+  /* ... existing column styles ... */
+  opacity: 0; /* Initially hidden */
+  transform: translateY(20px); /* Initially moved down */
+  animation: fadeInSlideUp 0.5s ease-out forwards; /* Apply animation */
+  animation-delay: calc(0.1s * var(--index)); /* Stagger the animation */
+}
+
+@keyframes fadeInSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply a CSS variable to each column in your HTML to control stagger */
+.row .column:nth-child(1) { --index: 1; }
+.row .column:nth-child(2) { --index: 2; }
+.row .column:nth-child(3) { --index: 3; }
+/* Add this for all your columns */
+
+
+.about-section {
+  /* ... existing styles ... */
+  background: linear-gradient(45deg, #9966CC, #B388FF, #9966CC);
+  background-size: 200% 200%;
+  animation: gradientAnimation 5s ease-in-out infinite alternate;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+h2 {
+  text-align: center;
+  overflow: hidden; /* Hide the overflowing characters */
+  white-space: nowrap; /* Prevent text from wrapping */
+  border-right: .15em solid orange; /* Blinking cursor effect */
+  animation: typing 2s steps(20, end), /* 'steps' creates the typing effect */
+             blinking-cursor .75s step-end infinite; /* Blinking cursor */
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blinking-cursor {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
+
+.card {
+  /* ... existing card styles ... */
+  border: 2px solid transparent; /* Initially transparent border */
+  transition: border-color 0.3s ease-in-out;
+}
+
+.card:hover {
+  /* ... existing hover styles ... */
+  border-color: #B388FF; /* Border color on hover */
+}
+
+.animated-background {
+  padding: 50px;
+  text-align: center;
+  background: linear-gradient(45deg, #9966CC, #B388FF, #9966CC);
+  background-size: 200% 200%;
+  animation: gradientAnimation 5s ease-in-out infinite alternate;
+  font-family: "Pattaya", sans-serif;
+  color: white;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-text {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInSlideUp 1s ease-out 0.5s forwards; /* Added delay */
+}
+
+@keyframes fadeInSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

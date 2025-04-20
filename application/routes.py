@@ -39,11 +39,6 @@ def wheel_of_fortune_game():
     first_name = get_first_name_by_email(user_email) if user_email else "Traveller"
     return render_template('wheel_of_fortune.html', first_name=first_name, promotional_products = promotional_products) #html=python variable
 
-@app.route('/wheel')
-def wheel():
-    user_id = session.get('user_id')
-    first_name = get_first_name_by_id(user_id) if user_id else "Traveller"
-    return render_template('wheel.html', first_name=first_name)
 
 def determine_winner(player_choice, computer_choice):
     if player_choice == computer_choice:
@@ -143,6 +138,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    session.clear()
     session.pop('user_email', None)  # remove the user from the session
     flash("You've been logged out 👋", "info")
     return redirect(url_for('login'))
@@ -157,7 +153,20 @@ def mulan_page():
 @app.route('/Product')
 def product_page():
     product_list = get_products()
-    return render_template('product.html', title_head='Magical Products', title_body='Our Splendid Magical Products', subtitle='★ The Magical Things Which You Always Wished For!★', img="static/images/product_background.jpeg", products = product_list)
+    purchased = get_total_purchased_by_product()
+
+    for product in product_list:
+        pid = str(product['productid'])
+        product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
+
+    return render_template(
+        'product.html',
+        title_head='Magical Products',
+        title_body='Our Splendid Magical Products',
+        subtitle='★ The Magical Things Which You Always Wished For!★',
+        img="static/images/product_background.jpeg",
+        products=product_list
+    )
 
 @app.route('/Experience')
 def experience_page():
@@ -170,41 +179,77 @@ def experience_page():
     return render_template('experience2.html', title_head='Magical Experience', experiences = experience_list,gallery_images=gallery_images)
 
 
-@app.route('/add_product_to_cart/<int:product_id>')
+@app.route('/add_product_to_cart/<int:product_id>', methods=['GET', 'POST'])
 def add_product_to_cart(product_id):
-    if 'cart' not in session:
-        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
-    cart = session['cart']
-    product_cart = cart['products']
+    session.setdefault('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    session.setdefault('product_cart', [])
 
-    if str(product_id) in product_cart:
-        product_cart[str(product_id)] += 1
-    else:
-        product_cart[str(product_id)] = 1
+    product_cart_dict = session['cart']['products']
+    current_qty = product_cart_dict.get(str(product_id), 0)
+    quantity_to_add = int(request.form.get('quantity', 1))
 
-    session['cart']['products']= product_cart
+    # Calculate remaining stock
+    total_purchased = get_total_purchased_by_product()
+    purchased_qty = total_purchased.get(str(product_id), 0)
+    stock_remaining = max(0, 5 - purchased_qty)
 
+    # Enforce stock cap
+    if current_qty + quantity_to_add > stock_remaining:
+        flash(f"Only {stock_remaining - current_qty} items left in stock!", "warning")
+        return redirect(url_for('product_page'))
 
-    if 'product_cart' not in session:
-        session['product_cart'] = []
+    product_cart_dict[str(product_id)] = current_qty + quantity_to_add
+    session['cart']['products'] = product_cart_dict
 
+    # Product details
     product = get_product_details(product_id)
     user_id = session.get('user_id')
-    session['product_cart'].append({
-        'product_id': int(product_id),
-        'quantity': 1,
-        'user_id': user_id,
-        'productname': product[0],
-        'productprice': product[1],
-        'productimage': product[2],
-    })
+
+    # Update product_cart or append
+    for item in session['product_cart']:
+        if item['productid'] == product_id:
+            item['quantity'] += quantity_to_add
+            break
+    else:
+        session['product_cart'].append({
+            'productid': int(product_id),
+            'quantity': quantity_to_add,
+            'user_id': user_id,
+            'productname': product[0],
+            'productprice': product[1],
+            'productimage': product[2],
+            'stockremaining': int(stock_remaining)
+        })
 
     session.modified = True
+    flash(f"{quantity_to_add} item(s) added to cart! 🎁", "success")
+    return redirect(url_for('product_page') + "#product-cards")
 
-    print("Cart after adding", session['cart'])
-    flash("🪄 Product added to cart! Continue shopping or go to view your cart! ", "success")
-    return redirect(url_for('product_page'))
 
+@app.route('/update_quantity/<int:product_id>', methods=['POST'])
+def update_quantity(product_id):
+    new_quantity = int(request.form.get('quantity'))
+    product_id_str = str(product_id)
+    purchased = get_total_purchased_by_product()
+    stock_remaining = max(0, 5 - purchased.get(product_id_str, 0))
+
+    if not (1 <= new_quantity <= stock_remaining):
+        flash(f"Quantity must be between 1 and {stock_remaining}.", "warning")
+        return redirect(url_for('view_cart'))
+
+    # Update quantity in session cart
+    session.setdefault('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    session['cart']['products'][product_id_str] = new_quantity
+
+    # Update quantity in detailed product_cart
+    for item in session.get('product_cart', []):
+        if item['productid'] == product_id:
+            item['quantity'] = new_quantity
+            break
+
+    session.modified = True
+    flash("Quantity updated!", "success")
+    return redirect(url_for('view_cart'))
 
 @app.route('/cart')
 def view_cart():
@@ -251,57 +296,48 @@ def add_to_cart_experience(experience_id):
     booking_time = request.form['booking_time']
     user_id = request.form['user_id']
 
+    # Fetch max group size
     conn = get_db_connection()
     cursor = conn.cursor()
+    cursor.execute("SELECT ExperienceGroupSize FROM Experiences WHERE ExperienceID = %s", (experience_id,))
+    max_guests = cursor.fetchone()[0]
 
-    cursor.execute("""
-        SELECT ExperienceName, ExperiencePrice, ExperienceImage, ExperienceGroupSize 
-        FROM Experiences WHERE ExperienceID = %s
-    """, (experience_id,))
-    result = cursor.fetchone()
-    cursor.close()
-    conn.close()
-
-    if not result:
-        flash("Experience not found.", "danger")
+    if guests > max_guests:
+        flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.", "warning")
         return redirect(url_for('experience_page'))
 
-    experiencename, experienceprice, experienceimage, group_size = result
+    # Initialize carts
+    session.setdefault('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    session.setdefault('experience_cart', [])
 
-    if guests > group_size:
-        flash(f"Max group size for this experience is {group_size}. You tried to book {guests}.")
-        return redirect(url_for('experience_page'))
+    # Check if this experience is already booked by user
+    for item in session['experience_cart']:
+        if item['experience_id'] == experience_id and str(item['user_id']) == str(user_id):
+            flash("⚠️ You’ve already booked this magical experience!", "warning")
+            return redirect(url_for('experience_page'))
 
-    if 'cart' not in session:
-        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
-    cart = session['cart']
-    exp_cart = cart['experiences']
+    # Add to simple cart
+    session['cart']['experiences'][str(experience_id)] = 1
 
-    if str(experience_id) in exp_cart:
-        exp_cart[str(experience_id)] += 1
-    else:
-        exp_cart[str(experience_id)] = 1
+    # Get experience info
+    cursor.execute("SELECT ExperienceName, ExperiencePrice, ExperienceImage FROM Experiences WHERE ExperienceID = %s", (experience_id,))
+    experience = cursor.fetchone()
+    name, price, image = experience
 
-    session['cart']['experiences'] = exp_cart
-
-    cart_item = {
-        'experience_id': int(experience_id),
+    # Add to detailed cart
+    session['experience_cart'].append({
+        'experience_id': experience_id,
         'user_id': user_id,
         'booking_date': booking_date,
         'booking_time': booking_time,
         'guests': guests,
-        'experiencename': experiencename,
-        'experienceprice': experienceprice,
-        'experienceimage': experienceimage
-    }
+        'experiencename': name,
+        'experienceprice': price,
+        'experienceimage': image
+    })
 
-    if 'experience_cart' not in session:
-        session['experience_cart'] = []
-
-    session['experience_cart'].append(cart_item)
     session.modified = True
-
-    flash("✨ Magical Experience added to cart!", "success")
+    flash("Magical Experience added to cart!", "success")
     return redirect(url_for('experience_page'))
 
 @app.route('/checkout', methods=['POST'])
@@ -364,7 +400,7 @@ def check_availability():
 
 @app.route('/remove_from_cart/<item_type>/<int:item_id>')
 def remove_from_cart(item_type, item_id):
-    cart = session.get('cart', {'products': {}, 'experiences': {}})
+    cart = session.get('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
     item_id_str = str(item_id)
 
     # Remove from main cart dictionary
@@ -374,10 +410,11 @@ def remove_from_cart(item_type, item_id):
 
     # Remove from detailed session cart
     if item_type == 'products':
-        session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('product_id') != item_id]
+        session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('productid') != item_id]
     elif item_type == 'experiences':
         session['experience_cart'] = [item for item in session.get('experience_cart', []) if item.get('experience_id') != item_id]
 
+    session.modified = True
     flash(f'{item_type.capitalize()} removed from cart!', 'info')
     return redirect(url_for('view_cart'))
 
