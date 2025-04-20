@@ -298,3 +298,18 @@ def get_ordered_experiences(order_id):
             'experienceimage': row[5]
         } for row in rows
     ]
+
+def get_total_purchased_by_product():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT ProductID, SUM(Quantity) 
+        FROM ProductOrders 
+        GROUP BY ProductID
+    """)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return {str(row[0]): row[1] for row in result}
+

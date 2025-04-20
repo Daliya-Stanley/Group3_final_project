@@ -24,10 +24,27 @@
         <tr>
           <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>
           <td>{{ product.productname }}</td>
-          <td>{{ product.quantity }}</td>
+          <td>
+            <form action="{{ url_for('update_quantity', product_id=product.productid) }}" method="POST" class="d-flex align-items-center">
+              <input type="number"
+                     name="quantity"
+                     value="{{ product.quantity }}"
+                     min="1"
+                     max="{{ product.stockremaining }}"
+                     class="form-control me-2"
+                     style="width: 80px;">
+              <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+            </form>
+            {% if product.quantity >= product.stockremaining %}
+              <small class="text-danger">Max stock reached</small>
+            {% else %}
+              <small class="text-muted">Stock left: {{ product.stockremaining }}</small>
+            {% endif %}
+          </td>
+
           <td>£{{ product.productprice }}</td>
           <td>£{{ product.total }}</td>
-          <td><a href="{{ url_for('remove_from_cart', item_type='products', item_id=product.product_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
+          <td><a href="{{ url_for('remove_from_cart', item_type='products', item_id=product.productid) }}" class="btn btn-danger btn-sm">Remove</a></td>
         </tr>
         {% endfor %}
       </tbody>
