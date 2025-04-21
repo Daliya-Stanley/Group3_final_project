@@ -6,7 +6,7 @@
 <section class="video-section">
    <div class="video-container sticky-video">
     <video autoplay muted loop>
-      <source src="{{ url_for('static', filename='video/homepagevideo.mp4') }}" type="video/mp4">
+      <source src="{{ url_for('static', filename='video/homepagevideo1.mp4') }}" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
@@ -30,6 +30,8 @@
   <br>
 <br>
    <br>
+  <br>
+  <br>
   <br>
   <br>
   <h1>Begin your journey here...</h1>
@@ -277,7 +279,7 @@
         <p class="text-center" style="font-size: 16px; font-family: Quicksand; color: #fffff;">
           Elevate your Enchanted Getaway with extraordinary products designed to enhance your experience at your chosen destination.
         </p>
-        <a href="{{ url_for('product_page') }}" class="btn">View Our Products</a>
+        <a href="{{ url_for('product_page_new') }}" class="btn">View Our Products</a>
         <br>
         <br>
       </div>
@@ -333,6 +335,10 @@
         <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"After watching Frozen, my child begged to build a snowman with Anna and all their dreams came true when we visited Arendelle and booked this experience!" - Fiona, Brighton </p>
       </div>
     </div>
+
+
+
+
     <div class="carousel-item">
       <img src="{{url_for('static', filename = 'images/wonderland_review.jpg') }}" class="d-block w-100" alt="beach">
       <div class="carousel-caption d-none d-md-block">
