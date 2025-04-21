@@ -2,7 +2,10 @@ body {
     font-family: "Pattaya", sans-serif;
   }
 
-  
+
 .accordian{
 font-family: font-family: "Pattaya", sans-serif;
+}
+h2,h5, p{
+font-family: "Quicksand", sans-serif;
 }
