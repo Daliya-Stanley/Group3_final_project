@@ -1,9 +1,11 @@
+from os import SEEK_SET
+
 from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
 from application.data_access import *
 from application import app
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
 
 app.permanent_session_lifetime = timedelta(days=30)
@@ -85,8 +87,10 @@ def register():
 
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
-
-            return redirect(url_for('rock_paper_scissors'))
+            if result["email"] == "admin@egt.magic":
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return redirect(url_for('home_page'))
         else:
             error = result["message"]
 
@@ -123,8 +127,11 @@ def login():
                 session.permanent = True  # Make the session persistent
 
             flash("Login successful! Welcome back 🎉", "success")
+            if result["email"] == "admin@egt.magic":
+                return redirect(url_for('admin_dashboard'))
+
             if not next_page or next_page == 'None':
-                next_page = url_for('rock_paper_scissors')
+                next_page = url_for('home_page')
             return redirect(next_page)
         else:
             # Login failed: show error message
@@ -143,30 +150,142 @@ def logout():
     flash("You've been logged out 👋", "info")
     return redirect(url_for('login'))
 
+@app.route('/admin/dashboard', methods=['GET', 'POST'])
+def admin_dashboard():
+    if session.get('user_email') != 'admin@egt.magic':
+        flash("Admin access only", "danger")
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # === STATS ===
+    pending_cancels = get_pending_cancel_count(cursor)
+    shipped_orders = get_shipped_order_count(cursor)
+
+    # === CANCEL REQUESTS ===
+    cancel_requests = get_cancel_requests(cursor)
+
+    # === PRODUCT ORDERS ===
+    product_status_filter = request.args.get('product_status') or 'All'
+    product_orders = get_product_orders(cursor, product_status_filter)
+
+    # === EXPERIENCE ORDERS ===
+    experience_orders = get_experience_orders(cursor)
+
+    cursor.close()
+    conn.close()
+
+    return render_template("admin_dashboard.html",
+                           pending_cancels=pending_cancels,
+                           shipped_orders=shipped_orders,
+                           cancel_requests=cancel_requests,
+                           product_orders=product_orders,
+                           product_status_filter=product_status_filter,
+                           experience_orders=experience_orders)
+
+
+@app.route('/admin/update_status', methods=['POST'])
+def admin_update_status():
+    if session.get('user_email') != 'admin@egt.magic':
+        flash("Admin access only", "danger")
+        return redirect(url_for('login'))
+
+    item_type = request.form.get('item_type')  # "product" or "cancel"
+    item_id = request.form.get('item_id')
+    new_status_name = request.form.get('new_status')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if item_type == 'product':
+        cursor.execute("SELECT OrderStatusID FROM OrderStatus WHERE StatusName = %s", (new_status_name,))
+        status_id = cursor.fetchone()[0]
+        cursor.execute("UPDATE ProductOrders SET OrderStatusID = %s WHERE OrderID = %s", (status_id, item_id))
+        flash("✅ Product order status updated.", "success")
+
+
+    elif item_type == 'cancel':
+        cursor.execute("SELECT CancelStatusID FROM CancelStatus WHERE StatusName = %s", (new_status_name,))
+        status_id = cursor.fetchone()[0]
+        cursor.execute("""
+            UPDATE CancelExperienceRequests
+            SET CancelStatusID = %s
+            WHERE CancelRequestID = %s
+        """, (status_id, item_id))
+
+        # If approved, mark the booking as cancelled (don't delete it)
+
+        if new_status_name == "Approved":
+            cursor.execute("SELECT BookingID FROM CancelExperienceRequests WHERE CancelRequestID = %s", (item_id,))
+
+            booking_id = cursor.fetchone()[0]
+
+            cursor.execute("UPDATE BookingExperience SET IsCancelled = TRUE WHERE BookingID = %s", (booking_id,))
+        elif new_status_name == "Rejected":
+            # Get BookingID
+            cursor.execute("SELECT BookingID FROM CancelExperienceRequests WHERE CancelRequestID = %s", (item_id,))
+            booking_id = cursor.fetchone()[0]
+            cursor.execute("UPDATE BookingExperience SET IsCancelled = FALSE WHERE BookingID = %s", (booking_id,))
+
+        flash("✅ Cancellation request updated.", "success")
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('admin_dashboard'))
+
 
 @app.route('/mulan')
 def mulan_page():
-      return render_template('mulan.html')
+    destination = get_destination_by_name("Mulan's World")
+    cards = [
+        {"title": "Teatime with the Matchmaker",
+        "text":"Step into Mulan’s world and try your hand at the most delicate of arts — making tea under the watchful eye of the Matchmaker. Steady hands, graceful pours, and maybe a little chaos… just the way Mulan likes it.",
+         "img":"tea_making_experience.jpg",
+         "alt":"Tea with the matchmaker"
+         },
+        {"title": "Train like a Warrior at Captain Li Shang's Camp!",
+         "text": "Step into Mulan’s world and enter the legendary training grounds where heroes are forged. Learn discipline, strength, and maybe how to catch an arrow mid-air (no promises).",
+         "img": "learn_how_to_fight.jpg",
+         "alt": "Mulan with her sword"
+         },
+        {"title": "A tour of the Imperial Palace!",
+         "text": "Step into the world of Mulan and explore the majestic Emperor's Palace, a symbol of imperial power and grandeur. This magnificent palace, with its towering roofs, intricate carvings, and vibrant colors, offers a glimpse into the heart of ancient China.",
+         "img": "tour_emperor_castle.png",
+         "alt": "imperial_palace'"
+         },
 
-
-
-@app.route('/Product')
-def product_page():
-    product_list = get_products()
-    purchased = get_total_purchased_by_product()
-
-    for product in product_list:
-        pid = str(product['productid'])
-        product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
-
+    ]
     return render_template(
-        'product.html',
-        title_head='Magical Products',
-        title_body='Our Splendid Magical Products',
-        subtitle='★ The Magical Things Which You Always Wished For!★',
-        img="static/images/product_background.jpeg",
-        products=product_list
-    )
+        'mulan.html',
+        cards=cards,
+        hero_title="Welcome to Mulan's World",
+        hero_subtitle="★ A mystical retreat where destiny, beauty, and bravery meet ★",
+        intro_title = "Step into a realm inspired by a legend!",
+        css_file="mulan.css",
+        destination=destination)
+
+
+
+# @app.route('/Product')
+# def product_page():
+#     product_list = get_products()
+#     purchased = get_total_purchased_by_product()
+#
+#     for product in product_list:
+#         pid = str(product['productid'])
+#         product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
+#
+#     return render_template(
+#         'product1.html',
+#         title_head='Magical Products',
+#         title_body='Our Splendid Magical Products',
+#         subtitle='★ The Magical Things Which You Always Wished For!★',
+#         img="static/images/product_background.jpeg",
+#         products=product_list
+#     )
 
 @app.route('/Experience')
 def experience_page():
@@ -196,7 +315,7 @@ def add_product_to_cart(product_id):
     # Enforce stock cap
     if current_qty + quantity_to_add > stock_remaining:
         flash(f"Only {stock_remaining - current_qty} items left in stock!", "warning")
-        return redirect(url_for('product_page'))
+        return redirect(url_for('product_page_new'))
 
     product_cart_dict[str(product_id)] = current_qty + quantity_to_add
     session['cart']['products'] = product_cart_dict
@@ -218,12 +337,13 @@ def add_product_to_cart(product_id):
             'productname': product[0],
             'productprice': product[1],
             'productimage': product[2],
+            'productdescription': product[3],
             'stockremaining': int(stock_remaining)
         })
 
     session.modified = True
     flash(f"{quantity_to_add} item(s) added to cart! 🎁", "success")
-    return redirect(url_for('product_page') + "#product-cards")
+    return redirect(url_for('product_page_new') + "#product-cards")
 
 
 @app.route('/update_quantity/<int:product_id>', methods=['POST'])
@@ -255,14 +375,13 @@ def update_quantity(product_id):
 def view_cart():
     experience_cart = session.get("experience_cart", [])
     product_cart = session.get("product_cart", [])
+    destination_cart = session.get("destination_cart",[])
 
 
     products_in_cart = []
     experiences_in_cart = []
+    destination_in_cart = []
     total_price = 0
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
 
     for item in product_cart:
         total = item['quantity'] * item['productprice']
@@ -278,13 +397,20 @@ def view_cart():
         experiences_in_cart.append(item)
         total_price += total
 
-    cursor.close()
-    conn.close()
+    for item in destination_cart:
+        total = item['guests'] * item['destination_price'] * item['no_of_nights']
+        item['total'] = total
+        item['quantity'] = item['guests']
+        item['datereserved'] = item['booking_startdate']
+        destination_in_cart.append(item)
+        total_price += total
+
 
     return render_template(
         'cart.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
+        destinations=destination_in_cart,
         total=total_price
     )
 
@@ -344,8 +470,9 @@ def add_to_cart_experience(experience_id):
 def checkout():
     experience_cart = session.get('experience_cart', [])
     product_cart = session.get('product_cart', [])
+    destination_cart = session.get('destination_cart', [])
 
-    if not experience_cart and not product_cart:
+    if not experience_cart and not product_cart and not destination_cart:
         flash("Cart is empty!", "warning")
         return redirect(url_for('view_cart'))
 
@@ -360,11 +487,12 @@ def checkout():
         cursor.close()
         conn.close()
 
-        process_order_items(order_id, product_cart, experience_cart, user_id)
+        process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
 
         # Clear the cart
         session['product_cart'] = []
         session['experience_cart'] = []
+        session['destination_cart'] = []
         session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
 
         flash("Your magical order has been placed! 🎉", "success")
@@ -379,11 +507,15 @@ def order_receipt(order_id):
     order_info = get_order_info(order_id)
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
+    destinations = get_ordered_destinations(order_id)
+
+    print(destinations)
 
     return render_template('order_receipt.html',
                            order=order_info,
                            products=products,
                            experiences=experiences,
+                           destinations=destinations,
                            order_id=order_id)
 
 
@@ -423,15 +555,51 @@ def product_sale():
     if 'user_email' in session:
         user_email= session['user_email']
         return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
-    return render_template('product_sale.html', user_email=False, title='Login Area')
 
 
+@app.route('/my_account', methods=['GET', 'POST'])
+def my_account():
+    if 'user_id' not in session:
+        flash("Please log in to access your account.", "warning")
+        return redirect(url_for('login', next=request.path))
 
+    user_id = session['user_id']
+    user_first_name = get_first_name_by_id(user_id)
 
+    # Handle cancellation request (POST)
+    if request.method == 'POST':
+        booking_id = request.form.get('booking_id')
 
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
+        # Check if request already exists
+        cursor.execute("""
+            SELECT * FROM CancelExperienceRequests 
+            WHERE BookingID = %s AND UserID = %s
+        """, (booking_id, user_id))
+        existing = cursor.fetchone()
 
+        if not existing:
+            cursor.execute("""
+                INSERT INTO CancelExperienceRequests (BookingID, UserID)
+                VALUES (%s, %s)
+            """, (booking_id, user_id))
+            conn.commit()
 
+        cursor.close()
+        conn.close()
+
+    # Load data for display
+    orders = get_user_orders(user_id)
+    experiences = get_user_experiences(user_id)
+    products = get_user_ordered_products(user_id)
+
+    return render_template('my_account.html',
+                           user_first_name=user_first_name,
+                           orders=orders,
+                           experiences=experiences,
+                           products=products)
 
 
 
@@ -449,14 +617,15 @@ def cinderella_kingdom():
 #context processor is used to inject the cart_count variable into the context of every template rendered by the application
 @app.context_processor
 def cart_item_count():
-    cart = session.get('cart', {'products': {}, 'experiences': {}})
-    count = sum(cart['products'].values()) + sum(cart['experiences'].values())
+    cart = session.get('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    count = sum(cart['products'].values()) + sum(cart['experiences'].values()) + sum(cart['destinations'].values())
     return dict(cart_count=count)
 
 
 
 @app.route('/wonderland')
 def wonderland():
+    destination = get_destination_by_name("Wonderland")
     cards = [
         {
             "title": "Embark on a journey where curiosity is your guide",
@@ -506,12 +675,14 @@ def wonderland():
         hero_title="Welcome to Wonderland",
         hero_subtitle="Down the rabbit hole you go, into a world where magic and curiosity collide!",
         intro_title="Ready to tumble into tea parties, talking cats, and total nonsense?",
-        css_file="wonderland2.css"
+        css_file="wonderland2.css",
+        destination=destination
     )
 
 
 @app.route('/aquariel')
 def aquariel():
+    destination = get_destination_by_name("Aquariel")
     cards = [
   {
     "title": "Dive into Ariel’s World",
@@ -562,6 +733,7 @@ def aquariel():
         hero_subtitle="Dive into a world where wonder glows beneath the waves",
         intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way!",
         css_file="aquariel.css",
+        destination=destination
     )
 
 
@@ -577,6 +749,7 @@ def book_destination():
 
 @app.route('/Arendelle')
 def frozen_page():
+    destination = get_destination_by_name("Frozen")
     cards = [
   {
     "title": "Our Luxurious Rooms",
@@ -627,9 +800,82 @@ def frozen_page():
         hero_title="Arandelle holidays",
         hero_subtitle="The Frozen Magical Land of Arandelle!!",
         intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
-        css_file="frozen_styles.css"
+        css_file="frozen_styles.css",
+        destination=destination
     )
 
+@app.route('/destination/<int:destination_id>')
+def show_destination(destination_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM Destination WHERE DestinationID = %s", (destination_id,))
+    destination = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if not destination:
+        flash("Destination not found.", "danger")
+        return redirect(url_for('home_page'))
+
+    return render_template('destination_page.html', destination=destination)
+
+@app.route('/add_to_destination_cart/<int:destination_id>', methods=['POST'])
+def add_to_destination_cart(destination_id):
+    guests = int(request.form['guests'])
+    booking_start_date = request.form['checkin']
+    booking_end_date= request.form['checkout']
+
+    dt1 = datetime.strptime(booking_start_date, '%Y-%m-%d')
+    dt2 = datetime.strptime(booking_end_date, '%Y-%m-%d')
+
+
+    no_of_nights = (dt2 - dt1).days
+    user_id = request.form['user_id']
+
+    result = get_destination_by_id(destination_id)
+
+    if not result:
+        flash("Destination not found.", "danger")
+        return redirect(url_for('home_page'))
+
+    destination_name = result['DestinationName']
+    destination_price = result['DestinationPricePerNight']
+    destination_image = result['DestinationImage']
+
+    if 'cart' not in session:
+        session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
+    cart = session['cart']
+    des_cart = cart['destinations']
+
+    if str(destination_id) in des_cart:
+        des_cart[str(destination_id)] += 1
+    else:
+        des_cart[str(destination_id)] = 1
+
+    session['cart']['destination'] = des_cart
+
+    cart_item = {
+        'destination_id': int(destination_id),
+        'user_id': user_id,
+        'booking_startdate': booking_start_date,
+        'booking_enddate': booking_end_date,
+        'guests': guests,
+        'destination_name': destination_name,
+        'destination_price': destination_price,
+        'destination_image': destination_image,
+        'no_of_nights' : no_of_nights
+    }
+
+    if 'destination_cart' not in session:
+        session['destination_cart'] = []
+
+    session['destination_cart'].append(cart_item)
+    session.modified = True
+
+    flash("✨ Magical destination added to cart!", "success")
+    return redirect(url_for('book_destination'))
 
 
 
@@ -701,3 +947,20 @@ def about_us():
                            title_body='Magical Team of Enchanted Getaways! ',
                            subtitle='★ We make your dreams come true★',
                            img="static/images/wallpaper_home.jpeg")
+
+
+@app.route('/Product1')
+def product_page_new():
+    product_list = get_products()
+    purchased = get_total_purchased_by_product()
+
+    for product in product_list:
+        pid = str(product['productid'])
+        product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
+
+    image_dir = os.path.join(app.static_folder, "images")
+    magic_images = sorted([
+        filename for filename in os.listdir(image_dir)
+        if filename.startswith("magic") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
+    ])
+    return render_template('product1.html', title_head='Magical Products', products = product_list, magic_images=magic_images)

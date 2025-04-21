@@ -1,3 +1,6 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
@@ -120,4 +123,25 @@ button[disabled] {
   opacity: 0.6;
   pointer-events: none;
   cursor: not-allowed;
+}
+
+
+.experience-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.btn-primary {
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }

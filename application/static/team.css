@@ -60,14 +60,14 @@ html {
   display: inline-block;
   padding: 8px;
   color: white;
-  background-color: #000;
+  background-color: #9966cc;
   text-align: center;
   cursor: pointer;
   width: 100%;
 }
 
 .button:hover {
-  background-color: #555;
+  background-color: #9966cc;
 }
 
 @media screen and (max-width: 650px) {

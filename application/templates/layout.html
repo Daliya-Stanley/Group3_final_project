@@ -22,7 +22,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div class="toast align-items-center text-white bg-{{ category }} border-0 show mb-2"
+          <div class="toast align-self-start text-white bg-{{ category }} border-0 show mb-2"
                role="alert" aria-live="assertive" aria-atomic="true" style="animation: fadeInToast 1s ease-in-out;">
             <div class="d-flex">
               <div class="toast-body">
@@ -40,14 +40,11 @@
   <audio id="toast-sound" src="{{ url_for('static', filename='sounds/ding.mp3') }}" preload="auto"></audio>
 
 
-<nav class="navbar navbar-expand-lg align-items-end sticky-top">
+<nav class="navbar navbar-expand-lg align-items-end  sticky-top">
   <a href="/" class="navbar-brand">
     <img src="{{ url_for('static', filename='images/EG_logo_transparent.png') }}" alt="Enchanted Getaways" height="45px">
-    <h4 class="mb-0 text-decoration-none">Enchanted Getaways</h4>
+    <h4 class="mb-0">Enchanted Getaways</h4>
   </a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
   <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
     <ul class="navbar-nav">
@@ -101,27 +98,16 @@
 
 
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{url_for('product_page')}}">Our Magical Products</a>
+        <a class="nav-link active" aria-current="page" href="{{url_for('product_page_new')}}">Our Magical Products</a>
       </li>
 
-        <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Play and Win</a>
-  <ul class="dropdown-menu">
-    {% if request.path != '/wheel_of_fortune' %}
-      <li><a class="dropdown-item" href="/wheel_of_fortune">Wheel of Fortune</a></li>
-    {% else %}
-      <li><a href="#" class="dropdown-item nav-link disabled">Wheel of Fortune</a></li>
-    {% endif %}
 
-    {% if request.path != '/rock_paper_scissors' %}
-      <li><a class="dropdown-item" href="/rock_paper_scissors">Rock Paper Scissors</a></li>
-    {% else %}
-      <li><a href="#" class="dropdown-item nav-link disabled">Rock Paper Scissors</a></li>
-    {% endif %}
-  </ul>
-</li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('wheel_of_fortune_game')}}">Play and Win</a>
+        </li>
 
-      <li class="nav-item">
+
+        <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{url_for('experience_page')}}">Our Magical Experiences!</a>
       </li
 
@@ -137,13 +123,13 @@
             {% if cart_count > 0 %}
               <img src="{{ url_for('static', filename='images/cart_black.png') }}" alt="Cart" width="30" height="30">
               <span class="position-absolute translate-left badge text-color-white" style="
-                    right: 0px;
-                    left: 0px;
-                    bottom: 0px;
-                    font-size: 0.7rem;
-                    font-weight: 100;">
-                {{ cart_count }}
-              </span>
+                     right: 0px;
+                     left: 0px;
+                     bottom: 0px;
+                     font-size: 0.7rem;
+                     font-weight: 100;">
+                 {{ cart_count }}
+               </span>
               {%else%}
               <img src="{{ url_for('static', filename='images/cart_white.png') }}" alt="Cart" width="27" height="27">
               <span class="position-absolute translate-left badge" style="
@@ -157,15 +143,20 @@
             {% endif %}
           </a>
 
-          {% if 'user_email' in session %}
-          <button class="login-btn">
-            <a href="{{ url_for('logout') }}"><i class='bx bxs-castle bx-burst-hover'></i>Logout</a>
-          </button>
-          {% else %}
-          <button class="login-btn align-self-end">
-            <a href="{{ url_for('login') }}"><i class='bx bxs-castle bx-burst-hover'></i>Login</a>
-          </button>
-          {% endif %}
+          <div class="dropdown align-self-end">
+              <a class="nav-link dropdown-toggle pe-2 d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class='bx bxs-castle castle-icon' style="font-size: 1.5rem;"></i>
+             </a>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                {% if 'user_email' in session %}
+                  <li><a class="dropdown-item" href="{{ url_for('my_account') }}">My Account</a></li>
+                  <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                  <li><a class="dropdown-item" href="{{ url_for('login') }}">Login/Register</a></li>
+                {% endif %}
+              </ul>
+          </div>
       </div>
 
 

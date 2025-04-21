@@ -15,24 +15,16 @@ title {
     text-transform: capitalize;
 }
 
-/* Adjusting the text-style, font, size and colour of the logo header (the 'EGT' next to the logo image) */
-
-.navbar-brand h2 {
-    text-transform: uppercase;
-    font-family: "Lilita One", sans-serif;
-    font-size: 2rem;
-    font-weight: 550;
-    color: black;
-    padding-top: 5px;
-    text-decoration: none;
-}
-
 .navbar-brand h4{
+    font-family: "Pattaya", sans-serif;
     text-decoration: none;
+    color: #FEC06F
+
 }
 
 body {
-  padding-top: 0px; /* Adjust this value to match your navbar height */
+  padding-top: 0px;
+  overflow-x: hidden;
 }
 
 main {
@@ -41,14 +33,19 @@ main {
 
 .navbar-brand {
     display: flex;
-    align-items: end;
-    gap: 10px;
+    align-items: flex-end;
+    gap: 3px;
 }
 
+
+.navbar-brand img {
+    align-self: flex-end;
+  vertical-align: bottom;
+}
 .navbar {
     background-color: #9954BA;
     padding-top: 2px;
-    padding-bottom: 2px;
+    padding-bottom: 1px;
     border: 0;
     border-radius: 0;
     margin-bottom: 0;
@@ -61,7 +58,7 @@ main {
 
  /* Positioning the Menu items to the center */
 .navbar-nav {
-    justify-content: right;
+    justify-content: center;
     width: 100%;
 }
 
@@ -139,19 +136,27 @@ main {
 }
 
 
-.login-btn a {
-    text-decoration: none;
-    color: #C8A2C8;
+.castle-icon {
+  color: #E6CCFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: inline-block;
 }
 
-.login-btn a:hover {
-    color: #E6CCFF;
+.castle-icon:hover {
+  animation: bounce-once 0.6s ease;
+  color: #D8B4F8;
+  text-shadow: 0 0 6px #E6CCFF;
 }
 
-.login-btn i {
-    margin-right: 8px;
-    font-size: 1.1rem;
+@keyframes bounce-once {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-8px); }
+  50%  { transform: translateY(4px); }
+  70%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
 }
+
 
 .login-wrapper {
   background-image: url("/static/images/login.png");
@@ -165,6 +170,10 @@ main {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+}
+
+.badge{
+    color: #E6CCFF;
 }
 
 
@@ -247,7 +256,7 @@ main {
 }
 
 .wheel-card {
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .login-card h1 {

@@ -8,7 +8,7 @@
   <p><strong>Order Date:</strong> {{ order[0] }}</p>
   {% endif %}
 
-  {% set totals = namespace(products=0, experiences=0) %}
+  {% set totals = namespace(products=0, experiences=0, destinations=0) %}
 
   {% if products %}
   <h4 class="mt-4">🛍️ Magical Products</h4>
@@ -70,7 +70,42 @@
   </table>
   {% endif %}
 
-  {% set grand_total = totals.products + totals.experiences %}
+  {% if destinations %}
+  <h4 class="mt-5">✨ Magical Destination</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Destination</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Guests</th>
+        <th>Nights booked</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for destination in destinations %}
+      {% set destination_total = destination.guests * destination.destination_price  * destination.no_of_nights %}
+      {% set totals.destinations = totals.destinations + destination_total %}
+      <tr>
+        <td><img src="{{ url_for('static', filename='images/' + destination.destinationimage) }}" height="60"></td>
+        <td>{{ destination.destinationname }}</td>
+        <td>{{ destination.bookingstartdate }}</td>
+        <td>{{ destination.bookingenddate }}</td>
+        <td>{{ destination.guests }}</td>
+        <td>{{ destination.no_of_nights }}</td>
+        <td>£{{ destination.destination_price }}</td>
+        <td>£{{ destination_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+  {% set grand_total = totals.products + totals.experiences + totals.destinations %}
   <p class="fw-bold mt-4">Grand Total: £{{ grand_total }}</p>
 
   <a href="{{ url_for('home_page') }}" class="btn btn-primary mt-3">Return to Home</a>
