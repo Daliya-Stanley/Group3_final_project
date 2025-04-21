@@ -294,6 +294,7 @@ def view_cart():
 def add_to_cart_experience(experience_id):
     guests = int(request.form['guests'])
     booking_date = request.form['booking_date']
+    booking_date_mandate= request.form.get('booking_date')
     booking_time = request.form['booking_time']
     user_id = request.form['user_id']
 
@@ -307,9 +308,17 @@ def add_to_cart_experience(experience_id):
         flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.", "warning")
         return redirect(url_for('experience_page'))
 
+    if not booking_date_mandate:
+        flash("⚠️ Please select a booking date before submitting.", "warning")
+        return redirect(url_for('experience_page'))
+
+
     # Initialize carts
     session.setdefault('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
     session.setdefault('experience_cart', [])
+
+
+
 
     # Check if this experience is already booked by user
     for item in session['experience_cart']:
