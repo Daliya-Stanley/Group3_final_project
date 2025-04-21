@@ -1,74 +1,171 @@
 {% extends "layout.html" %}
 {% block title %}Order Receipt{% endblock %}
 {% block body_content %}
-<div class="container mt-5">
-  <h2 class="mb-4">🧾 Your Order Receipt</h2>
+<link rel="stylesheet" href="{{ url_for('static', filename= 'cart.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-  {% if order %}
-  <p><strong>Order Date:</strong> {{ order[0] }}</p>
-  {% endif %}
+
+
+<div class="container mt-5">
+  <h3 class="mb-4">🧾 Thanks for your order {{ user_first_name}}, this is your receipt.  </h3>
+  <h4 class="mb-4" > Your payment link is sent to {{user_email}}</h4>
+
+<!--  {% if order %}-->
+<!--  <p><strong>Order Date:</strong> {{ order[0] }}</p>-->
+<!--  {% endif %}-->
+
+<!--  {% set totals = namespace(products=0, experiences=0) %}-->
+
+<!--  {% if products %}-->
+<!--  <h4 class="mt-4">🛍️ Magical Products</h4>-->
+<!--  <table class="table table-bordered">-->
+<!--    <thead>-->
+<!--      <tr>-->
+<!--        <th>Image</th>-->
+<!--        <th>Product</th>-->
+<!--        <th>Quantity</th>-->
+<!--        <th>Unit Price</th>-->
+<!--        <th>Total</th>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--      {% for product in products %}-->
+<!--      {% set product_total = product.quantity * product.productprice %}-->
+<!--      {% set totals.products = totals.products + product_total %}-->
+<!--      <tr>-->
+<!--        <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>-->
+<!--        <td>{{ product.productname }}</td>-->
+<!--        <td>{{ product.quantity }}</td>-->
+<!--        <td>£{{ product.productprice }}</td>-->
+<!--        <td>£{{ product_total }}</td>-->
+<!--      </tr>-->
+<!--      {% endfor %}-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  {% endif %}-->
+
+<!--  {% if experiences %}-->
+<!--  <h4 class="mt-5">✨ Enchanted Experiences</h4>-->
+<!--  <table class="table table-bordered">-->
+<!--    <thead>-->
+<!--      <tr>-->
+<!--        <th>Image</th>-->
+<!--        <th>Experience</th>-->
+<!--        <th>Date</th>-->
+<!--        <th>Time</th>-->
+<!--        <th>Guests</th>-->
+<!--        <th>Unit Price</th>-->
+<!--        <th>Total</th>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--      {% for experience in experiences %}-->
+<!--      {% set experience_total = experience.guests * experience.experienceprice %}-->
+<!--      {% set totals.experiences = totals.experiences + experience_total %}-->
+<!--      <tr>-->
+<!--        <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>-->
+<!--        <td>{{ experience.experiencename }}</td>-->
+<!--        <td>{{ experience.bookingdate }}</td>-->
+<!--        <td>{{ experience.bookingtime }}</td>-->
+<!--        <td>{{ experience.guests }}</td>-->
+<!--        <td>£{{ experience.experienceprice }}</td>-->
+<!--        <td>£{{ experience_total }}</td>-->
+<!--      </tr>-->
+<!--      {% endfor %}-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  {% endif %}-->
+
+<!--  {% set grand_total = totals.products + totals.experiences %}-->
+<!--  <p class="fw-bold mt-4">Grand Total: £{{ grand_total }}</p>-->
+
+<!--  <a href="{{ url_for('home_page') }}" class="btn btn-primary mt-3">Return to Home</a>-->
+<!--</div>-->
+
+  <div class="container my-5"  >
+  <div class="card shadow-lg" >
+    <div class= "card-header " style ="background-color: #9966cc ">
+      <h4 class="mb-0" >🧾 Order Summary</h4>
+    </div>
+    <div class="card-body">
+
+      {% if order %}
+       <p class="animate__animated animate__fadeInLeft"><strong>Order Date:</strong> {{ order[0] }}</p>
+      {% endif %}
 
   {% set totals = namespace(products=0, experiences=0, destinations=0) %}
 
-  {% if products %}
-  <h4 class="mt-4">🛍️ Magical Products</h4>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      {% set product_total = product.quantity * product.productprice %}
-      {% set totals.products = totals.products + product_total %}
-      <tr>
-        <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>
-        <td>{{ product.productname }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>£{{ product.productprice }}</td>
-        <td>£{{ product_total }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
+      {% if products %}
+      <div class="card mb-4 animate__animated animate__zoomIn animate__delay-1s">
+        <div class="card-header " style="background-color:#9966cc">
+          <h5 class="mb-0">🛍️ Magical Products</h5>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              {% set product_total = product.quantity * product.productprice %}
+              {% set totals.products = totals.products + product_total %}
+             <tr class="animate__animated animate__fadeInUp animate__faster">
+                <td><img src="{{ url_for('static', filename='images/' + product.productimage) }}" height="60"></td>
+                <td>{{ product.productname }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>£{{ product.productprice }}</td>
+                <td>£{{ product_total }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
 
-  {% if experiences %}
-  <h4 class="mt-5">✨ Enchanted Experiences</h4>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Experience</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Guests</th>
-        <th>Unit Price</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for experience in experiences %}
-      {% set experience_total = experience.guests * experience.experienceprice %}
-      {% set totals.experiences = totals.experiences + experience_total %}
-      <tr>
-        <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>
-        <td>{{ experience.experiencename }}</td>
-        <td>{{ experience.bookingdate }}</td>
-        <td>{{ experience.bookingtime }}</td>
-        <td>{{ experience.guests }}</td>
-        <td>£{{ experience.experienceprice }}</td>
-        <td>£{{ experience_total }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
+      {% if experiences %}
+              <div class="card mb-4 animate__animated animate__zoomIn animate__delay-2s">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">✨ Enchanted Experiences</h5>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Image</th>
+                <th>Experience</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Guests</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for experience in experiences %}
+              {% set experience_total = experience.guests * experience.experienceprice %}
+              {% set totals.experiences = totals.experiences + experience_total %}
+              <tr class="animate__animated animate__fadeInUp animate__faster">
+                <td><img src="{{ url_for('static', filename='images/' + experience.experienceimage) }}" height="60"></td>
+                <td>{{ experience.experiencename }}</td>
+                <td>{{ experience.bookingdate }}</td>
+                <td>{{ experience.bookingtime }}</td>
+                <td>{{ experience.guests }}</td>
+                <td>£{{ experience.experienceprice }}</td>
+                <td>£{{ experience_total }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
 
   {% if destinations %}
   <h4 class="mt-5">✨ Magical Destination</h4>
@@ -109,5 +206,14 @@
   <p class="fw-bold mt-4">Grand Total: £{{ grand_total }}</p>
 
   <a href="{{ url_for('home_page') }}" class="btn btn-primary mt-3">Return to Home</a>
+      {% set grand_total = totals.products + totals.experiences %}
+  <div class="text-end animate__animated animate__fadeIn animate__delay-3s">
+        <p class="fw-bold fs-5">Grand Total: £{{ grand_total }}</p>
+        <a href="{{ url_for('home_page') }}" class="btn btn-success">Return to Home</a>
+      </div>
+  </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

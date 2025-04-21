@@ -407,7 +407,7 @@ def view_cart():
 
 
     return render_template(
-        'cart.html',
+        'cart1.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
         destinations=destination_in_cart,
@@ -507,6 +507,9 @@ def order_receipt(order_id):
     order_info = get_order_info(order_id)
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
+    user_id = session['user_id']
+    user_first_name = get_first_name_by_id(user_id)
+    user_email=session.get("user_email")
     destinations = get_ordered_destinations(order_id)
 
     print(destinations)
@@ -516,6 +519,8 @@ def order_receipt(order_id):
                            products=products,
                            experiences=experiences,
                            destinations=destinations,
+                           user_first_name=user_first_name,
+                           user_email=user_email,
                            order_id=order_id)
 
 
