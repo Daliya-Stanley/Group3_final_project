@@ -5,7 +5,11 @@
 
 <link rel="stylesheet" href="{{ url_for('static', filename= 'team.css') }}">
 
+
 <section>
+
+
+
 <div class="about-section">
   <div class="about-section animated-background">
   <h1 style="color: black">Meet the team of Enchanted Getaways!</h1>
@@ -14,132 +18,78 @@
 </div>
 </div>
 
-<h2 style="text-align:center">Our Team</h2>
+<h2 style="text-align:center; font-family: 'Pattaya', sans-serif;">Our Team</h2>
+    <div class="container my-5">
+  <div class="row justify-content-center g-4">
+
 <div class="row">
-  <div class="column" style="--index: 1;">
-    <div class="card">
+    <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+      <div class="card" style="width: 100%; max-width: 300px;">
       <img src="{{ url_for('static', filename='images/daphne_amp.jpeg') }}" alt="Daphne" style="width:100%">
       <div class="container">
         <h2>Daphne</h2>
         <p class="title">Guide- Cinderella Land</p>
         <p>Meet your guide, a resident of Cinderella's Land, ready to unveil the magic behind the fairytale.</p>
         <p>Daphne@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="button"><a href="cinderella_kingdom" style="color:white; background-color: #9966cc">Visit My Destination</a></button></p>
       </div>
     </div>
   </div>
 
-  <div class="column">
-    <div class="card">
+  <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+      <div class="card" style="width: 100%; max-width: 300px;">
       <img src="{{ url_for('static', filename='images/emma_amp.jpeg') }}" alt="Emma" style="width:100%">
       <div class="container">
         <h2>Emma</h2>
         <p class="title">Guide- Wonderland</p>
         <p>Embark on a whimsical journey through Wonderland with your knowledgeable local guide.</p>
         <p>emma@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="button"><a href="/wonderland" style="color:white; background-color: #9966cc">Visit My Destination</a></button></p>
       </div>
     </div>
   </div>
-  <div class="column">
-    <div class="card">
+  <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+      <div class="card" style="width: 100%; max-width: 300px;">
       <img src="{{ url_for('static', filename='images/anna_amp.jpeg') }}" alt="Anna" style="width:100%">
       <div class="container">
         <h2>Anna</h2>
         <p class="title">Guide- Aquariel</p>
         <p>Dive into Atlantica with your guide, a denizen of Ariel's enchanting underwater realm.</p>
         <p>anna@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="button"><a href="aquariel" style="color:white; background-color: #9966cc">Visit My Destination</a></button></p>
       </div>
     </div>
   </div>
-  <div class="column">
-    <div class="card">
+  <br>
+
+  <br>
+
+  <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+      <div class="card" style="width: 100%; max-width: 300px;">
       <img src="{{ url_for('static', filename='images/titi_amp.jpeg') }}"  alt="Titi" style="width:100%">
       <div class="container">
         <h2>Titi</h2>
         <p class="title">Guide- World of Mulan</p>
         <p>Explore the heroic landscapes and traditions of Mulan's kingdom with your experienced guide.</p>
         <p>titi@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="button"><a href="mulan" style="color:white; background-color: #9966cc">Visit My Destination</a></button></p>
       </div>
     </div>
   </div>
-  <div class="column">
-    <div class="card">
+ <div class="col-12 col-sm-6 col-lg-4 d-flex justify-content-center">
+      <div class="card" style="width: 100%; max-width: 300px;">
       <img src="{{ url_for('static', filename='images/daliya_amp.jpeg') }}" alt="Daliya" style="width:100%">
       <div class="container">
         <h2>Daliya</h2>
         <p class="title">Guide- Arandelle</p>
         <p>Brave the enchanting, icy landscapes of Disney's Frozen Kingdom with your friendly guide.</p>
         <p>daliya@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  <div class="column">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/cinderalla_amp.jpeg') }}" alt="Cindy" style="width:100%">
-      <div class="container">
-        <h2>Cinderalla</h2>
-        <p class="title">Resource Person- Cinderalla Land</p>
-        <p>Cinderella, Chief Resource Person Cinderalla Land, ensures every visitor's fairytale journey is seamless and magical.</p>
-        <p>cindy@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  <div class="column">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/alice_amp.jpeg') }}" alt="alice"  style="width:100%">
-      <div class="container">
-        <h2>Alice</h2>
-        <p class="title">Resource Person- Wonderland</p>
-        <p>Endlessly curious Resource Person in Wonderland, expertly guides visitors through its bizarre wonders.</p>
-        <p>alice@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-  <div class="column">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/ariel_amp.jpeg') }}" alt="ariel" style="width:100%">
-      <div class="container">
-        <h2>Ariel</h2>
-        <p class="title">Resource Person- Aquariel</p>
-        <p>Ariel, the spirited resource person in Atlanta, brings her adventurous perspective to helping visitors explore the city.</p>
-        <p>ariel@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/frozen_amp.jpeg') }}" alt="Mike" style="width:100%">
-      <div class="container">
-        <h2>Anna-A</h2>
-        <p class="title">Resource Person- Arandelle</p>
-        <p>Anna, the warm and determined resource person in Arendelle, helps visitors discover the kingdom's heartfelt charm..</p>
-        <p>annaA@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-      <img src="{{ url_for('static', filename='images/mulan_amp.jpeg') }}"alt="John" style="width:100%">
-      <div class="container">
-        <h2>Mulan</h2>
-        <p class="title">Resource Person- China</p>
-        <p>Mulan, the courageous and resourceful guide in her kingdom, shares its heroic history and vibrant culture with visitors.</p>
-        <p>mulan@EGT.magic</p>
-        <p><button class="button">Contact</button></p>
+        <p><button class="button"><a href="Arendelle" style="color:white; background-color: #9966cc">Visit My Destination</a></button></p>
       </div>
     </div>
   </div>
 </div>
+
 </section>
 
 <script>

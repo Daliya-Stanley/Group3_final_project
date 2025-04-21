@@ -21,13 +21,13 @@ def get_products():
 
     cursor = conn.cursor()  # call its cursor method, which gives it the abilities to send commands
 
-    sql = "Select ProductID, ProductName, ProductPrice, ProductImage from Product WHERE ProductStatusID < 3" # selecting the first name...#added where clause so it doesn't show the free products
+    sql = "Select ProductID, ProductName, ProductPrice, ProductImage, ProductDescription from Product WHERE ProductStatusID < 3" # selecting the first name...#added where clause so it doesn't show the free products
     cursor.execute(sql) # and the executing them
 
     result_set = cursor.fetchall() #cursor object, to fetch all that info
     product_list = []
     for product in result_set:
-        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2], 'productimage': product[3]}) #used to fetch the ...
+        product_list.append({'productid': product[0], 'productname': product[1], 'productprice': product[2], 'productimage': product[3], 'productdescription':product[4]}) #used to fetch the ...
     # print(product_list)
     return product_list
 
@@ -163,7 +163,7 @@ def get_first_name_by_id(user_id):
 def get_product_details(product_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT ProductName, ProductPrice, ProductImage FROM Product WHERE ProductID = %s", (product_id,))
+    cursor.execute("SELECT ProductName, ProductPrice, ProductImage, ProductDescription FROM Product WHERE ProductID = %s", (product_id,))
     product = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -259,7 +259,7 @@ def get_ordered_products(order_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT p.ProductName, po.Quantity, p.ProductPrice, p.ProductImage
+        SELECT p.ProductName, po.Quantity, p.ProductPrice, p.ProductImage, p.ProductDescription
         FROM ProductOrders po
         JOIN Product p ON p.ProductID = po.ProductID
         WHERE po.OrderID = %s
@@ -272,7 +272,8 @@ def get_ordered_products(order_id):
             'productname': row[0],
             'quantity': row[1],
             'productprice': row[2],
-            'productimage': row[3]
+            'productimage': row[3],
+            'productdescription' :row[4]
         } for row in rows
     ]
 

@@ -32,6 +32,30 @@ ProductStatusID INT NOT NULL,
 foreign key (ProductStatusID) references ProductStatus(ProductStatusID),
 ProductImage VARCHAR (50) NOT NULL
 );
+ALTER TABLE Product
+ADD ProductDescription TEXT;
+
+SET SQL_SAFE_UPDATES =0;
+UPDATE Product
+SET ProductDescription = 'A bottomless suitcase that fits everything you need for an epic adventure.'
+WHERE ProductName = 'All You Can Pack Suitcase';
+
+UPDATE Product
+SET ProductDescription = 'A flying carpet that whisks you away to your destination in style.'
+WHERE ProductName = 'Magical Carpet';
+
+UPDATE Product
+SET ProductDescription = 'A mysterious elixir with enchanting effects and which heals your heart and body.'
+WHERE ProductName = 'Magic Potion';
+
+UPDATE Product
+SET ProductDescription = 'A sleek wand that channels your inner wizard with a flick and a spark and get your house squeaky clean.'
+WHERE ProductName = 'Magic Wand';
+
+UPDATE Product
+SET ProductDescription = 'A magical outfit that transforms into any style with zero effort.'
+WHERE ProductName = 'Spectacular One Dress';
+
 
 INSERT INTO Product (ProductName, ProductPrice, ProductStatusID, ProductImage)
 VALUES
