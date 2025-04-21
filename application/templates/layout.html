@@ -48,44 +48,48 @@
       </li>
 
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Destinations
-        </a>
-        <ul class="dropdown-menu">
-          {% if request.path != '/wonderland'%}
-          <li><a class="dropdown-item" href="wonderland">Wonderland</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Wonderland</a></li>
-          {% endif %}
-          {% if request.path != '/cinderella_kingdom'%}
-          <li><a class="dropdown-item" href="cinderella_kingdom">Cinderella's Kingdom</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Cinderella's Kingdom</a></li>
-          {% endif %}
-          {% if request.path != '/aquariel 3'%}
-          <li><a class="dropdown-item" href="aquariel">Aquariel</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Aquariel</a></li>
-           {% endif %}
-          {% if request.path != '/Arendelle'%}
-          <li><a class="dropdown-item" href="Arendelle">Magical Land of Arandelle</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Magical Land of Arandelle</a></li>
-          {% endif %}
-          {% if request.path != '/mulan'%}
-          <li><a class="dropdown-item" href="mulan">Mulan's World</a></li>
-          {% else %}
-          <li><a href="#" class="dropdown-item nav-link disabled">Mulan's World</a></li>
-          {% endif %}
-          <li><hr class="dropdown-divider"></li>
-            {% if request.path != '/book_destination'%}
-            <li><a class="dropdown-item" href="book_destination">Book Magical Destination</a></li>
-          {% else %}
-          <li><a href="#"  class = "drop-item nav-link disabled">Book Magical Destination</a></li>
-          {% endif %}
-        </ul>
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{url_for('book_destination')}}">Our Magical Destination</a>
       </li>
+
+<!--      <li class="nav-item dropdown">-->
+<!--        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--          Destinations-->
+<!--        </a>-->
+<!--        <ul class="dropdown-menu">-->
+<!--          {% if request.path != '/wonderland'%}-->
+<!--          <li><a class="dropdown-item" href="wonderland">Wonderland</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#" class="dropdown-item nav-link disabled">Wonderland</a></li>-->
+<!--          {% endif %}-->
+<!--          {% if request.path != '/cinderella_kingdom'%}-->
+<!--          <li><a class="dropdown-item" href="cinderella_kingdom">Cinderella's Kingdom</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#" class="dropdown-item nav-link disabled">Cinderella's Kingdom</a></li>-->
+<!--          {% endif %}-->
+<!--          {% if request.path != '/aquariel 3'%}-->
+<!--          <li><a class="dropdown-item" href="aquariel">Aquariel</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#" class="dropdown-item nav-link disabled">Aquariel</a></li>-->
+<!--           {% endif %}-->
+<!--          {% if request.path != '/Arendelle'%}-->
+<!--          <li><a class="dropdown-item" href="Arendelle">Magical Land of Arandelle</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#" class="dropdown-item nav-link disabled">Magical Land of Arandelle</a></li>-->
+<!--          {% endif %}-->
+<!--          {% if request.path != '/mulan'%}-->
+<!--          <li><a class="dropdown-item" href="mulan">Mulan's World</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#" class="dropdown-item nav-link disabled">Mulan's World</a></li>-->
+<!--          {% endif %}-->
+<!--          <li><hr class="dropdown-divider"></li>-->
+<!--            {% if request.path != '/book_destination'%}-->
+<!--            <li><a class="dropdown-item" href="book_destination">Book Magical Destination</a></li>-->
+<!--          {% else %}-->
+<!--          <li><a href="#"  class = "drop-item nav-link disabled">Book Magical Destination</a></li>-->
+<!--          {% endif %}-->
+<!--        </ul>-->
+<!--      </li>-->
 
 
 

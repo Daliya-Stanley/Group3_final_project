@@ -10,6 +10,8 @@
 
 <!-- Hero Gallery -->
 <section class="container mt-5">
+  <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">View our splendid range of magical experiences!</h1>
+  <br>
   <div class="gallery-grid">
     {% for img in gallery_images[:6] %}
     <div class="gallery-item">
@@ -112,9 +114,12 @@
   </div>
 </section>
 {% else %}
-  <div class="container text-center my-5">
-    <p class="lead">Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</p>
-  </div>
+  <div class="container text-center my-5" style="font-family: 'Lilita One', cursive; color: #9954BA;">
+    <h2>Please log in to view and book magical experiences!</h2>
+  <h3 style="text-align: center;">
+    <a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a>
+  </h3>
+   </div>
 {% endif %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>

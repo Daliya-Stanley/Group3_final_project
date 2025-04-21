@@ -10,6 +10,8 @@
 
 <!-- Hero Gallery -->
 <section class="container mt-5">
+  <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">View our magnificent range of magical products!</h1>
+  <br>
   <div class="gallery-grid">
     {% for img in magic_images[:6] %}
     <div class="gallery-item">
@@ -79,13 +81,13 @@
   </section>
 {% else %}
 
-<br>
-<br>
-  <h2 style="text-align: center;">You are not logged in.</h2>
-  <br>
+
+<div class="container text-center my-5" style="font-family: 'Lilita One', cursive; color: #9954BA;">
+    <h2>Please log in to view and book magical products!</h2>
   <h3 style="text-align: center;">
     <a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a>
   </h3>
+   </div>
 {% endif %}
 
 
