@@ -117,14 +117,14 @@
 
             {% if cart_count > 0 %}
               <img src="{{ url_for('static', filename='images/cart_black.png') }}" alt="Cart" width="30" height="30">
-              <span class="position-absolute translate-left badge;" style="
-                    right: 0px;
-                    left: 0px;
-                    bottom: 0px;
-                    font-size: 0.7rem;
-                    font-weight: 100;">
-                {{ cart_count }}
-              </span>
+              <span class="position-absolute translate-left badge text-color-white" style="
+                     right: 0px;
+                     left: 0px;
+                     bottom: 0px;
+                     font-size: 0.7rem;
+                     font-weight: 100;">
+                 {{ cart_count }}
+               </span>
               {%else%}
               <img src="{{ url_for('static', filename='images/cart_white.png') }}" alt="Cart" width="27" height="27">
               <span class="position-absolute translate-left badge" style="
