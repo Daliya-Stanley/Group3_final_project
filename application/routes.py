@@ -380,11 +380,16 @@ def order_receipt(order_id):
     order_info = get_order_info(order_id)
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
+    user_id = session['user_id']
+    user_first_name = get_first_name_by_id(user_id)
+    user_email=session.get("user_email")
 
     return render_template('order_receipt.html',
                            order=order_info,
                            products=products,
                            experiences=experiences,
+                           user_first_name=user_first_name,
+                           user_email=user_email,
                            order_id=order_id)
 
 
