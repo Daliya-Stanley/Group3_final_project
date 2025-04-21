@@ -247,6 +247,14 @@ ADD COLUMN CancelStatusID INT DEFAULT 1,
 ADD FOREIGN KEY (CancelStatusID) REFERENCES CancelStatus(CancelStatusID);
 
 
+CREATE TABLE PromotionalWinners (
+    WinnerID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    UserID INT NOT NULL,
+    ProductID INT NOT NULL,
+    WonAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES User(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);  
 -- DELIMITER $$
 
 -- CREATE PROCEDURE GetExperienceDetails(IN exp_id INT)
@@ -306,4 +314,6 @@ SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u
         JOIN Experiences e ON b.ExperienceID = e.ExperienceID
         JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
         ORDER BY c.RequestDate DESC;
+
+
 select * from Product;
