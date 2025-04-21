@@ -77,6 +77,14 @@ CREATE TABLE Orders (
   OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
 );
 
+CREATE TABLE OrderStatus (
+    OrderStatusID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    StatusName VARCHAR(20) NOT NULL
+);
+
+INSERT INTO OrderStatus (StatusName)
+VALUES ('Pending'), ('Shipped'), ('Delivered');
+
 
 create table ProductOrders
 (
@@ -90,15 +98,13 @@ create table ProductOrders
     OrderID INT NOT NULL,
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
+ALTER TABLE ProductOrders ADD COLUMN Status VARCHAR(20) DEFAULT 'Processing';
+ALTER TABLE ProductOrders 
+DROP COLUMN Status;
 
-create table Inventory
-(
-InventoryID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-ProductID INT NOT NULL,
-foreign key (ProductID) references Product(ProductID),
-ProductStatusID INT NOT NULL,
-foreign key (ProductStatusID) references ProductStatus(ProductStatusID)
-);
+ALTER TABLE ProductOrders 
+ADD COLUMN OrderStatusID INT DEFAULT 1, 
+ADD FOREIGN KEY (OrderStatusID) REFERENCES OrderStatus(OrderStatusID);
 
 
 create table Destination
@@ -190,20 +196,38 @@ FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
 ReviewText TEXT NULL,
 Rating INT NULL
 );
+ALTER TABLE BookingExperience
+ADD COLUMN IsCancelled BOOLEAN DEFAULT FALSE;
 
-
-
-create table Shopping
-(
-ShoppingID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-UserID INT NOT NULL,
-foreign key (UserID) references User(UserID),
-InventoryID INT NOT NULL,
-foreign key (InventoryID) references Inventory(InventoryID),
-ExperienceID INT NOT NULL,
-foreign key (ExperienceID) references Experiences(ExperienceID),
-Date date NOT NULL
+CREATE TABLE CancelStatus (
+    CancelStatusID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    StatusName VARCHAR(20) NOT NULL
 );
+
+INSERT INTO CancelStatus (StatusName)
+VALUES ('Pending'), ('Approved'), ('Rejected');
+
+
+CREATE TABLE CancelExperienceRequests (
+  CancelRequestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  BookingID INT NOT NULL,
+  UserID INT NOT NULL,
+  RequestDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  Status VARCHAR(20) DEFAULT 'Pending',
+  FOREIGN KEY (BookingID) REFERENCES BookingExperience(BookingID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+SHOW COLUMNS FROM CancelExperienceRequests;
+
+
+ALTER TABLE CancelExperienceRequests 
+DROP COLUMN Status;
+
+ALTER TABLE CancelExperienceRequests 
+ADD COLUMN CancelStatusID INT DEFAULT 1, 
+ADD FOREIGN KEY (CancelStatusID) REFERENCES CancelStatus(CancelStatusID);
+
 
 -- DELIMITER $$
 
@@ -237,3 +261,31 @@ SELECT OrderDate FROM Orders WHERE OrderID = 15;
         FROM BookingExperience b
         JOIN Experiences e ON e.ExperienceID = b.ExperienceID
         WHERE b.OrderID = 15;
+        
+SELECT P.ProductName, P.ProductImage, P.ProductPrice, OP.Quantity, O.OrderDate
+        FROM ProductOrders OP
+        JOIN Product P ON OP.ProductID = P.ProductID
+        JOIN Orders O ON OP.OrderID = O.OrderID
+        WHERE O.UserID =1
+        ORDER BY O.OrderDate DESC;
+        
+SELECT 
+            E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
+            B.Guests, B.BookingDate, B.BookingTime, B.BookingID,
+            (SELECT Status FROM CancelExperienceRequests 
+             WHERE BookingID = B.BookingID AND UserID = 1 LIMIT 1) AS CancelStatus
+        FROM BookingExperience B
+        JOIN Experiences E ON B.ExperienceID = E.ExperienceID
+        JOIN Orders O ON B.OrderID = O.OrderID
+        WHERE O.UserID = 1
+        ORDER BY B.BookingDate DESC;
+        
+SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u.LastName, u.Email,
+               e.ExperienceName, b.BookingDate
+        FROM CancelExperienceRequests c
+        JOIN BookingExperience b ON c.BookingID = b.BookingID
+        JOIN User u ON c.UserID = u.UserID
+        JOIN Experiences e ON b.ExperienceID = e.ExperienceID
+        JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
+        ORDER BY c.RequestDate DESC;
+select * from BookingExperience;
