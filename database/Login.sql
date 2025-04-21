@@ -74,7 +74,7 @@ CREATE TABLE Orders (
   OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   UserID INT NOT NULL,
   FOREIGN KEY (UserID) REFERENCES User(UserID),
-  OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+  OrderDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -123,7 +123,7 @@ ExperienceLevelKey VARCHAR (20) NOT NULL
 );
 
 INSERT INTO ExperienceLevel (ExperienceLevelKey)
-VALUES 
+VALUES
 ('Light'),
 ('Moderate'),
 ('High');
@@ -193,6 +193,16 @@ Rating INT NULL
 
 
 
+create table BookingExperienceTable
+(
+BookingID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+UserID INT NOT NULL,
+foreign key (UserID) references User(UserID),
+ExperienceID INT NOT NULL,
+foreign key (ExperienceID) references Experiences(ExperienceID),
+BookingDate date NOT NULL,
+BookingTime time NOT NULL
+);
 create table Shopping
 (
 ShoppingID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -205,18 +215,7 @@ foreign key (ExperienceID) references Experiences(ExperienceID),
 Date date NOT NULL
 );
 
--- DELIMITER $$
-
--- CREATE PROCEDURE GetExperienceDetails(IN exp_id INT)
--- BEGIN
---     SELECT 
---         ExperienceName AS name, 
---         ExperiencePrice AS price, 
---         ExperienceImage AS image, 
---         DateOfBooking AS date
---     FROM Experiences
---     WHERE ExperienceID = exp_id;
--- END $$
+DELIMITER $$
 
 -- DELIMITER ;
 
