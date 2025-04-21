@@ -81,6 +81,33 @@
       <p class="text-muted fst-italic">No experiences booked yet. Go make some magical memories! ✨</p>
     {% endif %}
   </div>
+  <!-- Booked Destinations -->
+<div class="mb-5">
+  <h3 class="mb-3">🏰 Your Magical Destinations</h3>
+  {% if destinations %}
+    <div class="row g-4">
+      {% for dest in destinations %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/' ~ dest.DestinationImage) }}"
+                 class="card-img-top" alt="{{ dest.DestinationName }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ dest.DestinationName }}</h5>
+              <p><strong>Guests:</strong> {{ dest.Guests }}</p>
+              <p><strong>Check-in:</strong> {{ dest.BookingStartDate.strftime('%d %b %Y') }}</p>
+              <p><strong>Check-out:</strong> {{ dest.BookingEndDate.strftime('%d %b %Y') }}</p>
+              <p><strong>Nights:</strong> {{ dest.NoOfNights }}</p>
+              <p><strong>Price/Night:</strong> £{{ dest.DestinationPricePerNight }}</p>
+              <p class="fw-bold">Total: £{{ dest.TotalPrice }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted fst-italic">No destinations booked yet. Let the magic begin! 🗺️</p>
+  {% endif %}
+</div>
 
 </div>
 
