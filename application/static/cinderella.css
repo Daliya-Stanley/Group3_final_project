@@ -1,33 +1,57 @@
 /* General Styles */
 body {
-    font-family: 'Garamond', serif;
+    font-family: 'Pattaya', sans-serif;
     background-color: #f9f9f9;
     margin: 0;
-    color: #333;
-}
-
-h1, h2, h4 {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
 }
 
 /* Top Section Styles */
 .top-section {
+    background-image: url('/static/images/cinderella.jpg');
+    height: 100vh;
+    position: relative;
+    top: 0;
+    max-width: 1500px;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
+    color: white;
 }
 
 .top-section h1 {
     font-size: 3.5rem;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #ffffff;
+    text-shadow: 0 0 10px #bb86fc, 0 0 30px #9146ff;
 }
 
 .top-section h4 {
-    font-size: 1.5rem;
-    margin-top: 0;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-top: 1rem;
+    color: #f3e4ff;
+    text-shadow: 0 0 5px rgba(255, 215, 255, 0.3);
+}
+
+/* Custom Title & Subtitle */
+.main-title {
+    color: #f6ebfa;
+    text-shadow: 0 0 10px #bb86fc, 0 0 30px #9146ff;
+}
+
+.subtitle {
+    color: #e0ffff;
+}
+
+h1#title {
+    color: #d2f1fa;
 }
 
 /* Bottom Section & Welcome Header */
@@ -38,21 +62,19 @@ h1, h2, h4 {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.bottom-section p {
-    font-size: 1.2rem;
-}
-
 /* Activities Section */
 .activities {
     background-color: #e0f7fa;
     padding: 40px 0;
     border-radius: 15px;
+    margin-bottom: 40px;
 }
 
 .activities h2 {
     font-size: 2.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-transform: uppercase;
+    font-weight: bold;
 }
 
 /* Card Styles */
@@ -60,7 +82,9 @@ h1, h2, h4 {
     border: none;
     border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card:hover {
@@ -69,6 +93,18 @@ h1, h2, h4 {
 
 .card-img-top {
     border-bottom: 5px solid #ff6f61;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 1.1rem;
 }
 
 .card-text {
@@ -98,4 +134,26 @@ h1, h2, h4 {
     padding: 30px 20px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.plan-visit h4 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+/* Buttons */
+.btn-submit {
+    background-color: #9954BA;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #7b3e9c;
 }
