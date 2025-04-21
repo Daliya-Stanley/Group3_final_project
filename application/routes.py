@@ -617,7 +617,7 @@ def cinderella_kingdom():
     return render_template(
         "cinderellas_kingdom.html",
         title_head="Cinderella's Kingdom",
-        title_body='Far Far Away!',
+        title_body="Cinderella's Kingdom",
         subtitle='★ Welcome to the destination where wishes come true ★',
         img="static/images/cinderella.jpg"
     )
