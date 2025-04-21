@@ -96,7 +96,7 @@
   {% set totals = namespace(products=0, experiences=0, destinations=0) %}
 
       {% if products %}
-      <div class="card mb-4 animate__animated animate__zoomIn animate__delay-1s">
+      <div class="card mb-4 animate__animated animate__zoomIn animate__delay-0.5s">
         <div class="card-header " style="background-color:#9966cc">
           <h5 class="mb-0">🛍️ Magical Products</h5>
         </div>
@@ -130,7 +130,7 @@
       {% endif %}
 
       {% if experiences %}
-              <div class="card mb-4 animate__animated animate__zoomIn animate__delay-2s">
+              <div class="card mb-4 animate__animated animate__zoomIn animate__delay-1s">
         <div class="card-header bg-warning text-dark">
           <h5 class="mb-0">✨ Enchanted Experiences</h5>
         </div>
@@ -168,52 +168,55 @@
       {% endif %}
 
   {% if destinations %}
-  <h4 class="mt-5">✨ Magical Destination</h4>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Destination</th>
-        <th>Start date</th>
-        <th>End date</th>
-        <th>Guests</th>
-        <th>Nights booked</th>
-        <th>Unit Price</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for destination in destinations %}
-      {% set destination_total = destination.guests * destination.destination_price  * destination.no_of_nights %}
-      {% set totals.destinations = totals.destinations + destination_total %}
-      <tr>
-        <td><img src="{{ url_for('static', filename='images/' + destination.destinationimage) }}" height="60"></td>
-        <td>{{ destination.destinationname }}</td>
-        <td>{{ destination.bookingstartdate }}</td>
-        <td>{{ destination.bookingenddate }}</td>
-        <td>{{ destination.guests }}</td>
-        <td>{{ destination.no_of_nights }}</td>
-        <td>£{{ destination.destination_price }}</td>
-        <td>£{{ destination_total }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
+<div class="card mb-4 animate__animated animate__zoomIn animate__delay-2s">
+  <div class="card-header" style="background-color:#caa0ff">
+    <h5 class="mb-0">🌍 Magical Destinations</h5>
+  </div>
+  <div class="card-body p-0">
+    <table class="table mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Image</th>
+          <th>Destination</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Guests</th>
+          <th>Nights booked</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for destination in destinations %}
+        {% set destination_total = destination.guests * destination.destination_price * destination.no_of_nights %}
+        {% set totals.destinations = totals.destinations + destination_total %}
+        <tr class="animate__animated animate__fadeInUp animate__faster">
+          <td><img src="{{ url_for('static', filename='images/' + destination.destinationimage) }}" height="60"></td>
+          <td>{{ destination.destinationname }}</td>
+          <td>{{ destination.bookingstartdate }}</td>
+          <td>{{ destination.bookingenddate }}</td>
+          <td>{{ destination.guests }}</td>
+          <td>{{ destination.no_of_nights }}</td>
+          <td>£{{ destination.destination_price }}</td>
+          <td>£{{ destination_total }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
 
 
   {% set grand_total = totals.products + totals.experiences + totals.destinations %}
-  <p class="fw-bold mt-4">Grand Total: £{{ grand_total }}</p>
-
-  <a href="{{ url_for('home_page') }}" class="btn btn-primary mt-3">Return to Home</a>
-      {% set grand_total = totals.products + totals.experiences %}
-  <div class="text-end animate__animated animate__fadeIn animate__delay-3s">
+  <div class="text-end animate__animated animate__fadeIn animate__delay-2s">
         <p class="fw-bold fs-5">Grand Total: £{{ grand_total }}</p>
-        <a href="{{ url_for('home_page') }}" class="btn btn-success">Return to Home</a>
-      </div>
+        <a href="{{ url_for('home_page') }}" class="btn btn-success" >Return to Home</a>
+    </div>
   </div>
     </div>
   </div>
-</div>
 
+</div>
 {% endblock %}

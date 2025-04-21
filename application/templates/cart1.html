@@ -117,12 +117,19 @@
 
 {% if products or experiences or destinations %}
   <p class="fw-bold mt-3 text-end">Total so far: £{{ total }}</p>
+
   <form method="POST" action="{{ url_for('checkout') }}" class="mt-4">
     <button type="submit" class="btn btn-primary" style="font-family: 'Quicksand', sans-serif;">Proceed to Checkout</button>
   </form>
 {% else %}
-  <p class="text-center mt-4 text-muted">Your cart is empty 🛒</p>
+  <h3 class="text-center mt-4 text-muted">Your cart is empty 🛒</h3>
+  <div class="text-center mt-3">
+    <a href="{{ url_for('home_page') }}" class="btn btn-outline-secondary" style="font-family: 'Quicksand', sans-serif;">
+      ← Continue Shopping
+    </a>
+  </div>
 {% endif %}
+
 
 
 

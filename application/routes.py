@@ -486,7 +486,7 @@ def checkout():
         conn.commit()
         cursor.close()
         conn.close()
-
+        print("Product cart:", product_cart)
         process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
 
         # Clear the cart
@@ -547,16 +547,11 @@ def remove_from_cart(item_type, item_id):
 
     # Remove from detailed session cart
     if item_type == 'products':
-        print("Before removal:", session.get('product_cart'))
         session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('productid') != item_id]
-        print("Before removal:", session.get('product_cart'))
     elif item_type == 'experiences':
-        print("Before removal:", session.get('experience_cart'))
         session['experience_cart'] = [item for item in session.get('experience_cart', []) if item.get('experience_id') != item_id]
     elif item_type == 'destinations':
-        print("Before removal:", session.get('destination_cart'))
         session['destination_cart'] = [item for item in session.get('destination_cart', []) if item.get('destination_id') != item_id]
-        print("After removal:", session['destination_cart'])
 
     session.modified = True
     flash(f'{item_type.capitalize()} removed from cart!', 'info')
@@ -606,12 +601,14 @@ def my_account():
     orders = get_user_orders(user_id)
     experiences = get_user_experiences(user_id)
     products = get_user_ordered_products(user_id)
+    destinations = get_user_ordered_destinations(user_id)
 
     return render_template('my_account.html',
                            user_first_name=user_first_name,
                            orders=orders,
                            experiences=experiences,
-                           products=products)
+                           products=products,
+                           destinations=destinations)
 
 
 
