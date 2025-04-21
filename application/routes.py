@@ -150,23 +150,23 @@ def mulan_page():
 
 
 
-@app.route('/Product')
-def product_page():
-    product_list = get_products()
-    purchased = get_total_purchased_by_product()
-
-    for product in product_list:
-        pid = str(product['productid'])
-        product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
-
-    return render_template(
-        'product1.html',
-        title_head='Magical Products',
-        title_body='Our Splendid Magical Products',
-        subtitle='★ The Magical Things Which You Always Wished For!★',
-        img="static/images/product_background.jpeg",
-        products=product_list
-    )
+# @app.route('/Product')
+# def product_page():
+#     product_list = get_products()
+#     purchased = get_total_purchased_by_product()
+#
+#     for product in product_list:
+#         pid = str(product['productid'])
+#         product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
+#
+#     return render_template(
+#         'product1.html',
+#         title_head='Magical Products',
+#         title_body='Our Splendid Magical Products',
+#         subtitle='★ The Magical Things Which You Always Wished For!★',
+#         img="static/images/product_background.jpeg",
+#         products=product_list
+#     )
 
 @app.route('/Experience')
 def experience_page():
@@ -224,7 +224,7 @@ def add_product_to_cart(product_id):
 
     session.modified = True
     flash(f"{quantity_to_add} item(s) added to cart! 🎁", "success")
-    return redirect(url_for('product_page') + "#product-cards")
+    return redirect(url_for('product_page_new') + "#product-cards")
 
 
 @app.route('/update_quantity/<int:product_id>', methods=['POST'])
@@ -664,7 +664,7 @@ def product_page_new():
     for product in product_list:
         pid = str(product['productid'])
         product['stock_remaining'] = max(0, 5 - purchased.get(pid, 0))
-        
+
     image_dir = os.path.join(app.static_folder, "images")
     magic_images = sorted([
         filename for filename in os.listdir(image_dir)
