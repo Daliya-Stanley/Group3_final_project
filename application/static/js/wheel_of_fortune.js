@@ -57,7 +57,7 @@ function drawWheel() {
         ctx.rotate((i + 0.5) * sliceAngle);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
-        ctx.font = "14px Arial";
+        ctx.font = "12px Arial";
         ctx.fillText(prizes[i].label, 180, 10);
         ctx.restore();
     }
@@ -83,7 +83,7 @@ function showPrize(prize) {
         productid = prize.id
 
         // Replace with your actual product page or link structure
-        const link = `/add_to_cart/${productid}`;  // e.g., /product/a-magic-wand
+        const link = `/add_product_to_cart/${productid}`;  // e.g., /product/a-magic-wand
 
         resultText.innerHTML = `<p>You won: <a href="${link}">${prize.label}</a></p>`;
     }

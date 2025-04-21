@@ -1,0 +1,46 @@
+.top-section{
+            background-image: url('/static/images/mulan.png');
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: 1500px;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            color: white;
+}
+
+
+.top-section h1 {
+  color: #ffffff;
+
+}
+
+.top-section h4 {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-top: 1rem;
+  color: #f3e4ff;
+  text-shadow: 0 0 5px rgba(255, 215, 255, 0.3);
+}
+
+
+.main-title {
+  color: #f6ebfa;
+  text-shadow: 0 0 10px #bb86fc, 0 0 30px #9146ff;
+}
+
+.subtitle {
+  color: #e0ffff;
+}
+
+
+h1#title {
+  color: #d2f1fa;
+}
+
+.btn-submit {
+  background-color: #9954BA;
+}

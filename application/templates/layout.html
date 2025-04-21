@@ -96,24 +96,13 @@
         <a class="nav-link active" aria-current="page" href="{{url_for('product_page_new')}}">Our Magical Products</a>
       </li>
 
-        <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Play and Win</a>
-  <ul class="dropdown-menu">
-    {% if request.path != '/wheel_of_fortune' %}
-      <li><a class="dropdown-item" href="/wheel_of_fortune">Wheel of Fortune</a></li>
-    {% else %}
-      <li><a href="#" class="dropdown-item nav-link disabled">Wheel of Fortune</a></li>
-    {% endif %}
 
-    {% if request.path != '/rock_paper_scissors' %}
-      <li><a class="dropdown-item" href="/rock_paper_scissors">Rock Paper Scissors</a></li>
-    {% else %}
-      <li><a href="#" class="dropdown-item nav-link disabled">Rock Paper Scissors</a></li>
-    {% endif %}
-  </ul>
-</li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('wheel_of_fortune_game')}}">Play and Win</a>
+        </li>
 
-      <li class="nav-item">
+
+        <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{url_for('experience_page')}}">Our Magical Experiences!</a>
       </li
 

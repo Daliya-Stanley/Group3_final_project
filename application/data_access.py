@@ -208,7 +208,58 @@ def get_remaining_spots(experience_id, booking_date, booking_time):
     return max(remaining, 0)
 
 
+def process_order_items(order_id, product_cart, experience_cart, destination_cart, default_user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        # Insert products
+        for item in product_cart:
+            product_id = item.get('product_id')
+            user_id = item.get('user_id') or default_user_id
+            quantity = item.get('quantity')
+            if not all([product_id, user_id, quantity]):
+                continue
+            cursor.execute("""
+                INSERT INTO ProductOrders (ProductID, UserID, Quantity, OrderID)
+                VALUES (%s, %s, %s, %s)
+            """, (product_id, user_id, quantity, order_id))
 
+        # Insert experiences
+        for item in experience_cart:
+            experience_id = item.get('experience_id')
+            user_id = item.get('user_id') or default_user_id
+            booking_date = item.get('booking_date')
+            booking_time = item.get('booking_time')
+            guests = item.get('guests')
+            if not all([experience_id, user_id, booking_date, booking_time, guests]):
+                continue
+            cursor.execute("""
+                INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime, UserID, Guests, OrderID)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (experience_id, booking_date, booking_time, user_id, guests, order_id))
+
+            # Insert destination
+        for item in destination_cart:
+            destination_id = item.get('destination_id')
+            user_id = item.get('user_id') or default_user_id
+            booking_startdate = item.get('booking_startdate')
+            booking_enddate = item.get('booking_enddate')
+            guests = item.get('guests')
+            if not all([destination_id, user_id, booking_startdate, booking_enddate, guests]):
+                continue
+            cursor.execute("""
+                INSERT INTO BookingDestination (DestinationID, BookingStartDate, BookingEndDate, UserID, Guests, OrderID)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """, (destination_id, booking_startdate, booking_enddate, user_id, guests, order_id))
+
+        conn.commit()
+    except Exception as e:
+        print(f"Error: {e}")
+        conn.rollback()
+        raise e
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_order_info(order_id):
     conn = get_db_connection()
@@ -412,3 +463,70 @@ def get_status_id(cursor, table, status_name):
     query = f"SELECT {table}ID FROM {table} WHERE StatusName = %s"
     cursor.execute(query, (status_name,))
     return cursor.fetchone()[0]
+
+def get_ordered_destinations(order_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT e.DestinationName, b.BookingStartDate, b.BookingEndDate, b.Guests, e.DestinationPricePerNight, e.DestinationImage
+        FROM BookingDestination b
+        JOIN Destination e ON e.DestinationID = b.DestinationID
+        WHERE b.OrderID = %s
+    """, (order_id,))
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return [
+        {
+            'destinationname': row[0],
+            'bookingstartdate': row[1],
+            'bookingenddate': row[2],
+            'guests': row[3],
+            'destination_price': row[4],
+            'destinationimage': row[5],
+            'no_of_nights' : abs((row[2] - row[1]).days)
+        } for row in rows
+    ]
+
+def get_destination_by_name(destination_name):
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+              SELECT *
+              FROM destination 
+              WHERE destination.DestinationName = %s
+          """, (destination_name,))
+        rows = cursor.fetchone()
+        return rows
+
+    except Exception:
+        return {"success": False, "message": f"Error retrieving destination {destination_name}"}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def get_destination_by_id(destination_id):
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+              SELECT *
+              FROM destination 
+              WHERE destination.DestinationID = %s
+          """, (destination_id,))
+        rows = cursor.fetchone()
+        return rows
+
+    except Exception as e:
+        print(e)
+        return {"success": False, "message": f"Error retrieving destination with id: {destination_id}"}
+    finally:
+        cursor.close()
+        conn.close()
+

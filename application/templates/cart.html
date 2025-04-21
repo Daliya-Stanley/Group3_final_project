@@ -4,7 +4,7 @@
 <div class="container mt-5">
   <h2>Your Cart</h2>
 
-  {% if products or experiences or session.experience_cart %}
+  {% if products or experiences or destinations or session.experience_cart %}
 
     {% if products %}
     <h4>Magical Products</h4>
@@ -75,6 +75,40 @@
           <td>{{ experience.quantity }}</td>
           <td>£{{ experience.total }}</td>
           <td><a href="{{ url_for('remove_from_cart', item_type='experiences', item_id=experience.experience_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if destinations %}
+    <h4>Magical Destinations</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Destination</th>
+          <th>Booking Start Date</th>
+          <th>Booking End Date</th>
+          <th>Price per Night</th>
+          <th>Nights</th>
+          <th>Guests</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for destination in destinations %}
+        <tr>
+          <td><img src="{{ url_for('static', filename='images/' + destination.destination_image) }}" height="60"></td>
+          <td>{{ destination.destination_name }}</td>
+          <td>{{ destination.booking_startdate }}</td>
+          <td>{{ destination.booking_enddate }}</td>
+          <td>£{{ destination.destination_price }}</td>
+          <td>{{ destination.no_of_nights }}</td>
+          <td>{{ destination.quantity }}</td>
+          <td>£{{ destination.total }}</td>
+          <td><a href="{{ url_for('remove_from_cart', item_type='destinations', item_id=destination.destination_id) }}" class="btn btn-danger btn-sm">Remove</a></td>
         </tr>
         {% endfor %}
       </tbody>
