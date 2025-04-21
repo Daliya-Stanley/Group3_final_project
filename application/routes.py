@@ -294,7 +294,7 @@ def view_cart():
 def add_to_cart_experience(experience_id):
     guests = int(request.form['guests'])
     booking_date = request.form['booking_date']
-    booking_date_mandate= request.form.get('booking_date')
+    # booking_date_mandate= request.form.get('booking_date')
     booking_time = request.form['booking_time']
     user_id = request.form['user_id']
 
@@ -308,7 +308,7 @@ def add_to_cart_experience(experience_id):
         flash(f"Max group size for this experience is {max_guests}. You tried to book {guests}.", "warning")
         return redirect(url_for('experience_page'))
 
-    if not booking_date_mandate:
+    if not booking_date:
         flash("⚠️ Please select a booking date before submitting.", "warning")
         return redirect(url_for('experience_page'))
 
@@ -556,7 +556,7 @@ def wonderland():
         cards=cards,
         hero_title="Welcome to Wonderland",
         hero_subtitle="Down the rabbit hole you go, into a world where magic and curiosity collide!",
-        intro_title="Ready to tumble into tea parties, talking cats, and total nonsense?",
+        intro_title="Ready to tumble into tea parties, talking cats, and total nonsense @ £200/night/person?",
         css_file="wonderland2.css"
     )
 
@@ -611,7 +611,7 @@ def aquariel():
         cards=cards,
         hero_title="Welcome to Aquariel",
         hero_subtitle="Dive into a world where wonder glows beneath the waves",
-        intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way!",
+        intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way@ £200/night/person!",
         css_file="aquariel.css",
     )
 
@@ -677,7 +677,7 @@ def frozen_page():
         video="/video/frozen_main.mp4",
         hero_title="Arandelle holidays",
         hero_subtitle="The Frozen Magical Land of Arandelle!!",
-        intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
+        intro_title="★ Come and explore the known and unknown magical powers of Arandelle @ £200/night/person?★",
         css_file="frozen_styles.css"
     )
 

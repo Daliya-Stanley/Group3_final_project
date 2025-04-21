@@ -25,12 +25,16 @@
 
 
 <!-- Booking Form (scroll target) -->
+
+
 <div id="booking-form" class="scroll-anchor"></div>
+
 <section class="booking-bar">
+  <h3 style="text-align: center;">Book you holiday here and start the magical journey.</h3>
   <form class="booking-form">
     <input type="text" id="checkin" name="checkin" class="flatpickr-date" placeholder="Start date" required />
     <input type="text" id="checkout" name="checkout" class="flatpickr-date" placeholder="End date" required />
-    <input type="number" name="guests" placeholder="Guests" min="1" required />
+    <input type="number"  name="guests" placeholder="Guests" min="1" />
     <button type="submit" class="btn btn-primary mt-3">Check Availability</button>
   </form>
 </section>
@@ -62,7 +66,7 @@
     altInput: true,
     altFormat: "F j, Y",
     dateFormat: "Y-m-d",
-    minDate: "today"
+    minDate: new Date().fp_incr(1),
   });
 </script>
 {% endblock %}
