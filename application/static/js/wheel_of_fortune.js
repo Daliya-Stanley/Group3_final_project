@@ -57,7 +57,7 @@ function drawWheel() {
         ctx.rotate((i + 0.5) * sliceAngle);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
-        ctx.font = "14px Arial";
+        ctx.font = "12px Arial";
         ctx.fillText(prizes[i].label, 180, 10);
         ctx.restore();
     }

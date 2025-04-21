@@ -25,15 +25,24 @@
 
 
 <!-- Booking Form (scroll target) -->
+{% if 'user_email' in session %}
 <div id="booking-form" class="scroll-anchor"></div>
 <section class="booking-bar">
-  <form class="booking-form">
-    <input type="date" name="checkin" placeholder="Start date" />
-    <input type="date" name="checkout" placeholder="End date" />
-    <input type="number" name="guests" placeholder="Guests" min="1" />
-    <button type="submit" class="btn-submit">Check Availability</button>
+  <form class="booking-form" method="POST" action="{{ url_for('add_to_destination_cart', destination_id=destination.DestinationID) }}">
+    <input type="date" name="checkin" class="flatpickr-date" placeholder="Start date" required/>
+    <input type="date" name="checkout" class="flatpickr-date" placeholder="End date" required />
+    <input type="number" name="guests" placeholder="Guests" min="1" required/>
+    <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+    <button type="submit" class="btn-submit">Book Now</button>
   </form>
 </section>
+{% else %}
+    <p style="text-align: centre;">You are not logged in.</p>
+  <br>
+<!--    #request.patch returns the path portion of the URL the user is currently on-->
+<!--    #this says after logging in redirect them to the current path-->
+  <p style="text-align: centre;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
+{% endif %}
 
 <!-- Destination Headline -->
 <h1 id="title">{{ intro_title }}</h1>

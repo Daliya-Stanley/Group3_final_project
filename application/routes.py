@@ -1,9 +1,11 @@
+from os import SEEK_SET
+
 from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
 from application.data_access import *
 from application import app
-from datetime import timedelta
+from datetime import timedelta, datetime
 import os
 
 app.permanent_session_lifetime = timedelta(days=30)
@@ -144,8 +146,11 @@ def logout():
     return redirect(url_for('login'))
 
 
+
+
 @app.route('/mulan')
 def mulan_page():
+    destination = get_destination_by_name("Mulan's World")
     cards = [
         {"title": "Teatime with the Matchmaker",
         "text":"Step into Mulan’s world and try your hand at the most delicate of arts — making tea under the watchful eye of the Matchmaker. Steady hands, graceful pours, and maybe a little chaos… just the way Mulan likes it.",
@@ -169,7 +174,9 @@ def mulan_page():
         cards=cards,
         hero_title="Welcome to Mulan's World",
         hero_subtitle="★ A mystical retreat where destiny, beauty, and bravery meet ★",
-        css_file="mulan.css", )
+        intro_title = "Step into a realm inspired by a legend!",
+        css_file="mulan.css",
+        destination=destination)
 
 
 
@@ -237,9 +244,6 @@ def view_cart():
     destination_in_cart = []
     total_price = 0
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
     for item in product_cart:
         total = item['quantity'] * item['productprice']
         item['total'] = total
@@ -255,21 +259,19 @@ def view_cart():
         total_price += total
 
     for item in destination_cart:
-        total = item['guests'] * item['destinationprice']
+        total = item['guests'] * item['destination_price'] * item['no_of_nights']
         item['total'] = total
         item['quantity'] = item['guests']
-        item['datereserved'] = item['booking_StartDate']
+        item['datereserved'] = item['booking_startdate']
         destination_in_cart.append(item)
         total_price += total
 
-    cursor.close()
-    conn.close()
 
     return render_template(
         'cart.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
-        destination=destination_in_cart,
+        destinations=destination_in_cart,
         total=total_price
     )
 
@@ -367,6 +369,7 @@ def checkout():
         return redirect(url_for('order_receipt', order_id=order_id))
 
     except Exception as e:
+        print(e)
         flash(f"Checkout failed: {str(e)}", "danger")
         return redirect(url_for('view_cart'))
 
@@ -376,6 +379,8 @@ def order_receipt(order_id):
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
     destinations = get_ordered_destinations(order_id)
+
+    print(destinations)
 
     return render_template('order_receipt.html',
                            order=order_info,
@@ -422,33 +427,46 @@ def product_sale():
         return render_template('product.html', user_email=user_email, title='Logged In Adventurer')
     return render_template('product_sale.html', user_email=False, title='Login Area')
 
-@app.route('/add_to_destination_cart/<int:destination_id>', methods=['POST'])
-def add_to_destination_cart(destination_id):
-    guests = int(request.form['guests'])
-    booking_start_date = request.form['Start date']
-    booking_end_date= request.form['End date']
-    user_id = request.form['user_id']
 
+@app.route('/destination/<int:destination_id>')
+def show_destination(destination_id):
     conn = get_db_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("""
-        SELECT DestinationName, DestinationPricePerNight, DestinationImage, 
-        FROM Destination WHERE DestinationID = %s
-    """, (destination_id,))
-    result = cursor.fetchone()
+    cursor.execute("SELECT * FROM Destination WHERE DestinationID = %s", (destination_id,))
+    destination = cursor.fetchone()
+
     cursor.close()
     conn.close()
 
+    if not destination:
+        flash("Destination not found.", "danger")
+        return redirect(url_for('home_page'))
+
+    return render_template('destination_page.html', destination=destination)
+
+@app.route('/add_to_destination_cart/<int:destination_id>', methods=['POST'])
+def add_to_destination_cart(destination_id):
+    guests = int(request.form['guests'])
+    booking_start_date = request.form['checkin']
+    booking_end_date= request.form['checkout']
+
+    dt1 = datetime.strptime(booking_start_date, '%Y-%m-%d')
+    dt2 = datetime.strptime(booking_end_date, '%Y-%m-%d')
+
+
+    no_of_nights = (dt2 - dt1).days
+    user_id = request.form['user_id']
+
+    result = get_destination_by_id(destination_id)
+
     if not result:
-        flash("Experience not found.", "danger")
-        return redirect(url_for('book_destination'))
+        flash("Destination not found.", "danger")
+        return redirect(url_for('home_page'))
 
-    destinationname, destinationprice, destinationimage, group_size = result
-
-    if guests > group_size:
-        flash(f"Max group size for this experience is {group_size}. You tried to book {guests}.")
-        return redirect(url_for('destination_page'))
+    destination_name = result['DestinationName']
+    destination_price = result['DestinationPricePerNight']
+    destination_image = result['DestinationImage']
 
     if 'cart' not in session:
         session['cart'] = {'products': {}, 'experiences': {}, 'destinations': {}}
@@ -468,9 +486,10 @@ def add_to_destination_cart(destination_id):
         'booking_startdate': booking_start_date,
         'booking_enddate': booking_end_date,
         'guests': guests,
-        'destinationname': destinationname,
-        'destinationprice': destinationprice,
-        'destinationimage': destinationimage
+        'destination_name': destination_name,
+        'destination_price': destination_price,
+        'destination_image': destination_image,
+        'no_of_nights' : no_of_nights
     }
 
     if 'destination_cart' not in session:
@@ -481,14 +500,6 @@ def add_to_destination_cart(destination_id):
 
     flash("✨ Magical destination added to cart!", "success")
     return redirect(url_for('book_destination'))
-
-
-
-
-
-
-
-
 
 @app.route("/cinderella_kingdom")
 def cinderella_kingdom():
@@ -504,8 +515,8 @@ def cinderella_kingdom():
 #context processor is used to inject the cart_count variable into the context of every template rendered by the application
 @app.context_processor
 def cart_item_count():
-    cart = session.get('cart', {'products': {}, 'experiences': {}})
-    count = sum(cart['products'].values()) + sum(cart['experiences'].values())
+    cart = session.get('cart', {'products': {}, 'experiences': {}, 'destinations': {}})
+    count = sum(cart['products'].values()) + sum(cart['experiences'].values()) + sum(cart['destinations'].values())
     return dict(cart_count=count)
 
 
@@ -517,6 +528,7 @@ def wonderland():
 
 @app.route('/aquariel')
 def aquariel():
+    destination = get_destination_by_name("Aquariel")
     cards = [
   {
     "title": "Dive into Ariel’s World",
@@ -567,6 +579,7 @@ def aquariel():
         hero_subtitle="Dive into a world where wonder glows beneath the waves",
         intro_title="Follow Ariel into a realm where curiosity reigns and sea stars guide your way!",
         css_file="aquariel.css",
+        destination=destination
     )
 
 
@@ -582,6 +595,7 @@ def book_destination():
 
 @app.route('/Arendelle')
 def frozen_page():
+    destination = get_destination_by_name("Frozen")
     cards = [
   {
     "title": "Our Luxurious Rooms",
@@ -632,7 +646,8 @@ def frozen_page():
         hero_title="Arandelle holidays",
         hero_subtitle="The Frozen Magical Land of Arandelle!!",
         intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
-        css_file="frozen_styles.css"
+        css_file="frozen_styles.css",
+        destination=destination
     )
 
 

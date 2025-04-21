@@ -242,18 +242,19 @@ def process_order_items(order_id, product_cart, experience_cart, destination_car
         for item in destination_cart:
             destination_id = item.get('destination_id')
             user_id = item.get('user_id') or default_user_id
-            booking_date = item.get('booking_date')
-            booking_time = item.get('booking_time')
+            booking_startdate = item.get('booking_startdate')
+            booking_enddate = item.get('booking_enddate')
             guests = item.get('guests')
-            if not all([destination_id, user_id, booking_date, booking_time, guests]):
+            if not all([destination_id, user_id, booking_startdate, booking_enddate, guests]):
                 continue
             cursor.execute("""
-                INSERT INTO BookingDestination (DestinationID, BookingDate, BookingTime, UserID, Guests, OrderID)
+                INSERT INTO BookingDestination (DestinationID, BookingStartDate, BookingEndDate, UserID, Guests, OrderID)
                 VALUES (%s, %s, %s, %s, %s, %s)
-            """, (destination_id, booking_date, booking_time, user_id, guests, order_id))
+            """, (destination_id, booking_startdate, booking_enddate, user_id, guests, order_id))
 
         conn.commit()
     except Exception as e:
+        print(f"Error: {e}")
         conn.rollback()
         raise e
     finally:
@@ -333,7 +334,7 @@ def get_ordered_destinations(order_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT e.DestinationName, b.BookingStartDate, b.BookingEndDate, b.Guests, e.DestinationPrice, e.DestinationImage
+        SELECT e.DestinationName, b.BookingStartDate, b.BookingEndDate, b.Guests, e.DestinationPricePerNight, e.DestinationImage
         FROM BookingDestination b
         JOIN Destination e ON e.DestinationID = b.DestinationID
         WHERE b.OrderID = %s
@@ -347,7 +348,51 @@ def get_ordered_destinations(order_id):
             'bookingstartdate': row[1],
             'bookingenddate': row[2],
             'guests': row[3],
-            'destinationprice': row[4],
-            'destinationimage': row[5]
+            'destination_price': row[4],
+            'destinationimage': row[5],
+            'no_of_nights' : abs((row[2] - row[1]).days)
         } for row in rows
     ]
+
+def get_destination_by_name(destination_name):
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+              SELECT *
+              FROM destination 
+              WHERE destination.DestinationName = %s
+          """, (destination_name,))
+        rows = cursor.fetchone()
+        return rows
+
+    except Exception:
+        return {"success": False, "message": f"Error retrieving destination {destination_name}"}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def get_destination_by_id(destination_id):
+    conn = None
+    cursor = None
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+              SELECT *
+              FROM destination 
+              WHERE destination.DestinationID = %s
+          """, (destination_id,))
+        rows = cursor.fetchone()
+        return rows
+
+    except Exception as e:
+        print(e)
+        return {"success": False, "message": f"Error retrieving destination with id: {destination_id}"}
+    finally:
+        cursor.close()
+        conn.close()
+
