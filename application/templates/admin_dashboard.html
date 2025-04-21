@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block body_content %}
+
+<div class="container mt-5">
+  <h1 class="mb-4">Admin Dashboard</h1>
+
+  <!-- Dashboard Overview -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card bg-warning-subtle p-3">
+        <h5>Pending Cancellation Requests</h5>
+        <p class="fs-4 fw-bold">{{ pending_cancels }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-info-subtle p-3">
+        <h5>Shipped Product Orders</h5>
+        <p class="fs-4 fw-bold">{{ shipped_orders }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cancellation Requests -->
+  <h3>Experience Cancellation Requests</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Experience</th>
+        <th>Booking Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cancel in cancel_requests %}
+      <tr>
+        <td>{{ cancel.FirstName }} {{ cancel.LastName }}</td>
+        <td>{{ cancel.ExperienceName }}</td>
+        <td>{{ cancel.RequestDate }}</td>
+        <td>{{ cancel.Status }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('admin_update_status') }}">
+            <input type="hidden" name="item_type" value="cancel">
+            <input type="hidden" name="item_id" value="{{ cancel.CancelRequestID }}">
+            <select name="new_status" class="form-select form-select-sm d-inline w-auto">
+              <option value="Pending" {% if cancel.Status == 'Pending' %}selected{% endif %}>Pending</option>
+              <option value="Approved" {% if cancel.Status == 'Approved' %}selected{% endif %}>Approved</option>
+              <option value="Rejected" {% if cancel.Status == 'Rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+            <button type="submit" class="btn btn-sm btn-success">Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Product Orders -->
+  <h3 class="mt-5">Product Orders</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Order Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in product_orders %}
+      <tr class="{% if order.Status == 'Shipped' %}table-success{% elif order.Status == 'Pending' %}table-warning{% endif %}">
+        <td>{{ order.FirstName }} {{ order.LastName }}</td>
+        <td>{{ order.ProductName }}</td>
+        <td>{{ order.Quantity }}</td>
+        <td>{{ order.OrderDate.strftime('%d %b %Y') }}</td>
+        <td>{{ order.Status }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('admin_update_status') }}">
+            <input type="hidden" name="item_type" value="product">
+            <input type="hidden" name="item_id" value="{{ order.OrderID }}">
+            <select name="new_status" class="form-select form-select-sm d-inline w-auto">
+              <option value="Pending" {% if order.Status == 'Pending' %}selected{% endif %}>Pending</option>
+              <option value="Shipped" {% if order.Status == 'Shipped' %}selected{% endif %}>Shipped</option>
+            </select>
+            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+{% endblock %}
