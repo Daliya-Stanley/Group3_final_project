@@ -208,43 +208,7 @@ def get_remaining_spots(experience_id, booking_date, booking_time):
     return max(remaining, 0)
 
 
-def process_order_items(order_id, product_cart, experience_cart, default_user_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    try:
-        # Insert products
-        for item in product_cart:
-            product_id = item.get('productid')
-            user_id = item.get('user_id') or default_user_id
-            quantity = item.get('quantity')
-            if not all([product_id, user_id, quantity]):
-                continue
-            cursor.execute("""
-                INSERT INTO ProductOrders (ProductID, UserID, Quantity, OrderID)
-                VALUES (%s, %s, %s, %s)
-            """, (product_id, user_id, quantity, order_id))
 
-        # Insert experiences
-        for item in experience_cart:
-            experience_id = item.get('experience_id')
-            user_id = item.get('user_id') or default_user_id
-            booking_date = item.get('booking_date')
-            booking_time = item.get('booking_time')
-            guests = item.get('guests')
-            if not all([experience_id, user_id, booking_date, booking_time, guests]):
-                continue
-            cursor.execute("""
-                INSERT INTO BookingExperience (ExperienceID, BookingDate, BookingTime, UserID, Guests, OrderID)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """, (experience_id, booking_date, booking_time, user_id, guests, order_id))
-
-        conn.commit()
-    except Exception as e:
-        conn.rollback()
-        raise e
-    finally:
-        cursor.close()
-        conn.close()
 
 def get_order_info(order_id):
     conn = get_db_connection()
@@ -332,7 +296,7 @@ def get_total_purchased_by_product():
 
 def get_user_orders(user_id):
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM Orders WHERE UserID = %s ORDER BY OrderDate DESC", (user_id,))
     orders = cursor.fetchall()
     cursor.close()
@@ -361,16 +325,90 @@ def get_user_experiences(user_id):
     cursor.execute("""
         SELECT 
             E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
-            B.Guests, B.BookingDate, B.BookingTime, B.BookingID,
-            (SELECT Status FROM CancelExperienceRequests 
-             WHERE BookingID = B.BookingID AND UserID = %s LIMIT 1) AS CancelStatus
+            B.Guests, B.BookingDate, B.BookingTime, B.BookingID, B.IsCancelled,
+            CS.StatusName AS CancelStatus
         FROM BookingExperience B
         JOIN Experiences E ON B.ExperienceID = E.ExperienceID
         JOIN Orders O ON B.OrderID = O.OrderID
+        LEFT JOIN CancelExperienceRequests CR ON CR.BookingID = B.BookingID AND CR.UserID = %s
+        LEFT JOIN CancelStatus CS ON CR.CancelStatusID = CS.CancelStatusID
         WHERE O.UserID = %s
         ORDER BY B.BookingDate DESC
     """, (user_id, user_id))
-    experiences = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return experiences
+    return cursor.fetchall()
+
+
+
+def get_pending_cancel_count(cursor):
+    cursor.execute("""
+        SELECT COUNT(*) as total 
+        FROM CancelExperienceRequests c
+        JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
+        WHERE cs.StatusName = 'Pending'
+    """)
+    return cursor.fetchone()['total']
+
+def get_shipped_order_count(cursor):
+    cursor.execute("""
+        SELECT COUNT(*) as total 
+        FROM ProductOrders po
+        JOIN OrderStatus os ON po.OrderStatusID = os.OrderStatusID
+        WHERE os.StatusName = 'Shipped'
+    """)
+    return cursor.fetchone()['total']
+
+def get_cancel_requests(cursor):
+    cursor.execute("""
+        SELECT 
+            c.CancelRequestID, 
+            c.RequestDate, 
+            cs.StatusName AS CancelStatus,
+            u.FirstName, u.LastName, u.Email,
+            e.ExperienceName, 
+            b.BookingDate,
+            b.IsCancelled
+        FROM CancelExperienceRequests c
+        JOIN BookingExperience b ON c.BookingID = b.BookingID
+        JOIN User u ON c.UserID = u.UserID
+        JOIN Experiences e ON b.ExperienceID = e.ExperienceID
+        JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
+        ORDER BY c.RequestDate DESC
+    """)
+    return cursor.fetchall()
+
+def get_product_orders(cursor, product_status_filter='All'):
+    product_sql = """
+        SELECT po.OrderID, po.ProductID, p.ProductName, u.FirstName, u.LastName, u.Email,
+               po.Quantity, po.OrderDate, os.StatusName AS Status
+        FROM ProductOrders po
+        JOIN Product p ON po.ProductID = p.ProductID
+        JOIN User u ON po.UserID = u.UserID
+        JOIN OrderStatus os ON po.OrderStatusID = os.OrderStatusID
+    """
+    if product_status_filter != 'All':
+        product_sql += " WHERE os.StatusName = %s"
+        cursor.execute(product_sql, (product_status_filter,))
+    else:
+        cursor.execute(product_sql)
+    return cursor.fetchall()
+
+def get_experience_orders(cursor):
+    cursor.execute("""
+            SELECT b.BookingID, e.ExperienceName, u.FirstName, u.LastName, u.Email,
+               b.Guests, b.BookingDate, b.BookingTime, o.OrderID,
+               b.IsCancelled,
+               cs.StatusName AS CancelStatus
+        FROM BookingExperience b
+        JOIN Experiences e ON b.ExperienceID = e.ExperienceID
+        JOIN User u ON b.UserID = u.UserID
+        LEFT JOIN Orders o ON b.OrderID = o.OrderID
+        LEFT JOIN CancelExperienceRequests cr ON cr.BookingID = b.BookingID
+        LEFT JOIN CancelStatus cs ON cr.CancelStatusID = cs.CancelStatusID
+        ORDER BY b.BookingDate DESC
+    """)
+    return cursor.fetchall()
+
+def get_status_id(cursor, table, status_name):
+    query = f"SELECT {table}ID FROM {table} WHERE StatusName = %s"
+    cursor.execute(query, (status_name,))
+    return cursor.fetchone()[0]

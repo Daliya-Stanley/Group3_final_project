@@ -45,21 +45,31 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">{{ exp.ExperienceName }}</h5>
+                    <h5 class="card-title">{{ exp.ExperienceName }}
+                    {% if exp.IsCancelled %}
+                      <span class="badge bg-danger ms-2">Cancelled</span>
+                    {% endif %}
+                    </h5>
                     <ul class="list-unstyled mb-2">
                       <li><strong>Date:</strong> {{ exp.BookingDate.strftime('%d %b %Y') }}</li>
                       <li><strong>Time:</strong> {{ exp.BookingTime }}</li>
                       <li><strong>Guests:</strong> {{ exp.Guests }}</li>
                       <li><strong>Price:</strong> £{{ exp.ExperiencePrice }}</li>
                     </ul>
-                    <form method="POST" action="{{ url_for('my_account') }}">
-                      <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
-                      {% if not exp.CancelStatus %}
-                        <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
-                      {% else %}
-                        <p class="text-info small mt-2">❄️ Cancellation request submitted.</p>
-                      {% endif %}
-                    </form>
+                    {% if not exp.IsCancelled %}
+                      <form method="POST" action="{{ url_for('my_account') }}">
+                        <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
+                        {% if exp.CancelStatus == None %}
+                          <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
+                        {% elif exp.CancelStatus == 'Pending' %}
+                          <p class="text-warning small mt-2">❄️ Cancellation request pending...</p>
+                        {% elif exp.CancelStatus == 'Approved' %}
+                          <p class="text-success small mt-2">✅ Cancelled by admin</p>
+                        {% else %}
+                          <p class="text-muted small mt-2">❌ Request status: {{ exp.CancelStatus }}</p>
+                        {% endif %}
+                      </form>
+                  {% endif %}
                   </div>
                 </div>
               </div>

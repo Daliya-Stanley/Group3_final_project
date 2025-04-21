@@ -1,7 +1,8 @@
 from flask import render_template, url_for, request, redirect,jsonify, flash, session
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
-from application.data_access import *
+from application.user_data_access  import *
+from application.admin_data_access import *
 from application import app
 from datetime import timedelta
 import os
@@ -85,8 +86,10 @@ def register():
 
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
-
-            return redirect(url_for('rock_paper_scissors'))
+            if result["email"] == "admin@egt.magic":
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return redirect(url_for('rock_paper_scissors'))
         else:
             error = result["message"]
 
@@ -123,6 +126,9 @@ def login():
                 session.permanent = True  # Make the session persistent
 
             flash("Login successful! Welcome back 🎉", "success")
+            if result["email"] == "admin@egt.magic":
+                return redirect(url_for('admin_dashboard'))
+
             if not next_page or next_page == 'None':
                 next_page = url_for('rock_paper_scissors')
             return redirect(next_page)
@@ -142,6 +148,92 @@ def logout():
     session.pop('user_email', None)  # remove the user from the session
     flash("You've been logged out 👋", "info")
     return redirect(url_for('login'))
+
+@app.route('/admin/dashboard', methods=['GET', 'POST'])
+def admin_dashboard():
+    if session.get('user_email') != 'admin@egt.magic':
+        flash("Admin access only", "danger")
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # === STATS ===
+    pending_cancels = get_pending_cancel_count(cursor)
+    shipped_orders = get_shipped_order_count(cursor)
+
+    # === CANCEL REQUESTS ===
+    cancel_requests = get_cancel_requests(cursor)
+
+    # === PRODUCT ORDERS ===
+    product_status_filter = request.args.get('product_status') or 'All'
+    product_orders = get_product_orders(cursor, product_status_filter)
+
+    # === EXPERIENCE ORDERS ===
+    experience_orders = get_experience_orders(cursor)
+
+    cursor.close()
+    conn.close()
+
+    return render_template("admin_dashboard.html",
+                           pending_cancels=pending_cancels,
+                           shipped_orders=shipped_orders,
+                           cancel_requests=cancel_requests,
+                           product_orders=product_orders,
+                           product_status_filter=product_status_filter,
+                           experience_orders=experience_orders)
+
+
+@app.route('/admin/update_status', methods=['POST'])
+def admin_update_status():
+    if session.get('user_email') != 'admin@egt.magic':
+        flash("Admin access only", "danger")
+        return redirect(url_for('login'))
+
+    item_type = request.form.get('item_type')  # "product" or "cancel"
+    item_id = request.form.get('item_id')
+    new_status_name = request.form.get('new_status')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if item_type == 'product':
+        cursor.execute("SELECT OrderStatusID FROM OrderStatus WHERE StatusName = %s", (new_status_name,))
+        status_id = cursor.fetchone()[0]
+        cursor.execute("UPDATE ProductOrders SET OrderStatusID = %s WHERE OrderID = %s", (status_id, item_id))
+        flash("✅ Product order status updated.", "success")
+
+
+    elif item_type == 'cancel':
+        cursor.execute("SELECT CancelStatusID FROM CancelStatus WHERE StatusName = %s", (new_status_name,))
+        status_id = cursor.fetchone()[0]
+        cursor.execute("""
+            UPDATE CancelExperienceRequests
+            SET CancelStatusID = %s
+            WHERE CancelRequestID = %s
+        """, (status_id, item_id))
+
+        # If approved, mark the booking as cancelled (don't delete it)
+
+        if new_status_name == "Approved":
+            cursor.execute("SELECT BookingID FROM CancelExperienceRequests WHERE CancelRequestID = %s", (item_id,))
+
+            booking_id = cursor.fetchone()[0]
+
+            cursor.execute("UPDATE BookingExperience SET IsCancelled = TRUE WHERE BookingID = %s", (booking_id,))
+        elif new_status_name == "Rejected":
+            # Get BookingID
+            cursor.execute("SELECT BookingID FROM CancelExperienceRequests WHERE CancelRequestID = %s", (item_id,))
+            booking_id = cursor.fetchone()[0]
+            cursor.execute("UPDATE BookingExperience SET IsCancelled = FALSE WHERE BookingID = %s", (booking_id,))
+
+        flash("✅ Cancellation request updated.", "success")
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('admin_dashboard'))
 
 
 @app.route('/mulan')

@@ -54,7 +54,7 @@ WHERE ProductName = 'Magic Wand';
 
 UPDATE Product
 SET ProductDescription = 'A magical outfit that transforms into any style with zero effort.'
-WHERE ProductName = 'Spectacular One Dress';
+WHERE ProductName = 'Spectacular One Dress - No mess';
 
 
 INSERT INTO Product (ProductName, ProductPrice, ProductStatusID, ProductImage)
@@ -288,4 +288,4 @@ SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u
         JOIN Experiences e ON b.ExperienceID = e.ExperienceID
         JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
         ORDER BY c.RequestDate DESC;
-select * from BookingExperience;
+select * from Product;
