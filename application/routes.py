@@ -547,9 +547,16 @@ def remove_from_cart(item_type, item_id):
 
     # Remove from detailed session cart
     if item_type == 'products':
+        print("Before removal:", session.get('product_cart'))
         session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('productid') != item_id]
+        print("Before removal:", session.get('product_cart'))
     elif item_type == 'experiences':
+        print("Before removal:", session.get('experience_cart'))
         session['experience_cart'] = [item for item in session.get('experience_cart', []) if item.get('experience_id') != item_id]
+    elif item_type == 'destinations':
+        print("Before removal:", session.get('destination_cart'))
+        session['destination_cart'] = [item for item in session.get('destination_cart', []) if item.get('destination_id') != item_id]
+        print("After removal:", session['destination_cart'])
 
     session.modified = True
     flash(f'{item_type.capitalize()} removed from cart!', 'info')
@@ -859,7 +866,7 @@ def add_to_destination_cart(destination_id):
     else:
         des_cart[str(destination_id)] = 1
 
-    session['cart']['destination'] = des_cart
+    session['cart']['destinations'] = des_cart
 
     cart_item = {
         'destination_id': int(destination_id),
