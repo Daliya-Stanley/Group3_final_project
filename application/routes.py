@@ -283,7 +283,7 @@ def view_cart():
     conn.close()
 
     return render_template(
-        'cart.html',
+        'cart1.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
         total=total_price
