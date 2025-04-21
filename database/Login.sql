@@ -69,7 +69,7 @@ VALUES
 ('Magical Carpet - Free', 0, 3, 'product_carpet.jpeg'),
 ('Magic Potion - Free', 0, 3, 'product-magic bottle.jpeg'),
 ('Magic Wand - Free', 0, 3,'magical_wand.jpeg'),
-('Spectacular One Dress - No Mess - Free', 0, 3, 'product_clothes.jpeg');
+('One Dress - No Mess - Free', 0, 3, 'product_clothes.jpeg');
 
 CREATE TABLE Orders (
   OrderID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

@@ -3,7 +3,7 @@
 {% block body_content %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='wheel_of_fortune.css') }}">
-
+{% if 'user_email' in session %}
 <section class="login-wrapper wheel-wrapper">
     <div class="login-card login-fade wheel-card">
         <div class="wheel-content">
@@ -12,19 +12,22 @@
             <p id="result"></p>
         </div>
         <div class="wheel-container">
-            <div class="pointer"></div>
             <canvas id="wheelCanvas" width="440" height="440"></canvas>
             <button id="spinButton" class="btn-wheel-primary">SPIN</button>
         </div>
     </div>
 
     <script>
-     // Inject promotional_products from Flask into global JS variable
         const promotional_products = {{ promotional_products | tojson }};
     </script>
 
     <script src="{{ url_for('static', filename='js/wheel_of_fortune.js') }}"></script>
-
 </section>
-
+{% else %}
+    <p style="text-align: center;">You are not logged in.</p>
+    <br>
+    <!-- request.path returns the path portion of the URL the user is currently on -->
+    <!-- this says after logging in redirect them to the current path -->
+    <p style="text-align: center;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
+{% endif %}
 {% endblock %}

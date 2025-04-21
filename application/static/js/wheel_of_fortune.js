@@ -95,7 +95,7 @@ function spinWheel() {
     spinning = true;
     let spinAngle = Math.floor(3600 + Math.random() * 1000);
     //The number of seconds the wheel spins for 500 = 0.5 seconds
-    let spinTime = 500;
+    let spinTime = 2500;
     let start = null;
 
     function animateWheel(timestamp) {
