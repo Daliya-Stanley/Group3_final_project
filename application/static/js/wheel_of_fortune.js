@@ -86,7 +86,7 @@ function showPrize(prize) {
         const link = `/add_product_to_cart/${productid}`;  // e.g., /product/a-magic-wand
 
         resultText.innerHTML = `<p>You won: <a href="${link}"class="gold-link">${prize.label}</a></p>
-        <p><em>Click the prize to add it to your cart!</em></p>`;
+        <p><em>Click your prize to add it to your cart!</em></p>`;
     }
 }
 
