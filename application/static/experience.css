@@ -135,9 +135,14 @@ button[disabled] {
 
 .btn-primary {
   transition: transform 0.2s ease;
+  background-color: #b57edc;
 }
 
 .btn-primary:hover {
   transform: scale(1.05);
   box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+}
+
+.blockquote {
+  font-size: 1.1rem;
 }
