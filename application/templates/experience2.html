@@ -6,11 +6,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='experience.css') }}">
 
 <!-- Hero Gallery -->
 <section class="container mt-5">
-  <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">View our splendid range of magical experiences!</h1>
+  <h1 style="text-align:center;  color: #9954BA;">View our splendid range of magical experiences!</h1>
   <br>
    <br>
   <div class="gallery-grid">
@@ -49,8 +50,8 @@
 {% if 'user_email' in session %}
 <!-- Experience Overview & Booking Section -->
 <section class="container my-5">
-  <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">Enchanted Getaways offers magical experiences.</h1>
-   <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">Check Them out!</h1>
+  <h1 style="text-align:center; color: #9954BA;">Enchanted Getaways offers magical experiences.</h1>
+   <h1 style="text-align:center;color: #9954BA;">Check Them out!</h1>
   <br>
    <br>
   <div class="d-flex flex-column gap-4">
@@ -105,14 +106,24 @@
             {% if experience.reviews %}
               <div id="carouselReviews{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  {% for review in experience.reviews %}
+                  {% for review in experience.reviews if review.text %}
                   <div class="carousel-item {% if loop.first %}active{% endif %}">
                     <blockquote class="blockquote ps-3 fst-italic">
                       <p>"{{ review.text }}"</p>
-                      <footer class="blockquote-footer">{{ review.author }}</footer>
+                      <footer class="blockquote-footer">
+                        {{ review.author }}<br>
+                        {% for star in range(1, 6) %}
+                          {% if review.rating is not none and star <= review.rating %}
+                            <i class="bi bi-star-fill text-warning"></i>
+                          {% else %}
+                            <i class="bi bi-star text-warning"></i>
+                          {% endif %}
+                        {% endfor %}
+                      </footer>
                     </blockquote>
                   </div>
-                  {% endfor %}
+                {% endfor %}
+
                 </div>
                 {% if experience.reviews|length > 1 %}
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews{{ loop.index }}" data-bs-slide="prev">
@@ -124,6 +135,7 @@
                   <span class="visually-hidden">Next</span>
                 </button>
                 {% endif %}
+
               </div>
             {% else %}
               <p class="fst-italic text-muted">No reviews yet.</p>
@@ -139,7 +151,7 @@
 </section>
 {% else %}
     <div class="container text-center my-5">
-      <h4 style="font-family: 'Lilita One', cursive; color: #9954BA;" >Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</h4>
+      <h4 style="color: #9954BA;" >Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</h4>
     </div>
 {% endif %}
 

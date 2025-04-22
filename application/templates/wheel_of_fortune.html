@@ -24,10 +24,14 @@
     <script src="{{ url_for('static', filename='js/wheel_of_fortune.js') }}"></script>
 </section>
 {% else %}
-    <p style="text-align: center;">You are not logged in.</p>
+
     <br>
+     <br>
     <!-- request.path returns the path portion of the URL the user is currently on -->
     <!-- this says after logging in redirect them to the current path -->
-    <p style="text-align: center;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
+    <h4 style="text-align:center; color: #9954BA;" >Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to play!</h4>
+    <br>
+     <br>
+
 {% endif %}
 {% endblock %}
