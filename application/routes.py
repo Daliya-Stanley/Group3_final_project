@@ -80,12 +80,13 @@ def register():
         email = register_form.email.data
         password = register_form.password.data
 
-        result = register_person(firstname, lastname, email, password)
+        result = register_person(firstname, lastname, email, password,)
 
         if result["success"]:
             flash(result["message"], "success")
 
             session['user_email'] = result["email"]
+            session['user_id'] = result["user_id"]
 
             session.permanent = True  # Make the session persistent
             app.permanent_session_lifetime = timedelta(days=30)
@@ -125,9 +126,7 @@ def login():
             session['user_email'] = result["email"]
             session['user_id'] = result["user_id"]
 
-            user = get_user_by_email(email)
-            if user:
-                login_user(user)
+
 
             if remember:
                 session.permanent = True  # Make the session persistent
@@ -527,7 +526,6 @@ def checkout():
     experience_cart = session.get('experience_cart', [])
     product_cart = session.get('product_cart', [])
     destination_cart = session.get('destination_cart', [])
-    print("Current user ID:", current_user.id)
 
     if not experience_cart and not product_cart and not destination_cart:
         flash("Cart is empty!", "warning")
@@ -544,8 +542,7 @@ def checkout():
         cursor.close()
         conn.close()
         print("Product cart:", product_cart)
-        process_order_items(order_id, product_cart, experience_cart, destination_cart, process_order_items(order_id, product_cart, experience_cart, destination_cart, current_user.id)
-)
+        process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
 
         # Clear the cart
         session['product_cart'] = []

@@ -1,7 +1,6 @@
 import mysql.connector
 import sys
 import bcrypt
-from flask_login import UserMixin
 
 
 if sys.platform == "win32":
@@ -18,18 +17,6 @@ def get_db_connection():
     )
     return mydb
 
-
-
-class User(UserMixin):
-    def __init__(self, user_id, firstname, lastname, email, password):
-        self.id = user_id
-        self.firstname = firstname
-        self.lastname = lastname
-        self.email = email
-        self.password = password
-
-    def get_id(self):
-        return str(self.id)
 
 def get_user_by_email(email):
     conn = get_db_connection()
@@ -86,8 +73,9 @@ def register_person(fname, lname, email, password):
         val = (fname, lname, email, hashed_password)
         cursor.execute(sql_insert_user, val)
         conn.commit()
+        user_id = cursor.lastrowid
 
-        return {"success": True, "message": "User registered successfully", "email" : email}
+        return {"success": True, "message": "User registered successfully", "email" : email, "user_id": user_id}
 
     except Exception as e:
         return {"success": False, "message": f"Unexpected error: {str(e)}"}
