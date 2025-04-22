@@ -654,7 +654,8 @@ def my_account():
                            orders=orders,
                            experiences=experiences,
                            products=products,
-                           destinations=destinations)
+                           destinations=destinations,
+                           now=datetime.now)
 
 
 
@@ -1019,3 +1020,46 @@ def product_page_new():
         if filename.startswith("magic") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
     ])
     return render_template('product1.html', title_head='Magical Products', products = product_list, magic_images=magic_images)
+
+
+@app.route('/submit_experience_review', methods=['POST'])
+def submit_experience_review():
+    booking_id = request.form.get('booking_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('rating')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE BookingExperience
+        SET ReviewText = %s, Rating = %s
+        WHERE BookingID = %s
+    """, (review_text, rating, booking_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('my_account', reviewed='experience'))
+
+
+
+
+@app.route('/submit_destination_review', methods=['POST'])
+def submit_destination_review():
+    booking_id = request.form.get('booking_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('rating')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE BookingDestination
+        SET ReviewText = %s, Rating = %s
+        WHERE BookingDestinationID = %s
+    """, (review_text, rating, booking_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('my_account', reviewed='destination'))
+

@@ -377,7 +377,8 @@ def get_user_experiences(user_id):
         SELECT 
             E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
             B.Guests, B.BookingDate, B.BookingTime, B.BookingID, B.IsCancelled,
-            CS.StatusName AS CancelStatus
+            CS.StatusName AS CancelStatus,
+            B.ReviewText, B.Rating
         FROM BookingExperience B
         JOIN Experiences E ON B.ExperienceID = E.ExperienceID
         JOIN Orders O ON B.OrderID = O.OrderID
@@ -398,7 +399,8 @@ def get_user_ordered_destinations(user_id):
             bd.BookingStartDate, bd.BookingEndDate, bd.Guests,
             DATEDIFF(bd.BookingEndDate, bd.BookingStartDate) AS NoOfNights,
             bd.BookingDestinationID,
-            cs.StatusName AS CancelStatus
+            cs.StatusName AS CancelStatus,
+            bd.ReviewText, bd.Rating
         FROM BookingDestination bd
         JOIN Destination d ON bd.DestinationID = d.DestinationID
         JOIN Orders o ON bd.OrderID = o.OrderID
@@ -417,26 +419,6 @@ def get_user_ordered_destinations(user_id):
     cursor.close()
     conn.close()
     return destinations
-
-
-
-def get_user_experiences(user_id):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT 
-            E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
-            B.Guests, B.BookingDate, B.BookingTime, B.BookingID, B.IsCancelled,
-            CS.StatusName AS CancelStatus
-        FROM BookingExperience B
-        JOIN Experiences E ON B.ExperienceID = E.ExperienceID
-        JOIN Orders O ON B.OrderID = O.OrderID
-        LEFT JOIN CancelExperienceRequests CR ON CR.BookingID = B.BookingID AND CR.UserID = %s
-        LEFT JOIN CancelStatus CS ON CR.CancelStatusID = CS.CancelStatusID
-        WHERE O.UserID = %s
-        ORDER BY B.BookingDate DESC
-    """, (user_id, user_id))
-    return cursor.fetchall()
 
 
 
