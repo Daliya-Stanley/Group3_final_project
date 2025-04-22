@@ -72,7 +72,7 @@
         <div class="mt-auto">
           <form method="POST" action="{{ url_for('add_product_to_cart', product_id=product.productid) }}#product-cards">
             <input type="number" name="quantity" value="1" min="1" max="{{ product.stock_remaining }}" class="form-control mb-2" style="width: 100px;">
-            <button style= "background-color:#9966cc" type="submit" class="btn btn-primary w-100">Buy</button>
+            <button type="submit" class="btn btn-success w-100">Buy</button>
             <small class="text-muted">Stock left: {{ product.stock_remaining }}</small>
           </form>
         </div>

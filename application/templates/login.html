@@ -24,7 +24,7 @@
                 {{ form.remember_me(class_="form-check-input", id="remember_me") }}
                 <label class="form-check-label" for="remember_me">Remember Me</label>
             </div>
-            <button type="submit" class="btn btn-primary mt-4">{{ form.submit.label.text }}</button>
+            <button type="submit" class="login-btn">{{ form.submit.label.text }}</button>
             <p class="register-link">New here? <a href="{{ url_for('register') }}">Start your journey</a></p>
     </form>
 </div>

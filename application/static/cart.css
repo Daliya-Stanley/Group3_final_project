@@ -1,9 +1,38 @@
-.accordian{
-font-family: font-family: "Pattaya", sans-serif;
-}
- p{
-font-family: "Quicksand", sans-serif;
-}
 .bg-primary{
 background-color:#9966cc
+}
+
+.accordion-button,
+.accordion-button:not(.collapsed) {
+  background-color: #9966cc !important;
+  color: white !important;
+}
+
+.accordion-button {
+  box-shadow: none !important;
+}
+
+button,
+.btn {
+  font-family: "Pattaya", sans-serif;
+  font-size: 0.9rem;
+}
+
+.btn-secondary{
+    font-family: "Pattaya", sans-serif;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: #b57edc;
+    color: white;  /* White text */
+    border-radius: 5px;  /* Rounded corners */
+    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #ffc16f;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }

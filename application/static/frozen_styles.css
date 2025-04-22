@@ -323,17 +323,20 @@ text-shadow: 0 0 10px #ffa500, 0 0 20px #ff8c00, 0 0 30px #ff6600;
 }
 
 .btn {
+    font-family: "Pattaya", sans-serif;
     display: inline-block;
     padding: 10px 20px;
-    font-size: 18px;
+    font-size: 1.2rem;
     text-align: center;
     text-decoration: none;
-    background-color: #bc6ff4;
+    background-color: #b57edc;
     color: white;  /* White text */
     border-radius: 5px;  /* Rounded corners */
     transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    border: none;
 }
 
 .btn:hover {
     background-color: #ffc16f;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }

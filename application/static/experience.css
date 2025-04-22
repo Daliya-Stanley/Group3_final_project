@@ -2,7 +2,12 @@
 
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Quicksand", sans-serif;
+}
+
+button,
+.btn {
+  font-family: "Pattaya", sans-serif;
 }
 
 .gallery-grid {
@@ -133,14 +138,18 @@ button[disabled] {
 
 
 
-.btn-primary {
+.btn-success {
   transition: transform 0.2s ease;
   background-color: #b57edc;
+  border: none;
+  font-size: 1.1rem;
 }
 
-.btn-primary:hover {
+.btn-success:hover {
   transform: scale(1.05);
+  background-color: #ffc16f;
   box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+  border: none;
 }
 
 .blockquote {

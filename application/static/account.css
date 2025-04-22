@@ -1,5 +1,6 @@
 /* Buttons */
 .btn-my-account {
+    font-family: "Pattaya", sans-serif;
   background-color: #b57edc;
   color: white;
   border: none;
@@ -11,7 +12,8 @@
 }
 
 .btn-my-account:hover {
-  background-color: #a04fd0;
+  background-color: #ffc16f;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }
 
 .btn-request-cancel {
