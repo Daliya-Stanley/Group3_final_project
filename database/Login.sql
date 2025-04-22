@@ -1,7 +1,7 @@
 create database Login;
 drop database Login;
 use Login;
-
+select * from User;
 create table User
 (
 UserID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
