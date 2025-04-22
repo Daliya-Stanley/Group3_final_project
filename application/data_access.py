@@ -1,6 +1,8 @@
 import mysql.connector
 import sys
 import bcrypt
+from flask_login import UserMixin
+
 
 if sys.platform == "win32":
     mysql_password = "password"
@@ -15,6 +17,34 @@ def get_db_connection():
         database="login"
     )
     return mydb
+
+
+
+class User(UserMixin):
+    def __init__(self, user_id, firstname, lastname, email, password):
+        self.id = user_id
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.password = password
+
+    def get_id(self):
+        return str(self.id)
+
+def get_user_by_email(email):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("SELECT UserID, FirstName, LastName, Email, Password FROM User WHERE Email = %s", (email,))
+        row = cursor.fetchone()
+
+        if row:
+            return User(*row)
+        return None
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_products():
     conn = get_db_connection() # establish connection with DB server and DB called ""

@@ -1,11 +1,13 @@
 from os import SEEK_SET
 
 from flask import render_template, url_for, request, redirect,jsonify, flash, session
+from flask_login import login_user
 from application.forms.register_form import RegistrationForm
 from application.forms.login_form import LoginForm
 from application.data_access import *
 from application import app
 from datetime import timedelta, datetime
+from flask_login import current_user
 import os
 
 app.permanent_session_lifetime = timedelta(days=30)
@@ -122,6 +124,10 @@ def login():
             # Login success: store session info and redirect
             session['user_email'] = result["email"]
             session['user_id'] = result["user_id"]
+
+            user = get_user_by_email(email)
+            if user:
+                login_user(user)
 
             if remember:
                 session.permanent = True  # Make the session persistent
@@ -521,6 +527,7 @@ def checkout():
     experience_cart = session.get('experience_cart', [])
     product_cart = session.get('product_cart', [])
     destination_cart = session.get('destination_cart', [])
+    print("Current user ID:", current_user.id)
 
     if not experience_cart and not product_cart and not destination_cart:
         flash("Cart is empty!", "warning")
@@ -537,7 +544,8 @@ def checkout():
         cursor.close()
         conn.close()
         print("Product cart:", product_cart)
-        process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
+        process_order_items(order_id, product_cart, experience_cart, destination_cart, process_order_items(order_id, product_cart, experience_cart, destination_cart, current_user.id)
+)
 
         # Clear the cart
         session['product_cart'] = []

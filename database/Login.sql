@@ -1,5 +1,5 @@
 create database Login;
--- drop database Login;
+drop database Login;
 use Login;
 
 create table User
