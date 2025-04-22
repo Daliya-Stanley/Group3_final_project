@@ -1,21 +1,19 @@
 {% extends "layout.html" %}
 {% block title %}My Account Dashboard{% endblock %}
 {% block body_content %}
+{% set today = today if today is defined else now().date() %}
 <style>
-    .sidebar-links .nav-link {
+  .sidebar-links .nav-link {
     color: black;
     font-weight: 600;
   }
-
   .sidebar-links .nav-link.active {
     color: #9954BA;
   }
-
   .sidebar-links .nav-link:hover {
     color: #FEC06F;
     text-decoration: none;
   }
-
   .star-rating {
     font-size: 1.2rem;
     cursor: pointer;
@@ -30,7 +28,6 @@
 </style>
 <div class="container-fluid my-5">
   <div class="row">
-    <!-- Sidebar -->
     <div class="col-md-3 mb-4">
       <div class="bg-white rounded-3 shadow-sm p-3 sidebar-links">
         <h5 class="mb-3">Overview</h5>
@@ -42,9 +39,7 @@
       </div>
     </div>
 
-    <!-- Main Content -->
     <div class="col-md-9">
-      <!-- Profile Section -->
       <div id="profile" class="bg-white rounded-3 shadow-sm p-4 mb-5">
         <h4 class="mb-4">My Profile</h4>
         <form>
@@ -57,9 +52,7 @@
             <input type="text" class="form-control" value="{{ user_first_name }}" disabled>
           </div>
         </form>
-
         <hr class="my-4">
-
         <h5 class="mb-3">Change Password</h5>
         <form method="POST" action="{{ url_for('update_password') }}">
           <div class="mb-3">
@@ -74,7 +67,6 @@
         </form>
       </div>
 
-      <!-- Orders Section -->
       <div id="orders" class="bg-white rounded-3 shadow-sm p-4 mb-5">
         <h4 class="mb-3">My Orders</h4>
         {% if products %}
@@ -91,122 +83,138 @@
         {% endif %}
       </div>
 
-      <!-- Bookings Section -->
       {% if request.args.reviewed == 'experience' %}
         <div class="alert alert-success">⭐ Thank you! Your experience review has been submitted.</div>
       {% elif request.args.reviewed == 'destination' %}
         <div class="alert alert-success">⭐ Thank you! Your destination review has been submitted.</div>
       {% endif %}
 
-      <h5 class="mt-4">Experiences</h5>
-      {% set today = today if today is defined else now().date() %}
+      <!-- Experiences Section -->
+      <h5>Experiences</h5>
       {% if experiences %}
         <ul class="list-group mb-4">
           {% for exp in experiences %}
-            <li class="list-group-item d-flex flex-column gap-2">
-              <div class="d-flex align-items-center gap-3">
-                <img src="{{ url_for('static', filename='images/' ~ exp.ExperienceImage) }}" width="50" class="rounded shadow-sm" alt="{{ exp.ExperienceName }}">
-                <div>
-                  <strong>{{ exp.ExperienceName }}</strong><br>
-                  <small class="text-muted">
-                    Date: {{ exp.BookingDate.strftime('%d %b') }} | Time: {{ exp.BookingTime }} | Guests: {{ exp.Guests }}
-                  </small>
-                </div>
-              </div>
-
-              {% if exp.BookingDate > today %}
-                {% if exp.ReviewText %}
-                  <div class="mt-2">
-                    <strong>Your Review:</strong><br>
-                    <em>{{ exp.ReviewText }}</em> – ⭐ {{ exp.Rating }}/5
+            <div class="mb-3">
+              <li class="list-group-item d-flex flex-column gap-2 bg-white rounded shadow-sm p-3">
+                <div class="d-flex align-items-center gap-3">
+                  <img src="{{ url_for('static', filename='images/' ~ exp.ExperienceImage) }}" width="50" class="rounded shadow-sm" alt="{{ exp.ExperienceName }}">
+                  <div>
+                    <strong>{{ exp.ExperienceName }}</strong><br>
+                    <small class="text-muted">Date: {{ exp.BookingDate.strftime('%d %b') }} | Time: {{ exp.BookingTime }} | Guests: {{ exp.Guests }}</small>
                   </div>
-                {% else %}
-                  <form method="POST" action="{{ url_for('submit_experience_review') }}" class="mt-2 review-form">
+                </div>
+
+                <div class="mt-2">
+                  {% if exp.CancelStatus == 'Pending' %}
+                    <p class="text-warning small mb-0">❄️ Cancellation request pending...</p>
+                  {% elif exp.CancelStatus == 'Approved' %}
+                    <span class="badge bg-danger">❄️ Cancelled</span>
+                  {% elif exp.CancelStatus == 'Rejected' %}
+                    <p class="text-danger small mb-0">❌ Request rejected</p>
+                  {% endif %}
+                </div>
+
+                {% if exp.CancelStatus != 'Approved' %}
+                  {% if exp.BookingDate > today %}
+                    {% if exp.ReviewText %}
+                      <div class="mt-2"><strong>Your Review:</strong><br><em>{{ exp.ReviewText }}</em> – ⭐ {{ exp.Rating }}/5</div>
+                    {% else %}
+                      <form method="POST" action="{{ url_for('submit_experience_review') }}" class="mt-2 review-form">
+                        <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
+                        <input type="hidden" name="rating" class="rating-input" value="0">
+                        <div class="mb-2 star-rating">
+                          {% for r in range(1,6) %}<span class="star" data-value="{{ r }}">&#9734;</span>{% endfor %}
+                        </div>
+                        <div class="mb-2">
+                          <label>Review</label>
+                          <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Submit Review</button>
+                      </form>
+                    {% endif %}
+                  {% else %}
+                    <p class="text-muted mt-2">⭐ Reviews available after your experience date.</p>
+                  {% endif %}
+                {% endif %}
+
+                {% if exp.CancelStatus == None %}
+                  <form method="POST" action="{{ url_for('my_account') }}" class="mt-2">
                     <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
-                    <input type="hidden" name="rating" class="rating-input" value="0">
-
-                    <div class="mb-2 star-rating">
-                      {% for r in range(1,6) %}
-                        <span class="star" data-value="{{ r }}">&#9734;</span>
-                      {% endfor %}
-                    </div>
-
-                    <div class="mb-2">
-                      <label>Review</label>
-                      <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-sm btn-primary">Submit Review</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
                   </form>
                 {% endif %}
-              {% else %}
-                <p class="text-muted mt-2">⭐ Reviews available after your experience date.</p>
-              {% endif %}
-            </li>
+              </li>
+            </div>
           {% endfor %}
         </ul>
       {% else %}
         <p class="text-muted">No experiences booked yet.</p>
       {% endif %}
 
-
-        <!-- Destinations -->
-        <h5>Destinations</h5>
-        {% if destinations %}
+      <!-- Destinations Section -->
+      <h5>Destinations</h5>
+      {% if destinations %}
         <ul class="list-group">
           {% for dest in destinations %}
-            <li class="list-group-item d-flex flex-column gap-2">
-              <div class="d-flex align-items-center gap-3">
-                <img src="{{ url_for('static', filename='images/' ~ dest.DestinationImage) }}" width="50" class="rounded shadow-sm" alt="{{ dest.DestinationName }}">
-                <div>
-                  <strong>{{ dest.DestinationName }}</strong><br>
-                  <small class="text-muted">
-                    From {{ dest.BookingStartDate.strftime('%d %b') }} to {{ dest.BookingEndDate.strftime('%d %b') }} | Guests: {{ dest.Guests }}
-                  </small>
-                </div>
-              </div>
-
-              {% if dest.BookingEndDate > today %}
-                {% if dest.ReviewText %}
-                  <div class="mt-2">
-                    <strong>Your Review:</strong><br>
-                    <em>{{ dest.ReviewText }}</em> – ⭐ {{ dest.Rating }}/5
+            <div class="mb-3">
+              <li class="list-group-item d-flex flex-column gap-2 bg-white rounded shadow-sm p-3">
+                <div class="d-flex align-items-center gap-3">
+                  <img src="{{ url_for('static', filename='images/' ~ dest.DestinationImage) }}" width="50" class="rounded shadow-sm" alt="{{ dest.DestinationName }}">
+                  <div>
+                    <strong>{{ dest.DestinationName }}</strong><br>
+                    <small class="text-muted">From {{ dest.BookingStartDate.strftime('%d %b') }} to {{ dest.BookingEndDate.strftime('%d %b') }} | Guests: {{ dest.Guests }}</small>
                   </div>
-                {% else %}
-                  <form method="POST" action="{{ url_for('submit_destination_review') }}" class="mt-2 review-form">
-                    <input type="hidden" name="booking_id" value="{{ dest.BookingDestinationID }}">
-                    <input type="hidden" name="rating" class="rating-input" value="0">
+                </div>
 
-                    <div class="mb-2 star-rating">
-                      {% for r in range(1,6) %}
-                        <span class="star" data-value="{{ r }}">&#9734;</span>
-                      {% endfor %}
-                    </div>
+                <div class="mt-2">
+                  {% if dest.CancelStatus == 'Pending' %}
+                    <p class="text-warning small mb-0">❄️ Cancellation request pending...</p>
+                  {% elif dest.CancelStatus == 'Approved' %}
+                    <span class="badge bg-danger">❄️ Cancelled</span>
+                  {% elif dest.CancelStatus == 'Rejected' %}
+                    <p class="text-danger small mb-0">❌ Request rejected</p>
+                  {% endif %}
+                </div>
 
-                    <div class="mb-2">
-                      <label>Review</label>
-                      <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
-                    </div>
+                {% if dest.CancelStatus != 'Approved' %}
+                  {% if dest.BookingEndDate > today %}
+                    {% if dest.ReviewText and dest.ReviewText|lower != 'cancelled' %}
+                      <div class="mt-2"><strong>Your Review:</strong><br><em>{{ dest.ReviewText }}</em> – ⭐ {{ dest.Rating }}/5</div>
+                    {% elif not dest.ReviewText %}
+                      <form method="POST" action="{{ url_for('submit_destination_review') }}" class="mt-2 review-form">
+                        <input type="hidden" name="booking_id" value="{{ dest.BookingDestinationID }}">
+                        <input type="hidden" name="rating" class="rating-input" value="0">
+                        <div class="mb-2 star-rating">
+                          {% for r in range(1,6) %}<span class="star" data-value="{{ r }}">&#9734;</span>{% endfor %}
+                        </div>
+                        <div class="mb-2">
+                          <label>Review</label>
+                          <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Submit Review</button>
+                      </form>
+                    {% endif %}
+                  {% else %}
+                    <p class="text-muted mt-2">⭐ Reviews available after your trip ends.</p>
+                  {% endif %}
+                {% endif %}
 
-                    <button type="submit" class="btn btn-sm btn-primary">Submit Review</button>
+                {% if dest.CancelStatus == None %}
+                  <form method="POST" action="{{ url_for('my_account') }}" class="mt-2">
+                    <input type="hidden" name="destination_booking_id" value="{{ dest.BookingDestinationID }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
                   </form>
                 {% endif %}
-              {% else %}
-                <p class="text-muted mt-2">⭐ Reviews available after your trip ends.</p>
-              {% endif %}
-            </li>
+              </li>
+            </div>
           {% endfor %}
         </ul>
       {% else %}
         <p class="text-muted">No destinations booked yet.</p>
-      {% endif %}``
-
-
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>
-
 
 <script>
   document.querySelectorAll('.star-rating').forEach(starGroup => {
@@ -215,29 +223,17 @@
 
     stars.forEach(star => {
       const val = parseInt(star.dataset.value);
-
-      // Hover effect
       star.addEventListener('mouseover', () => {
         stars.forEach(s => s.classList.remove('hover'));
-        for (let i = 0; i < val; i++) {
-          stars[i].classList.add('hover');
-        }
+        for (let i = 0; i < val; i++) stars[i].classList.add('hover');
       });
-
-      star.addEventListener('mouseout', () => {
-        stars.forEach(s => s.classList.remove('hover'));
-      });
-
-      // Click to select
+      star.addEventListener('mouseout', () => stars.forEach(s => s.classList.remove('hover')));
       star.addEventListener('click', () => {
         ratingInput.value = val;
         stars.forEach(s => s.classList.remove('selected'));
-        for (let i = 0; i < val; i++) {
-          stars[i].classList.add('selected');
-        }
+        for (let i = 0; i < val; i++) stars[i].classList.add('selected');
       });
     });
   });
 </script>
-
 {% endblock %}
