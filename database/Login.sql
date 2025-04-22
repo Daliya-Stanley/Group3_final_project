@@ -279,7 +279,10 @@ CREATE TABLE PromotionalWinners (
 -- END $$
 
 -- DELIMITER ;
-
+ALTER TABLE CancelDestinationRequests
+DROP COLUMN CancelStatus,
+ADD COLUMN CancelStatusID INT DEFAULT 1,
+ADD CONSTRAINT fk_cancelstatus FOREIGN KEY (CancelStatusID) REFERENCES CancelStatus(CancelStatusID);
 
 -- CALL GetExperienceDetails(2);
 SHOW COLUMNS FROM BookingExperience;
