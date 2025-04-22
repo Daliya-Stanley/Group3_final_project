@@ -254,7 +254,7 @@ CREATE TABLE PromotionalWinners (
     WonAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UserID) REFERENCES User(UserID),
     FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
-);  
+);
 -- DELIMITER $$
 
 -- CREATE PROCEDURE GetExperienceDetails(IN exp_id INT)
