@@ -665,7 +665,7 @@ def my_account():
 
 @app.route("/cinderella_kingdom")
 def cinderella_kingdom():
-    destination = get_destination_by_name("Cinderella’s_Kingdom")
+    destination = get_destination_by_name("Cinderella")
     cards = [
   {
     "title": "Attend the Grand Ball",
