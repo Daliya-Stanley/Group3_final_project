@@ -11,7 +11,7 @@
 
 <!-- Hero Gallery -->
 <section class="container mt-5">
-  <h1 style="text-align:center; font-family: 'Lilita One', cursive; color: #9954BA;">View our splendid range of magical experiences!</h1>
+  <h1 style="text-align:center;  color: #9954BA;">View our splendid range of magical experiences!</h1>
   <br>
    <br>
   <div class="gallery-grid">
@@ -151,7 +151,7 @@
 </section>
 {% else %}
     <div class="container text-center my-5">
-      <h4 style="font-family: 'Lilita One', cursive; color: #9954BA;" >Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</h4>
+      <h4 style="color: #9954BA;" >Please <a href="{{ url_for('login', next=request.path) }}">log in</a> to view and book magical experiences!</h4>
     </div>
 {% endif %}
 
