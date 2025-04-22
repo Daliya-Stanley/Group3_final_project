@@ -37,11 +37,13 @@
   </form>
 </section>
 {% else %}
-    <p style="text-align: centre;">You are not logged in.</p>
+<div style="text-align:center;">
+    <h3 >Login in to book the destination!</h3>
   <br>
 <!--    #request.patch returns the path portion of the URL the user is currently on-->
 <!--    #this says after logging in redirect them to the current path-->
-  <p style="text-align: centre;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></p>
+  <h4 style="text-align: centre;"><a href="{{ url_for('login', next=request.path) }}">Click here to log in!</a></h4>
+  </div>
 {% endif %}
 
 <!-- Destination Headline -->
