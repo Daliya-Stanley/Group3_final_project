@@ -155,3 +155,15 @@ button[disabled] {
 .blockquote {
   font-size: 1.1rem;
 }
+
+.flatpickr-day.today {
+  background: #9954ba;
+  color: white;
+}
+
+
+.flatpickr-day:hover {
+  background: #ffc16f;
+  color: #1a0f2d;
+}
+
