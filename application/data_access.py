@@ -580,3 +580,51 @@ def get_destination_by_id(destination_id):
         cursor.close()
         conn.close()
 
+def request_destination_cancel(cursor, user_id, booking_destination_id):
+        # Handle destination cancel request only if destination_booking_id exists
+        cursor.execute("""
+                        SELECT * FROM CancelDestinationRequests 
+                        WHERE BookingDestinationID = %s AND UserID = %s
+                    """, (booking_destination_id, user_id))
+        existing = cursor.fetchone()
+
+        if not existing:
+            cursor.execute("""
+                            INSERT INTO CancelDestinationRequests (BookingDestinationID, UserID)
+                            VALUES (%s, %s)
+                        """, (booking_destination_id, user_id))
+
+
+def get_destination_cancel_requests(cursor):
+    cursor.execute("""
+        SELECT 
+            d.CancelRequestID, 
+            d.RequestDate, 
+            cs.StatusName AS CancelStatus,
+            u.FirstName, u.LastName, u.Email,
+            bd.BookingStartDate,bd.BookingEndDate,
+            dest.DestinationName
+        FROM CancelDestinationRequests d
+        JOIN BookingDestination bd ON d.BookingDestinationID = bd.BookingDestinationID
+        JOIN Destination dest ON bd.DestinationID = dest.DestinationID
+        JOIN User u ON d.UserID = u.UserID
+        JOIN CancelStatus cs ON d.CancelStatusID = cs.CancelStatusID
+        ORDER BY d.RequestDate DESC
+    """)
+    return cursor.fetchall()
+
+def update_user_password(user_id, new_password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+        cursor.execute("""
+            UPDATE User SET Password = %s WHERE UserID = %s
+        """, (hashed_password, user_id))
+        conn.commit()
+        return {"success": True, "message": "Password updated successfully"}
+    except Exception as e:
+        return {"success": False, "message": f"Error: {str(e)}"}
+    finally:
+        cursor.close()
+        conn.close()

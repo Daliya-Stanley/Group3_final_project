@@ -1,9 +1,4 @@
-.mid-section{
-background-color:#CEF4FC;
-}
-.bottom-section{
-background-color:#73C2FB;
-}
+
 
 
 .product-mid-section{
@@ -17,10 +12,6 @@ font-family: 'Pattaya', sans-serif;
     max-height: 100%;
     margin: 0 auto;
     background-color: #CBBDE2;
-}
-
-#carousel-container {
-border: 2px solid #A82993;
 }
 
 #product-carousel-container {
@@ -329,15 +320,14 @@ text-shadow: 0 0 10px #ffa500, 0 0 20px #ff8c00, 0 0 30px #ff6600;
     display: inline-block;
     padding: 10px 20px;
     font-size: 18px;
-    font-weight: bold;
     text-align: center;
     text-decoration: none;
-    background-color: #bc6ff4;  /* Blue background */
+    background-color: #bc6ff4;
     color: white;  /* White text */
     border-radius: 5px;  /* Rounded corners */
     transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
 }
 
 .btn:hover {
-    background-color: #ffc16f;  /* Darker blue when hovered */
+    background-color: #ffc16f;
 }
