@@ -150,6 +150,24 @@ def logout():
     flash("You've been logged out 👋", "info")
     return redirect(url_for('login'))
 
+@app.route('/update_password', methods=['POST'])
+def update_password():
+    if 'user_id' not in session:
+        flash("Please log in to update your password.", "warning")
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    new_password = request.form.get('new_password')
+
+    if not new_password or len(new_password) < 6:
+        flash("Password must be at least 6 characters long.", "warning")
+        return redirect(url_for('my_account'))
+
+    result = update_user_password(user_id, new_password)
+    flash(result["message"], "success" if result["success"] else "danger")
+    return redirect(url_for('my_account'))
+
+
 @app.route('/admin/dashboard', methods=['GET', 'POST'])
 def admin_dashboard():
     if session.get('user_email') != 'admin@egt.magic':
@@ -165,6 +183,8 @@ def admin_dashboard():
 
     # === CANCEL REQUESTS ===
     cancel_requests = get_cancel_requests(cursor)
+    destination_cancel_requests = get_destination_cancel_requests(cursor)
+
 
     # === PRODUCT ORDERS ===
     product_status_filter = request.args.get('product_status') or 'All'
@@ -180,6 +200,7 @@ def admin_dashboard():
                            pending_cancels=pending_cancels,
                            shipped_orders=shipped_orders,
                            cancel_requests=cancel_requests,
+                           destination_cancel_requests=destination_cancel_requests,
                            product_orders=product_orders,
                            product_status_filter=product_status_filter,
                            experience_orders=experience_orders)
@@ -214,6 +235,25 @@ def admin_update_status():
             WHERE CancelRequestID = %s
         """, (status_id, item_id))
 
+        flash("✅ Experience cancellation request updated.", "success")
+    elif item_type == 'cancel_destination':
+        cursor.execute("SELECT CancelStatusID FROM CancelStatus WHERE StatusName = %s", (new_status_name,))
+        status_id = cursor.fetchone()[0]
+
+        cursor.execute("""
+                UPDATE CancelDestinationRequests
+                SET CancelStatusID = %s
+                WHERE CancelRequestID = %s
+            """, (status_id, item_id))
+
+        if new_status_name == "Approved":
+            cursor.execute("SELECT BookingDestinationID FROM CancelDestinationRequests WHERE CancelRequestID = %s",
+                           (item_id,))
+            bd_id = cursor.fetchone()[0]
+            cursor.execute("UPDATE BookingDestination SET ReviewText = 'Cancelled' WHERE BookingDestinationID = %s",
+                           (bd_id,))
+        flash("✅ Destination cancellation request updated.", "success")
+
         # If approved, mark the booking as cancelled (don't delete it)
 
         if new_status_name == "Approved":
@@ -228,7 +268,7 @@ def admin_update_status():
             booking_id = cursor.fetchone()[0]
             cursor.execute("UPDATE BookingExperience SET IsCancelled = FALSE WHERE BookingID = %s", (booking_id,))
 
-        flash("✅ Cancellation request updated.", "success")
+
 
     conn.commit()
     cursor.close()
@@ -575,23 +615,29 @@ def my_account():
 
     # Handle cancellation request (POST)
     if request.method == 'POST':
-        booking_id = request.form.get('booking_id')
+        exp_booking_id = request.form.get('booking_id')  # for experience
+        dest_booking_id = request.form.get('destination_booking_id')  # for destination
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Check if request already exists
-        cursor.execute("""
-            SELECT * FROM CancelExperienceRequests 
-            WHERE BookingID = %s AND UserID = %s
-        """, (booking_id, user_id))
-        existing = cursor.fetchone()
-
-        if not existing:
+        if exp_booking_id:
+            # Handle experience cancel request only if booking_id exists
             cursor.execute("""
-                INSERT INTO CancelExperienceRequests (BookingID, UserID)
-                VALUES (%s, %s)
-            """, (booking_id, user_id))
+                SELECT * FROM CancelExperienceRequests
+                WHERE BookingID = %s AND UserID = %s
+            """, (exp_booking_id, user_id))
+            existing = cursor.fetchone()
+
+            if not existing:
+                cursor.execute("""
+                    INSERT INTO CancelExperienceRequests (BookingID, UserID)
+                    VALUES (%s, %s)
+                """, (exp_booking_id, user_id))
+                conn.commit()
+
+        if dest_booking_id:
+            request_destination_cancel(cursor,user_id, dest_booking_id )
             conn.commit()
 
         cursor.close()
@@ -608,7 +654,8 @@ def my_account():
                            orders=orders,
                            experiences=experiences,
                            products=products,
-                           destinations=destinations)
+                           destinations=destinations,
+                           now=datetime.now)
 
 
 
@@ -973,3 +1020,46 @@ def product_page_new():
         if filename.startswith("magic") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
     ])
     return render_template('product1.html', title_head='Magical Products', products = product_list, magic_images=magic_images)
+
+
+@app.route('/submit_experience_review', methods=['POST'])
+def submit_experience_review():
+    booking_id = request.form.get('booking_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('rating')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE BookingExperience
+        SET ReviewText = %s, Rating = %s
+        WHERE BookingID = %s
+    """, (review_text, rating, booking_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('my_account', reviewed='experience'))
+
+
+
+
+@app.route('/submit_destination_review', methods=['POST'])
+def submit_destination_review():
+    booking_id = request.form.get('booking_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('rating')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE BookingDestination
+        SET ReviewText = %s, Rating = %s
+        WHERE BookingDestinationID = %s
+    """, (review_text, rating, booking_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('my_account', reviewed='destination'))
+

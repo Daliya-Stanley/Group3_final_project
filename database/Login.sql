@@ -306,3 +306,7 @@ SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u
         JOIN CancelStatus cs ON c.CancelStatusID = cs.CancelStatusID
         ORDER BY c.RequestDate DESC;
 select * from Product;
+
+use login;
+select * from bookingexperience;
+select * from bookingdestination;

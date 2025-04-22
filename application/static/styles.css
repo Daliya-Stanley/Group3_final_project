@@ -25,6 +25,12 @@ title {
 body {
   padding-top: 0px;
   overflow-x: hidden;
+  font-family: "Quicksand", sans-serif;
+  background-color: #B88EDD;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Pattaya", sans-serif;
 }
 
 main {
@@ -54,6 +60,8 @@ main {
     font-family: "Lilita One", sans-serif;
     z-index: 1000;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text: #BCCCE0;
+    text-decoration: none; !important
 }
 
  /* Positioning the Menu items to the center */
@@ -64,17 +72,17 @@ main {
 
 /* For Home link on the Menu Bar: make the text white */
 .navbar-nav .nav-link.active {
-    color: black;
+    color: #FEC06F !important;
  }
 
 .navbar-nav .nav-link {
-    color: black;
+   color: #E5CFF5; !important;
 }
 
 /* Make the textcolour change when mouse arrow hovers over */
 .navbar-nav .nav-link:hover {
     background-color: lilac;
-    color: white;
+    color: #FEC06F;
     border-radius: 0.5rem;
 }
 
@@ -99,7 +107,7 @@ main {
 
 /* For the links on the Dropdown Bar: make the text white */
 .dropdown-item {
-    color: black;
+    color: #303633;
     font-weight: 600;
     font-family: "Lilita One", sans-serif;
 }
@@ -114,7 +122,7 @@ main {
 
 /* Adding a line between the society names and 'All Societies' */
 .dropdown .dropdown-divider {
-    border-top: 1px solid black;
+    border-top: 1px solid #303633;
     margin:8px 0;
 }
 
@@ -124,16 +132,6 @@ main {
     font-weight: 600;
 }
 
-.login-btn {
-    background-color: white;
-    border-radius: 2rem;
-    border-color: black;
-    width: 7.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    padding-right: 1rem;
-    text-transform: uppercase;
-}
 
 
 .castle-icon {
@@ -285,6 +283,24 @@ main {
   color: rgba(255, 255, 255, 0.5);
 }
 
+.admin-logout-btn {
+  background-color: #e5ccff;
+
+  color: #4b0082;
+  border: none;
+  border-radius: 2px;
+  padding: 7px 20px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+.admin-logout-btn:hover{
+    background-color: #E6CCFF;
+     text-decoration: none;
+}
+
 .btn-primary {
   background-color: #C8A2C8;
   border-color: #C8A2C8;
@@ -292,6 +308,7 @@ main {
   padding: 0.6rem 1.2rem;
   border-radius: 0.75rem;
 }
+
 
 .btn-wheel-primary {
   background-color: #ffffff;
@@ -339,56 +356,63 @@ main {
 #components{
 background-color: #d6b2f0;
 font-family: "Pattaya", sans-serif;
+width: 100vw;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
 }
-#feedback{
-background-color: #d6b2f0;
-}
+
+/* Home-page bottom carousel */
+.blurred-box {
+    background: rgba(54, 28, 77, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+  }
+
+  .carousel-indicators.position-static {
+    position: static;
+    margin-top: 1rem;
+  }
+
+  .carousel-indicators button {
+    background-color: #9c27b0;
+  }
+
+  @media (max-width: 768px) {
+    .blurred-box {
+      font-size: 15px;
+      padding: 1.25rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .blurred-box {
+      font-size: 12px;
+    }
+
+    .carousel-inner .row {
+      text-align: center;
+    }
+
+    .carousel-inner img {
+      margin: 0 auto;
+    }
+  }
+
+/* Home-page bottom carousel */
+
 
 .carousel-container {
-  max-width: 400px;  /* adjust as needed */
+  max-width: 800px;  /* adjust as needed */
   margin: 0 auto;    /* centers the carousel horizontally */
   padding-top: 40px; /* optional vertical spacing */
-}
-.top-section{
-height: 100vh;
-            position: relative;
-            top:0;
-            max-width: auto;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
-            font-family: "Pattaya", sans-serif;
-            height: 100vh;
-            position: relative;
-            top:0;
-            max-width: auto;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-            background-repeat: no-repeat;
-            color: white;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-}
-}
-
-#customer-feedback {
-    width: 80%;
-    max-width: 500px;
-    max-height: 500px;
-    margin: 0 auto;
-    border: 15px solid #ffffff;
-    font-family: "Quicksand", sans-serif;
-}
-
-#customer-feedback .carousel-inner {
-  margin: 0 auto;
-  max-width: 500px;
-  font-family: "Pattaya", sans-serif;
 }
 
 .carousel-item img {
@@ -415,21 +439,8 @@ height: 100vh;
     padding: 15px;
 }
 .carousel-item h5, .carousel-item p {
-    text-shadow: 6px 6px 12px black;
+    text-shadow: 6px 6px 12px #303633;
 }
-
-#feedback{
-background-color: #9954BA;
-}
-
-.review {
-  font-family: 'Quicksand', sans-serif;
-  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
-  color: black;
-  padding: 10px;
-  border-radius: 10px;
-  display: inline-block;
-  }
 
 .content {
     flex: 1;
@@ -454,7 +465,7 @@ background-color: #9954BA;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 20px solid black;
+    border-bottom: 20px solid #303633;
 }
 
 .container {
@@ -574,11 +585,6 @@ h2 {
     border-bottom: none;
 }
 
-.container-fluid bg-4 text-center {
-      background-color: red /* Charcoal */
-      color: #fff;
-  }
-
 
 @keyframes fadeInToast {
   0% {
@@ -601,18 +607,6 @@ h2 {
   z-index: 1050; /* Ensures it appears on top */
 }
 
-
-
-.container {
-    background-image: url('static/images/wheel.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
 
 html {
   scroll-behavior: smooth;
