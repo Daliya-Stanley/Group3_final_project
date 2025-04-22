@@ -246,6 +246,17 @@ ADD COLUMN CancelStatusID INT DEFAULT 1,
 ADD FOREIGN KEY (CancelStatusID) REFERENCES CancelStatus(CancelStatusID);
 
 
+CREATE TABLE CancelDestinationRequests (
+  CancelRequestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  BookingDestinationID INT NOT NULL,
+  UserID INT NOT NULL,
+  RequestDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CancelStatus VARCHAR(20) DEFAULT 'Pending',
+  FOREIGN KEY (BookingDestinationID) REFERENCES BookingDestination(BookingDestinationID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+
 CREATE TABLE PromotionalWinners (
     WinnerID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL,
