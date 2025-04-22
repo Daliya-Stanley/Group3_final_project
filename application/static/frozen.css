@@ -51,6 +51,12 @@ border: 2px solid #A82993;
     width: 100%;
 }
 
+#experience{
+background-color:#E6CCFE;
+font-family: 'Pattaya', sans-serif;
+}
+
+background-image: url("/static/images/Experience_background.")
 
 
 .d-inline-block align-text-top me-2{
@@ -78,6 +84,16 @@ border-radius: 50%;
   height: 50vh;  /* Set height to 50% of the viewport height */
   object-fit: cover;  /* Ensures the video covers the area */
   display: block; /* Makes it behave as a block element */
+}
+
+/* Video section to remove any unwanted margin or padding */
+.video-section {
+  width: 100%;
+  min-height: 80vh;  /* Or set any desired value here */
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 /* Optional - Remove gap below video section */

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Admin Dashboard{% endblock %}
 {% block body_content %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename= 'admin.css') }}">
 <div class="container mt-5">
   <h1 class="mb-4">Admin Dashboard</h1>
 
@@ -9,7 +9,7 @@
   <div class="row mb-4">
     <div class="col-md-6">
       <div class="card bg-warning-subtle p-3">
-        <h5>Pending Cancellation Requests</h5>
+        <h5>Pending Experience Cancellations</h5>
         <p class="fs-4 fw-bold">{{ pending_cancels }}</p>
       </div>
     </div>
@@ -21,14 +21,14 @@
     </div>
   </div>
 
-  <!-- Cancellation Requests -->
+  <!-- Experience Cancellation Requests -->
   <h3>Experience Cancellation Requests</h3>
   <table class="table table-striped text-center">
     <thead>
       <tr>
         <th>User</th>
         <th>Experience</th>
-        <th>Cancellation Request Date</th>
+        <th>Request Date</th>
         <th>Booking Date</th>
         <th>Status</th>
         <th>Action</th>
@@ -42,14 +42,14 @@
         <td>{{ cancel.RequestDate.strftime('%d %b %Y') }}</td>
         <td>{{ cancel.BookingDate }}</td>
         <td>
-          {% if cancel.IsCancelled %}
+          {% if cancel.CancelStatus == 'Approved' %}
             <span class="badge bg-danger">Cancelled</span>
           {% elif cancel.CancelStatus == 'Pending' %}
-            <span class="badge bg-warning text-dark">Cancel Requested</span>
+            <span class="badge bg-warning text-dark">Pending</span>
           {% elif cancel.CancelStatus == 'Rejected' %}
-            <span class="badge bg-secondary">Request Rejected</span>
+            <span class="badge bg-secondary">Rejected</span>
           {% else %}
-            <span class="badge bg-success">Active</span>
+            <span class="badge bg-light text-dark">Unknown</span>
           {% endif %}
         </td>
         <td>
@@ -61,7 +61,57 @@
               <option value="Approved" {% if cancel.CancelStatus == 'Approved' %}selected{% endif %}>Approved</option>
               <option value="Rejected" {% if cancel.CancelStatus == 'Rejected' %}selected{% endif %}>Rejected</option>
             </select>
-            <button type="submit" class="btn btn-sm btn-success">Update</button>
+            <button type="submit" class="btn-cancel-update">Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Destination Cancellation Requests -->
+  <h3 class="mt-5">Destination Cancellation Requests</h3>
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Destination</th>
+        <th>Request Date</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cancel in destination_cancel_requests %}
+      <tr>
+        <td>{{ cancel.FirstName }} {{ cancel.LastName }}</td>
+        <td>{{ cancel.DestinationName }}</td>
+        <td>{{ cancel.RequestDate.strftime('%d %b %Y') }}</td>
+        <td>{{ cancel.BookingStartDate.strftime('%d %b %Y') }}</td>
+        <td>{{ cancel.BookingEndDate.strftime('%d %b %Y') }}</td>
+        <td>
+          {% if cancel.CancelStatus == 'Approved' %}
+            <span class="badge bg-danger">Cancelled</span>
+          {% elif cancel.CancelStatus == 'Pending' %}
+            <span class="badge bg-warning text-dark">Pending</span>
+          {% elif cancel.CancelStatus == 'Rejected' %}
+            <span class="badge bg-secondary">Rejected</span>
+          {% else %}
+            <span class="badge bg-light text-dark">Unknown</span>
+          {% endif %}
+        </td>
+        <td>
+          <form method="POST" action="{{ url_for('admin_update_status') }}">
+            <input type="hidden" name="item_type" value="cancel_destination">
+            <input type="hidden" name="item_id" value="{{ cancel.CancelRequestID }}">
+            <select name="new_status" class="form-select form-select-sm d-inline w-auto">
+              <option value="Pending" {% if cancel.CancelStatus == 'Pending' %}selected{% endif %}>Pending</option>
+              <option value="Approved" {% if cancel.CancelStatus == 'Approved' %}selected{% endif %}>Approved</option>
+              <option value="Rejected" {% if cancel.CancelStatus == 'Rejected' %}selected{% endif %}>Rejected</option>
+            </select>
+            <button type="submit" class="btn-cancel-update">Update</button>
           </form>
         </td>
       </tr>
@@ -72,17 +122,15 @@
   <!-- Product Orders -->
   <h3 class="mt-5">Product Orders</h3>
   <form method="GET" class="d-flex align-items-center flex-wrap gap-3 mb-4">
-          <label for="product_status" class="form-label mb-0">Filter by Status:</label>
-
-          <select name="product_status" id="product_status" class="form-select form-select-sm" style="width: auto; min-width: 150px;">
-            <option value="All" {% if product_status_filter == 'All' %}selected{% endif %}>All</option>
-            <option value="Pending" {% if product_status_filter == 'Pending' %}selected{% endif %}>Pending</option>
-            <option value="Shipped" {% if product_status_filter == 'Shipped' %}selected{% endif %}>Shipped</option>
-            <option value="Delivered" {% if product_status_filter == 'Delivered' %}selected{% endif %}>Delivered</option>
-          </select>
-
-          <button type="submit" class="btn btn-sm btn-outline-primary">Apply</button>
-        </form>
+    <label for="product_status" class="form-label mb-0">Filter by Status:</label>
+    <select name="product_status" id="product_status" class="form-select form-select-sm" style="width: auto; min-width: 150px;">
+      <option value="All" {% if product_status_filter == 'All' %}selected{% endif %}>All</option>
+      <option value="Pending" {% if product_status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+      <option value="Shipped" {% if product_status_filter == 'Shipped' %}selected{% endif %}>Shipped</option>
+      <option value="Delivered" {% if product_status_filter == 'Delivered' %}selected{% endif %}>Delivered</option>
+    </select>
+    <button type="submit" class="btn-filter-apply">Apply</button>
+  </form>
   <table class="table table-bordered text-center">
     <thead>
       <tr>
@@ -95,7 +143,6 @@
       </tr>
     </thead>
     <tbody>
-
       {% for order in product_orders %}
       <tr class="{% if order.Status == 'Shipped' %}table-success{% elif order.Status == 'Pending' %}table-warning{% endif %}">
         <td>{{ order.FirstName }} {{ order.LastName }}</td>
@@ -108,11 +155,11 @@
             <input type="hidden" name="item_type" value="product">
             <input type="hidden" name="item_id" value="{{ order.OrderID }}">
             <select name="new_status" class="form-select form-select-sm d-inline w-auto">
-              <option value="Pending" {% if order.OrderStatus == "Pending" %}selected{% endif %}>Pending</option>
-              <option value="Shipped" {% if order.OrderStatus == "Shipped" %}selected{% endif %}>Shipped</option>
-              <option value="Delivered" {% if order.OrderStatus == "Delivered" %}selected{% endif %}>Delivered</option>
+              <option value="Pending" {% if order.Status == "Pending" %}selected{% endif %}>Pending</option>
+              <option value="Shipped" {% if order.Status == "Shipped" %}selected{% endif %}>Shipped</option>
+              <option value="Delivered" {% if order.Status == "Delivered" %}selected{% endif %}>Delivered</option>
             </select>
-            <button type="submit" class="btn btn-sm btn-success">Update</button>
+            <button type="submit" class="btn-cancel-update">Update</button>
           </form>
         </td>
       </tr>

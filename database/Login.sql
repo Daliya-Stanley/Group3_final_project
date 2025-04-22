@@ -316,3 +316,7 @@ SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u
 
 
 select * from Product;
+
+use login;
+select * from bookingexperience;
+select * from bookingdestination;

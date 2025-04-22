@@ -6,13 +6,13 @@
 
 <section id="bookdestinaton">
   <div class="container py-5">
-    <h2 class="text-center mb-5" style="font-family: 'Lilita One', cursive; color: #9954BA;">Book Your Magical Destination</h2>
+    <h1 class="text-center mb-5" style=" color: #9954BA;">Book Your Magical Destination</h1>
     <div class="card-container">
 
       <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
-            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/W-mainpic.jpg') }}'); background-size: cover; background-position: center;">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-position: center;"></div>
+            <div class="flip-card-back" style="--back-image: url('{{ url_for('static', filename='images/W-mainpic.jpg') }}'); background-size: cover; background-position: center;">
               <h4>Wonderland</h4>
               <p>Fall into the whimsical rabbit hole for an adventure.</p>
               <a href="{{ url_for('wonderland') }}" class="btn btn-light">Book Here!</a>
@@ -22,8 +22,8 @@
 
       <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
-            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/cinderella.jpg') }}'); background-size: cover; background-position: center;">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-position: center;"></div>
+            <div class="flip-card-back" style="--back-image: url('{{ url_for('static', filename='images/cinderella.jpg') }}'); background-size: cover; background-position: center;">
               <h4>Cinderella’s Kingdom</h4>
               <p>Live your fairytale — glass slippers included.</p>
               <a href="{{ url_for('cinderella_kingdom') }}" class="btn btn-light">Book Here!</a>
@@ -33,8 +33,9 @@
 
       <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
-            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/ariel_topsection.jpg') }}'); background-size: cover; background-position: center;">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-position: center;"></div>
+
+            <div class="flip-card-back" style="--back-image: url('{{ url_for('static', filename='images/ariel_topsection.jpg') }}'); background-size: cover; background-position: center;">
               <h4>Aquariel World</h4>
               <p>Swim with magic under the sea.</p>
               <a href="{{ url_for('aquariel') }}" class="btn btn-light">Book Here!</a>
@@ -44,8 +45,9 @@
 
       <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: 460px 530px; background-position: center;"></div>
-            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/frozen_main.jpeg') }}'); background-size: cover; background-position: center;">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-position: center;"></div>
+
+            <div class="flip-card-back" style="--back-image: url('{{ url_for('static', filename='images/frozen_main.jpeg') }}'); background-size: cover; background-position: center;">
               <h4>Arandelle</h4>
               <p>Winter wonders and icy enchantments.</p>
               <a href="{{ url_for('frozen_page') }}" class="btn btn-light">Book Here!</a>
@@ -55,11 +57,12 @@
 
       <div class="flip-card card-animate">
           <div class="flip-card-inner">
-            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-size: cover; background-position: center;"></div>
-            <div class="flip-card-back" style="background-image: url('{{ url_for('static', filename='images/mulan.png') }}'); background-size: cover; background-position: center;">
+            <div class="flip-card-front" style="background-image: url('{{ url_for('static', filename='images/card2.png') }}'); background-position: center;"></div>
+
+            <div class="flip-card-back" style="--back-image: url('{{ url_for('static', filename='images/mulan.png') }}'); background-size: cover; background-position: center;">
               <h4>Land of Mulan</h4>
               <p>Discover honor, bravery, and a legendary journey.</p>
-              <a href="#" class="btn btn-light">Book Here!</a>
+              <a href="{{ url_for('mulan_page') }}" class="btn btn-light">Book Here!</a>
             </div>
           </div>
       </div>
@@ -68,7 +71,7 @@
 
     <div class="text-center mt-5">
       <hr>
-      <h2><i class='bx bxs-castle'></i><br>We're excited to take you on an amazing journey!!</h2>
+      <h2 style=" color: #9954BA;"><i class='bx bxs-castle' style=" color: #E6CCFF;"></i><br>We're excited to take you on an amazing journey!!</h2>
       <hr>
     </div>
   </div>

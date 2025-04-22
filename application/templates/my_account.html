@@ -1,114 +1,259 @@
 {% extends "layout.html" %}
-{% block title %}My Magical Account{% endblock %}
+{% block title %}My Account Dashboard{% endblock %}
 {% block body_content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
+{% set today = today if today is defined else now().date() %}
 
-<div class="container my-5">
-  <h2 class="text-center mb-4" style="font-family: 'Lilita One', cursive; color: #B57EDC;">Welcome back, {{ user_first_name }}</h2>
-
-  <!-- Ordered Products -->
-  <div class="mb-5">
-    <h3 class="mb-3">🧙‍♀️ Your Magical Products</h3>
-    {% if products %}
-      <div class="row g-4">
-        {% for product in products %}
-          <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="card shadow-sm h-100" style="font-size: 0.9rem;">
-                <img src="{{ url_for('static', filename='images/' ~ product.ProductImage) }}"
-                     class="card-img-top"
-                     alt="{{ product.ProductName }}"
-                     style="height: 120px; object-fit: cover;">
-                <div class="card-body py-2 px-3">
-                  <h6 class="fw-bold mb-1">{{ product.ProductName }}</h6>
-                  <p class="mb-1">£{{ product.ProductPrice }} × {{ product.Quantity }}</p>
-                  <p class="text-muted small mb-0">Ordered {{ product.OrderDate.strftime('%d %b %Y') }}</p>
-                </div>
-              </div>
-            </div>
-        {% endfor %}
+<div class="container-fluid my-5">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 mb-4">
+      <div class="bg-white rounded-3 shadow-sm p-3 sidebar-links">
+        <div class="sidebar-welcome">
+          <h4>Welcome to your account, {{ user_first_name }} </h4>
+        </div>
+        <p class="text-muted mb-0">Use the tabs to manage your bookings, profile & more.</p>
       </div>
-    {% else %}
-      <p class="text-muted fst-italic">You haven't bought any products yet.</p>
-    {% endif %}
-  </div>
+    </div>
 
-  <!-- Booked Experiences -->
-  <div class="mb-5">
-    <h3 class="mb-3">🌟 Your Magical Experiences</h3>
-    {% if experiences %}
-      <div class="row g-4">
-        {% for exp in experiences %}
-          <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img src="{{ url_for('static', filename='images/' ~ exp.ExperienceImage) }}" class="img-fluid rounded-start" alt="{{ exp.ExperienceName }}">
+    <!-- Main Content -->
+    <div class="col-md-9">
+      <div class="accordion p-3 rounded-3 accordion-container" id="accountAccordion">
+
+        <!-- Profile Accordion -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingProfile">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+              👤 My Profile
+            </button>
+          </h2>
+          <div id="collapseProfile" class="accordion-collapse collapse show" aria-labelledby="headingProfile" data-bs-parent="#accountAccordion">
+            <div class="accordion-body">
+              <form>
+                <div class="mb-3">
+                  <label>Email</label>
+                  <input type="email" class="form-control" value="{{ session.user_email }}" disabled>
                 </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ exp.ExperienceName }}
-                    {% if exp.IsCancelled %}
-                      <span class="badge bg-danger ms-2">Cancelled</span>
-                    {% endif %}
-                    </h5>
-                    <ul class="list-unstyled mb-2">
-                      <li><strong>Date:</strong> {{ exp.BookingDate.strftime('%d %b %Y') }}</li>
-                      <li><strong>Time:</strong> {{ exp.BookingTime }}</li>
-                      <li><strong>Guests:</strong> {{ exp.Guests }}</li>
-                      <li><strong>Price:</strong> £{{ exp.ExperiencePrice }}</li>
-                    </ul>
-                    {% if not exp.IsCancelled %}
-                      <form method="POST" action="{{ url_for('my_account') }}">
-                        <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
-                        {% if exp.CancelStatus == None %}
-                          <button type="submit" class="btn btn-outline-danger btn-sm">❄️ Request Cancel</button>
-                        {% elif exp.CancelStatus == 'Pending' %}
-                          <p class="text-warning small mt-2">❄️ Cancellation request pending...</p>
-                        {% elif exp.CancelStatus == 'Approved' %}
-                          <p class="text-success small mt-2">✅ Cancelled by admin</p>
-                        {% else %}
-                          <p class="text-muted small mt-2">❌ Request status: {{ exp.CancelStatus }}</p>
-                        {% endif %}
-                      </form>
-                  {% endif %}
-                  </div>
+                <div class="mb-3">
+                  <label>First Name</label>
+                  <input type="text" class="form-control" value="{{ user_first_name }}" disabled>
                 </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p class="text-muted fst-italic">No experiences booked yet. Go make some magical memories! ✨</p>
-    {% endif %}
-  </div>
-  <!-- Booked Destinations -->
-<div class="mb-5">
-  <h3 class="mb-3">🏰 Your Magical Destinations</h3>
-  {% if destinations %}
-    <div class="row g-4">
-      {% for dest in destinations %}
-        <div class="col-md-6 col-lg-4">
-          <div class="card shadow-sm h-100">
-            <img src="{{ url_for('static', filename='images/' ~ dest.DestinationImage) }}"
-                 class="card-img-top" alt="{{ dest.DestinationName }}">
-            <div class="card-body">
-              <h5 class="card-title">{{ dest.DestinationName }}</h5>
-              <p><strong>Guests:</strong> {{ dest.Guests }}</p>
-              <p><strong>Check-in:</strong> {{ dest.BookingStartDate.strftime('%d %b %Y') }}</p>
-              <p><strong>Check-out:</strong> {{ dest.BookingEndDate.strftime('%d %b %Y') }}</p>
-              <p><strong>Nights:</strong> {{ dest.NoOfNights }}</p>
-              <p><strong>Price/Night:</strong> £{{ dest.DestinationPricePerNight }}</p>
-              <p class="fw-bold">Total: £{{ dest.TotalPrice }}</p>
+              </form>
+              <hr class="my-4">
+              <h5 class="mb-3">Change Password</h5>
+              <form method="POST" action="{{ url_for('update_password') }}">
+                <div class="mb-3">
+                  <label>Current Password</label>
+                  <input type="password" name="current_password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                  <label>New Password</label>
+                  <input type="password" name="new_password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-my-account">Update Password</button>
+              </form>
             </div>
           </div>
         </div>
-      {% endfor %}
+
+        <!-- Orders Accordion -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOrders">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOrders" aria-expanded="false" aria-controls="collapseOrders">
+              📦 My Orders
+            </button>
+          </h2>
+          <div id="collapseOrders" class="accordion-collapse collapse" aria-labelledby="headingOrders" data-bs-parent="#accountAccordion">
+            <div class="accordion-body">
+              {% if products %}
+                <ul class="list-group">
+                  {% for p in products %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      {{ p.ProductName }}
+                      <span class="text-muted">{{ p.OrderDate.strftime('%d %b %Y') }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p class="text-muted">You haven't ordered any products yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Success Messages -->
+        {% if request.args.reviewed == 'experience' %}
+          <div class="alert alert-success auto-dismiss">⭐ Thank you! Your experience review has been submitted.</div>
+        {% endif %}
+        {% if request.args.reviewed == 'destination' %}
+          <div class="alert alert-success auto-dismiss">⭐ Thank you! Your destination review has been submitted.</div>
+        {% endif %}
+
+        <!-- Experiences Accordion -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingExperiences">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExperiences" aria-expanded="false" aria-controls="collapseExperiences">
+              🌟 My Experiences
+            </button>
+          </h2>
+          <div id="collapseExperiences" class="accordion-collapse collapse" aria-labelledby="headingExperiences" data-bs-parent="#accountAccordion">
+            <div class="accordion-body">
+              {% if experiences %}
+                <div class="booking-grid mb-4">
+                  {% for exp in experiences %}
+                    <div class="booking-card">
+                      <li class="list-group-item">
+                        <div class="d-flex gap-3 align-items-start">
+                          <img src="{{ url_for('static', filename='images/' ~ exp.ExperienceImage) }}" class="rounded shadow-sm" alt="{{ exp.ExperienceName }}">
+                          <div class="w-100">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                              <strong class="me-2 mb-1">{{ exp.ExperienceName }}</strong>
+                              {% if exp.CancelStatus == None %}
+                                <form method="POST" action="{{ url_for('my_account') }}">
+                                  <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
+                                  <button type="submit" class="btn-request-cancel btn-sm">Cancel</button>
+                                </form>
+                              {% endif %}
+                            </div>
+                            <small class="text-muted">Date: {{ exp.BookingDate.strftime('%d %b') }} | Time: {{ exp.BookingTime }} | Guests: {{ exp.Guests }}</small>
+                          </div>
+                        </div>
+
+                        {% if exp.CancelStatus == 'Pending' %}
+                          <p class="text-warning small mb-0">❄️ Cancellation request pending...</p>
+                        {% elif exp.CancelStatus == 'Approved' %}
+                          <span class="badge bg-danger">❄️ Cancelled</span>
+                        {% elif exp.CancelStatus == 'Rejected' %}
+                          <p class="text-danger small mb-0">❌ Request rejected</p>
+                        {% endif %}
+
+                        {% if exp.CancelStatus != 'Approved' and exp.BookingDate > today %}
+                          {% if exp.ReviewText %}
+                            <div class="mt-2"><strong>Your Review:</strong><br><em>{{ exp.ReviewText }}</em> – ⭐ {{ exp.Rating }}/5</div>
+                          {% else %}
+                            <form method="POST" action="{{ url_for('submit_experience_review') }}" class="mt-2 review-form">
+                              <input type="hidden" name="booking_id" value="{{ exp.BookingID }}">
+                              <input type="hidden" name="rating" class="rating-input" value="0">
+                              <div class="mb-2 star-rating">
+                                {% for r in range(1,6) %}<span class="star" data-value="{{ r }}">&#9734;</span>{% endfor %}
+                              </div>
+                              <div class="mb-2">
+                                <label>Review</label>
+                                <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
+                              </div>
+                              <button type="submit" class="btn-my-account">Submit Review</button>
+                            </form>
+                          {% endif %}
+                        {% endif %}
+                      </li>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <p class="text-muted">No experiences booked yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Destinations Accordion -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingDestinations">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDestinations" aria-expanded="false" aria-controls="collapseDestinations">
+              🗺️ My Destinations
+            </button>
+          </h2>
+          <div id="collapseDestinations" class="accordion-collapse collapse" aria-labelledby="headingDestinations" data-bs-parent="#accountAccordion">
+            <div class="accordion-body">
+              {% if destinations %}
+                <div class="booking-grid">
+                  {% for dest in destinations %}
+                    <div class="booking-card">
+                      <li class="list-group-item">
+                        <div class="d-flex gap-3 align-items-start">
+                          <img src="{{ url_for('static', filename='images/' ~ dest.DestinationImage) }}" class="rounded shadow-sm" alt="{{ dest.DestinationName }}">
+                          <div class="w-100">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                              <strong class="me-2 mb-1">{{ dest.DestinationName }}</strong>
+                              {% if dest.CancelStatus == None %}
+                                <form method="POST" action="{{ url_for('my_account') }}">
+                                  <input type="hidden" name="destination_booking_id" value="{{ dest.BookingDestinationID }}">
+                                  <button type="submit" class="btn-request-cancel btn-sm"> Cancel</button>
+                                </form>
+                              {% endif %}
+                            </div>
+                            <small class="text-muted">From {{ dest.BookingStartDate.strftime('%d %b') }} to {{ dest.BookingEndDate.strftime('%d %b') }} | Guests: {{ dest.Guests }}</small>
+                          </div>
+                        </div>
+
+                        {% if dest.CancelStatus == 'Pending' %}
+                          <p class="text-warning small mb-0">❄️ Cancellation request pending...</p>
+                        {% elif dest.CancelStatus == 'Approved' %}
+                          <span class="badge bg-danger">❄️ Cancelled</span>
+                        {% elif dest.CancelStatus == 'Rejected' %}
+                          <p class="text-danger small mb-0">❌ Request rejected</p>
+                        {% endif %}
+
+                        {% if dest.CancelStatus != 'Approved' and dest.BookingEndDate > today %}
+                          {% if dest.ReviewText and dest.ReviewText|lower != 'cancelled' %}
+                            <div class="mt-2"><strong>Your Review:</strong><br><em>{{ dest.ReviewText }}</em> – ⭐ {{ dest.Rating }}/5</div>
+                          {% elif not dest.ReviewText %}
+                            <form method="POST" action="{{ url_for('submit_destination_review') }}" class="mt-2 review-form">
+                              <input type="hidden" name="booking_id" value="{{ dest.BookingDestinationID }}">
+                              <input type="hidden" name="rating" class="rating-input" value="0">
+                              <div class="mb-2 star-rating">
+                                {% for r in range(1,6) %}<span class="star" data-value="{{ r }}">&#9734;</span>{% endfor %}
+                              </div>
+                              <div class="mb-2">
+                                <label>Review</label>
+                                <textarea name="review_text" class="form-control form-control-sm" rows="2" required></textarea>
+                              </div>
+                              <button type="submit" class="btn-my-account">Submit Review</button>
+                            </form>
+                          {% endif %}
+                        {% endif %}
+                      </li>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <p class="text-muted">No destinations booked yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- End accordion -->
     </div>
-  {% else %}
-    <p class="text-muted fst-italic">No destinations booked yet. Let the magic begin! 🗺️</p>
-  {% endif %}
+  </div>
 </div>
 
-</div>
+<script>
+  // Star rating
+  document.querySelectorAll('.star-rating').forEach(starGroup => {
+    const stars = starGroup.querySelectorAll('.star');
+    const ratingInput = starGroup.closest('form').querySelector('.rating-input');
 
+    stars.forEach((star, index) => {
+      star.addEventListener('mouseover', () => {
+        stars.forEach((s, i) => s.classList.toggle('hover', i <= index));
+      });
+      star.addEventListener('mouseout', () => {
+        stars.forEach(s => s.classList.remove('hover'));
+      });
+      star.addEventListener('click', () => {
+        ratingInput.value = index + 1;
+        stars.forEach((s, i) => s.classList.toggle('selected', i <= index));
+      });
+    });
+  });
+
+  // Auto-dismiss success alerts
+  document.querySelectorAll('.auto-dismiss').forEach(alert => {
+    setTimeout(() => {
+      alert.style.opacity = '0';
+      setTimeout(() => alert.remove(), 300);
+    }, 5000);
+  });
+</script>
 {% endblock %}
