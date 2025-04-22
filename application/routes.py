@@ -462,6 +462,10 @@ def add_to_cart_experience(experience_id):
     booking_time = request.form['booking_time']
     user_id = request.form['user_id']
 
+    if not booking_date:
+        flash("⚠️ Please select a booking before submitting!", "warning")
+        return redirect(url_for('experience_page'))
+
     # Fetch max group size
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -806,6 +810,7 @@ def book_destination():
 @app.route('/Arendelle')
 def frozen_page():
     destination = get_destination_by_name("Frozen")
+
     cards = [
   {
     "title": "Our Luxurious Rooms",
@@ -856,7 +861,7 @@ def frozen_page():
         hero_title="Arandelle holidays",
         hero_subtitle="The Frozen Magical Land of Arandelle!!",
         intro_title="★ Come and explore the known and unknown magical powers of Arandelle★",
-        css_file="frozen_styles.css",
+        css_file="frozen.css",
         destination=destination
     )
 
