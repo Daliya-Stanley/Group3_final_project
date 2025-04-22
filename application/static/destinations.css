@@ -142,6 +142,7 @@ a:hover {
   border-top: 1px solid rgba(255,255,255,0.05);
   border-bottom: 1px solid rgba(255,255,255,0.05);
   margin-bottom: 2rem;
+  padding: 2rem 2rem 3rem;
 }
 
 .booking-form {
@@ -150,7 +151,7 @@ a:hover {
   gap: 1rem;
   justify-content: center;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
 }
 
 .booking-form input,
@@ -220,6 +221,20 @@ a:hover {
     background-color: #ffc16f;
     box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
 }
+
+.price-start-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-info {
+  font-weight: bold;
+  font-family: 'Quicksand', sans-serif;
+  color: #ffc16f;
+  white-space: nowrap;
+}
+
 
 
 html {
@@ -300,6 +315,20 @@ section {
 }
 
 
+.btn-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-
-
+.price-label-absolute {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffc16f;
+  font-family: 'Quicksand', sans-serif;
+  white-space: nowrap;
+}
