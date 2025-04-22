@@ -3,36 +3,25 @@
 
 {% block body_content %}
 
-<video autoplay muted loop id="myVideo">
-  <source src="{{ url_for('static', filename='video/homepagevideo.mp4') }}" type="video/mp4">
-</video>
+<section class="video-section">
+   <div class="video-container sticky-video">
+    <video autoplay muted loop>
+      <source src="{{ url_for('static', filename='video/homepagevideo1.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+<!--<video autoplay muted loop id="myVideo">-->
+<!--  <source src="{{ url_for('static', filename='video/homepagevideo.mp4') }}" type="video/mp4">-->
+<!--</video>-->
 
 
 <div class="content">
-  <h1 class="display-4 display-md-3 display-lg-2">Enchanted Getaway Travels</h1>
+  <h1 class="display-4 display-md-3 display-lg-2">Enchanted Getaways</h1>
   <p>★ Travel the unexplored lands ★</p>
   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
   <br>
-   <br>
-   <br>
-   <br>
-  <br>
-<br>
-   <br>
-  <br>
-  <h1>Enchanted Getaways offers!</h1>
-  <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
    <br>
   <br>
    <br>
@@ -43,79 +32,271 @@
    <br>
   <br>
   <br>
-   <br>
-   <br>
-  <br>
-<br>
-   <br>
   <br>
   <br>
+  <h1>Begin your journey here...</h1>
   <br>
-<br>
-   <br>
-  <br>
-  <br>
-<br>
-   <br>
-  <br>
-  <br>
-<h1>Our Satisfied Customers have this to say!</h1>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="offer">
-          <section id="components" >
-            <br>
-            <br>
-            <h1 style="text-align:center; font-family: 'Poppins', sans-serif;">This Is What We Offer!!!</h1>
-            <br>
-              <div class="row row-cols-1 row-cols-md-3 g-3">
-            <div class="col">
-              <div class="card">
-                <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top" alt="Enchanted Desert Travel">
-                <div class="card-body">
-                  <h5 class="card-title">Our Enchanted Destinations</h5>
-                  <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden dunes stretch endlessly beneath a sky ablaze with stars..</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top" alt="Diving experience with Ariel">
-                <div class="card-body">
-                  <h5 class="card-title">Magical Experiences</h5>
-                  <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life beneath the waves, where dreams and ocean wonders meet.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card">
-                <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top" alt="Magical wand">
-                <div class="card-body">
-                  <h5 class="card-title">Splendid Products</h5>
-                  <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday moments, it’s magic in your hands.</p>
-                </div>
-              </div>
-            </div>
-              </div>
+          <section class="next-section" id="components" >
 
-<br>
-<br>
-            </section>
+            <br>
+<!--              <div class="row row-cols-1 row-cols-md-3 g-3">-->
+<!--            <div class="col">-->
+<!--              <div class="card">-->
+<!--                <img src="{{ url_for('static', filename='images/Desert_pic.jpeg') }}" class="card-img-top" alt="Enchanted Desert Travel">-->
+<!--                <div class="card-body">-->
+<!--                  <h5 class="card-title">Our Enchanted Destinations</h5>-->
+<!--                  <p class="card-text">Escape to a magical getaway in the heart of the Arabian desert, where golden dunes stretch endlessly beneath a sky ablaze with stars..</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--              <div class="card">-->
+<!--                <img src="{{ url_for('static', filename='images/diving_with_ariel.jpeg') }}" class="card-img-top" alt="Diving experience with Ariel">-->
+<!--                <div class="card-body">-->
+<!--                  <h5 class="card-title">Magical Experiences</h5>-->
+<!--                  <p class="card-text">Dive into a magical underwater adventure as you snorkel alongside Disney’s Ariel, exploring vibrant coral reefs and shimmering sea life. It’s a fairytale come to life beneath the waves, where dreams and ocean wonders meet.</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--              <div class="card">-->
+<!--                <img src="{{url_for('static', filename = 'images/magical_wand.jpeg') }}" class="card-img-top" alt="Magical wand">-->
+<!--                <div class="card-body">-->
+<!--                  <h5 class="card-title">Splendid Products</h5>-->
+<!--                  <p class="card-text">Unleash your imagination with the Magical Wand — a spellbinding tool that brings wishes to life with a flick and a sparkle. From lighting up dreams to enchanting everyday moments, it’s magic in your hands.</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--              </div>-->
+
+<!--<br>-->
+<!--<br>-->
+<div class="container my-5">
+
+  <div class="row">
+    <!-- Carousel 1 -->
+    <div class="col-md-4">
+        <h4 style="font-family: 'Pattaya', sans-serif; font-size: 40px">Destinations</h4>
+      <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="image-wrapper">
+            <img src="static/images/W-mainpic.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Wonderland</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/cinderella_np2.jpg" class="d-block w-100" alt="cinderella">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text"> Cinderella's Kingdom</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/ariel_topsection.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Aquariel</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <div class="image-wrapper">
+            <img src="static/images/arendale.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Magical Land of Arandelle</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/mulan_home.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Mulan's World</h5>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="carousel-text mt-3">
+        <p class="text-center" style="font-size: 16px; font-family: Quicksand; color: #fffff;">
+          Explore your way. Select the Enchanted Getaway that fits your vibe. Leave the ordinary behind and step into a world of wonder.
+        </p>
+        <a href="{{ url_for('book_destination') }}" class="btn">Book Your Destination</a>
+        <br>
+        <br>
+      </div>
+    </div>
+
+
+
+    <!-- Carousel 2 (same as Carousel 1) -->
+
+
+
+    <div class="col-md-4">
+        <h4 style="font-family: 'Pattaya', sans-serif; font-size: 40px">Experiences</h4>
+      <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="image-wrapper">
+            <img src="static/images/anna_snowman.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Build a Snowman</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/magic_carpet2.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Fly on a Magic Carpet</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/troll_party.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Party with Trolls</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/spa_aurora.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Relax at the Spa</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/ariel_snorkel2.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Snorkel with Ariel</h5>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="carousel-text mt-3">
+        <p class="text-center" style="font-size: 16px; font-family: Quicksand; color: #fffff;">
+          Go beyond the ordinary, discover the magic in every adventure and book one of our magical experiences.
+        </p>
+        <a href="{{ url_for('experience_page') }}" class="btn">View Our Experiences</a>
+        <br>
+        <br>
+      </div>
+    </div>
+
+    <!-- Carousel 3 (same as Carousel 1) -->
+    <div class="col-md-4">
+        <h4 style="font-family: 'Pattaya', sans-serif; font-size: 40px">Products</h4>
+      <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="image-wrapper">
+            <img src="static/images/magicpotion_home.jpg" class="d-block w-100" alt="ariel">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Magic Potion</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/magicwand_home.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Magical Wand</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/dress_home.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text"> Spectacular One Dress - No Mess</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/suitcase_home.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">All You Can Pack Suitcase</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="image-wrapper">
+            <img src="static/images/carpet_home.jpg" class="d-block w-100" alt="wonderland">
+            <div class="purple-overlay"></div>
+            </div>
+            <div class="carousel-caption d-none d-md-block">
+              <h5 class="main_text">Magical Carpet</h5>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel3" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="carousel-text mt-3">
+        <p class="text-center" style="font-size: 16px; font-family: Quicksand; color: #fffff;">
+          Elevate your Enchanted Getaway with extraordinary products designed to enhance your experience at your chosen destination.
+        </p>
+        <a href="{{ url_for('product_page_new') }}" class="btn">View Our Products</a>
+        <br>
+        <br>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+          </section>
 <br>
 <br>
 
 <section id ="feedback">
   <br>
 <br>
-<h1 style="text-align:center; font-family: 'Poppins', sans-serif;">Our satisfied Customer have this to say!!!</h1>
-<br>
+<h1 style="text-align:center; font-family: 'Pattaya', sans-serif;">See reviews from those who’ve experienced the magic!</h1>
+
   <div id = "carousel-container">
   <div id="customer-feedback" class="carousel slide">
   <div class="carousel-indicators">
@@ -127,46 +308,50 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{{url_for('static', filename = 'images/flying_carpet.jpeg') }}" class="d-block w-100" alt="flying carpet">
+      <img src="{{url_for('static', filename = 'images/carpet_review.jpg') }}" class="d-block w-100" alt="flying carpet">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Flying over Arabia</h5>
-        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white;">Had the best time of my life, seeing a whole new world!....Carlos</p>
+        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 24px;">Flying over Arabia</h5>
+        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"Had the best time of my life with my girlfriend, seeing a whole new world! Enchanted Getaways were so organised and the tour guides were so knowledgeable." - Carlos, Manchester</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="{{url_for('static', filename = 'images/diving_with_ariel.jpeg') }}" class="d-block w-100" alt="diving with ariel">
+      <img src="{{url_for('static', filename = 'images/ariel_review.jpg') }}" class="d-block w-100" alt="diving with ariel">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Diving in magical Oceans</h5>
-        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Loved every moment spent with Ariel and Coral reef!....Lucy and family</p>
+        <h5 class ="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 24px;">Snorkelling with Ariel</h5>
+        <p class="word"  style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"I am so pleased I booked to snorkel with Ariel when I visited Aquariel, it was the most amazing day!" - Penelope, Edinburgh</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="{{url_for('static', filename = 'images/party_with_trolls.jpeg') }}" class="d-block w-100" alt="party with trolls">
+      <img src="{{url_for('static', filename = 'images/cinderella_review.jpg') }}" class="d-block w-100" alt="party with trolls">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Wildest party Ever!</h5>
-        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">I have happiness going through my bones when I look back on my lovely memories! Jack and friends</p>
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 24px;">"Everything we ever dreamt of!"</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"Visiting Cinderella's Kingdom was a dream come true! I finally got to live my princess dream!" - Lily, Newcastle</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="{{url_for('static', filename = 'images/building_snowman.jpeg') }}" class="d-block w-100" alt="snowman">
+      <img src="{{url_for('static', filename = 'images/snowman_review.jpg') }}" class="d-block w-100" alt="snowman">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">I wanna build a snowman!</h5>
-        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">My kid had the best time ever with lovely Anna building the snowman. Fiona and family</p>
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 24px;" >"I built a snowman with Anna!"</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"After watching Frozen, my child begged to build a snowman with Anna and all their dreams came true when we visited Arendelle and booked this experience!" - Fiona, Brighton </p>
       </div>
     </div>
+
+
+
+
     <div class="carousel-item">
-      <img src="{{url_for('static', filename = 'images/beach_holiday.jpeg') }}" class="d-block w-100" alt="beach">
+      <img src="{{url_for('static', filename = 'images/wonderland_review.jpg') }}" class="d-block w-100" alt="beach">
       <div class="carousel-caption d-none d-md-block">
-        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Such relaxing beach Holiday</h5>
-        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white;">Beautiful memories of Beach holiday with Ariel and her family! Ashley and friends</p>
+        <h5 class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-size: 24px;">"Wonderland was incredible!"</h5>
+        <p class="word" style="background-color: rgba(0, 0, 0, 0.5); color: white; font-family: Quicksand; font-size: 18px;">"We have never experienced anything like Wonderland, every turn was filled with magic. Enchanted Getaways were so helpful throughout!" - Ashley, London</p>
       </div>
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+  <button class="carousel-control-prev" type="button" data-bs-target="#customer-feedback" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback" data-bs-slide="3000">
+  <button class="carousel-control-next" type="button" data-bs-target="#customer-feedback" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>

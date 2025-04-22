@@ -407,7 +407,7 @@ def view_cart():
 
 
     return render_template(
-        'cart.html',
+        'cart1.html',
         products=products_in_cart,
         experiences=experiences_in_cart,
         destinations=destination_in_cart,
@@ -486,7 +486,7 @@ def checkout():
         conn.commit()
         cursor.close()
         conn.close()
-
+        print("Product cart:", product_cart)
         process_order_items(order_id, product_cart, experience_cart, destination_cart, user_id)
 
         # Clear the cart
@@ -507,6 +507,9 @@ def order_receipt(order_id):
     order_info = get_order_info(order_id)
     products = get_ordered_products(order_id)
     experiences = get_ordered_experiences(order_id)
+    user_id = session['user_id']
+    user_first_name = get_first_name_by_id(user_id)
+    user_email=session.get("user_email")
     destinations = get_ordered_destinations(order_id)
 
     print(destinations)
@@ -516,6 +519,8 @@ def order_receipt(order_id):
                            products=products,
                            experiences=experiences,
                            destinations=destinations,
+                           user_first_name=user_first_name,
+                           user_email=user_email,
                            order_id=order_id)
 
 
@@ -545,6 +550,8 @@ def remove_from_cart(item_type, item_id):
         session['product_cart'] = [item for item in session.get('product_cart', []) if item.get('productid') != item_id]
     elif item_type == 'experiences':
         session['experience_cart'] = [item for item in session.get('experience_cart', []) if item.get('experience_id') != item_id]
+    elif item_type == 'destinations':
+        session['destination_cart'] = [item for item in session.get('destination_cart', []) if item.get('destination_id') != item_id]
 
     session.modified = True
     flash(f'{item_type.capitalize()} removed from cart!', 'info')
@@ -594,12 +601,14 @@ def my_account():
     orders = get_user_orders(user_id)
     experiences = get_user_experiences(user_id)
     products = get_user_ordered_products(user_id)
+    destinations = get_user_ordered_destinations(user_id)
 
     return render_template('my_account.html',
                            user_first_name=user_first_name,
                            orders=orders,
                            experiences=experiences,
-                           products=products)
+                           products=products,
+                           destinations=destinations)
 
 
 
@@ -608,7 +617,7 @@ def cinderella_kingdom():
     return render_template(
         "cinderellas_kingdom.html",
         title_head="Cinderella's Kingdom",
-        title_body='Far Far Away!',
+        title_body="Cinderella's Kingdom",
         subtitle='★ Welcome to the destination where wishes come true ★',
         img="static/images/cinderella.jpg"
     )
@@ -854,7 +863,7 @@ def add_to_destination_cart(destination_id):
     else:
         des_cart[str(destination_id)] = 1
 
-    session['cart']['destination'] = des_cart
+    session['cart']['destinations'] = des_cart
 
     cart_item = {
         'destination_id': int(destination_id),

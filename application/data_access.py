@@ -214,7 +214,7 @@ def process_order_items(order_id, product_cart, experience_cart, destination_car
     try:
         # Insert products
         for item in product_cart:
-            product_id = item.get('product_id')
+            product_id = item.get('productid')
             user_id = item.get('user_id') or default_user_id
             quantity = item.get('quantity')
             if not all([product_id, user_id, quantity]):
@@ -369,6 +369,56 @@ def get_user_ordered_products(user_id):
     cursor.close()
     conn.close()
     return products
+
+def get_user_experiences(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT 
+            E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
+            B.Guests, B.BookingDate, B.BookingTime, B.BookingID, B.IsCancelled,
+            CS.StatusName AS CancelStatus
+        FROM BookingExperience B
+        JOIN Experiences E ON B.ExperienceID = E.ExperienceID
+        JOIN Orders O ON B.OrderID = O.OrderID
+        LEFT JOIN CancelExperienceRequests CR ON CR.BookingID = B.BookingID AND CR.UserID = %s
+        LEFT JOIN CancelStatus CS ON CR.CancelStatusID = CS.CancelStatusID
+        WHERE O.UserID = %s
+        ORDER BY B.BookingDate DESC
+    """, (user_id, user_id))
+    return cursor.fetchall()
+
+def get_user_ordered_destinations(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT 
+            d.DestinationName, d.DestinationPricePerNight, d.DestinationImage,
+            bd.BookingStartDate, bd.BookingEndDate, bd.Guests,
+            DATEDIFF(bd.BookingEndDate, bd.BookingStartDate) AS NoOfNights,
+            bd.BookingDestinationID,
+            cs.StatusName AS CancelStatus
+        FROM BookingDestination bd
+        JOIN Destination d ON bd.DestinationID = d.DestinationID
+        JOIN Orders o ON bd.OrderID = o.OrderID
+        LEFT JOIN CancelDestinationRequests cr ON cr.BookingDestinationID = bd.BookingDestinationID
+                                               AND cr.UserID = %s
+        LEFT JOIN CancelStatus cs ON cr.CancelStatusID = cs.CancelStatusID
+        WHERE o.UserID = %s
+        ORDER BY bd.BookingStartDate DESC
+    """, (user_id, user_id))
+
+    destinations = cursor.fetchall()
+
+    for dest in destinations:
+        dest['TotalPrice'] = dest['DestinationPricePerNight'] * dest['Guests'] * dest['NoOfNights']
+
+    cursor.close()
+    conn.close()
+    return destinations
+
+
 
 def get_user_experiences(user_id):
     conn = get_db_connection()

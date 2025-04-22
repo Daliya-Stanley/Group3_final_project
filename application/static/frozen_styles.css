@@ -75,21 +75,44 @@ background-image: url("/static/images/Experience_background.")
 border-radius: 50%;
 }
 
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
+.video-section {
+  width: 100%;
+  min-height: 80vh; /* Minimum height of 80% of the viewport height */
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0; /* Ensure no space below the video section */
+}
 
+/* Adjusted styles for video */
+#myVideo {
+  width: 100%;   /* Full width */
+  height: 50vh;  /* Set height to 50% of the viewport height */
+  object-fit: cover;  /* Ensures the video covers the area */
+  display: block; /* Makes it behave as a block element */
+}
 
+/* Video section to remove any unwanted margin or padding */
+.video-section {
+  width: 100%;
+  min-height: 80vh;  /* Or set any desired value here */
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+/* Optional - Remove gap below video section */
+.next-section {
+  margin-top: 0;
+  padding-top: 0;
+}
 
 
 
@@ -237,11 +260,7 @@ border-radius: 50%;
   color: black;
 }
 
-#myVideo {
-  width: 100%;
-  height: 50vh;  /* Restricts the height of the video to 50% of the viewport height */
-  object-fit: cover;  /* Ensures the video covers the area without distortion */
-}
+
 
 .content {
   position: absolute;
@@ -254,11 +273,11 @@ border-radius: 50%;
 }
 
 #components {
-  margin-top: 50vh;
+  margin-top: 0vh;
 
 }
 .offer{
-background-color:red;
+background-color: #9954BA;
 }
 
 
@@ -272,11 +291,6 @@ background-color:red;
   overflow: hidden;
 }
 
-.background-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 .overlay {
   position: absolute;
@@ -288,14 +302,42 @@ background-color:red;
   z-index: 1;
 }
 
-.top-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: white;
+.main_text {
+font-size: 32px;
+color: #ffc16f;
+text-shadow: 0 0 10px #ffa500, 0 0 20px #ff8c00, 0 0 30px #ff6600;
 }
 
-.top-content h1,
-.top-content h3 {
-  margin: 0.5em 0;
+.image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.purple-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(128, 0, 128, 0.35); /* Purple with 35% opacity */
+  mix-blend-mode: multiply;            /* Makes it blend naturally */
+  pointer-events: none;                /* Keeps it non-interactive */
+  border-radius: 0.5rem;               /* Optional: soft rounded edges */
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #bc6ff4;  /* Blue background */
+    color: white;  /* White text */
+    border-radius: 5px;  /* Rounded corners */
+    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+}
+
+.btn:hover {
+    background-color: #ffc16f;  /* Darker blue when hovered */
 }

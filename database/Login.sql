@@ -1,6 +1,5 @@
--- drop database Login;
 create database Login;
-
+-- drop database Login;
 use Login;
 
 create table User
@@ -100,11 +99,11 @@ create table ProductOrders
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 ALTER TABLE ProductOrders ADD COLUMN Status VARCHAR(20) DEFAULT 'Processing';
-ALTER TABLE ProductOrders 
+ALTER TABLE ProductOrders
 DROP COLUMN Status;
 
-ALTER TABLE ProductOrders 
-ADD COLUMN OrderStatusID INT DEFAULT 1, 
+ALTER TABLE ProductOrders
+ADD COLUMN OrderStatusID INT DEFAULT 1,
 ADD FOREIGN KEY (OrderStatusID) REFERENCES OrderStatus(OrderStatusID);
 
 
@@ -147,7 +146,7 @@ ExperienceLevelKey VARCHAR (20) NOT NULL
 );
 
 INSERT INTO ExperienceLevel (ExperienceLevelKey)
-VALUES 
+VALUES
 ('Light'),
 ('Moderate'),
 ('High');
@@ -239,11 +238,11 @@ CREATE TABLE CancelExperienceRequests (
 SHOW COLUMNS FROM CancelExperienceRequests;
 
 
-ALTER TABLE CancelExperienceRequests 
+ALTER TABLE CancelExperienceRequests
 DROP COLUMN Status;
 
-ALTER TABLE CancelExperienceRequests 
-ADD COLUMN CancelStatusID INT DEFAULT 1, 
+ALTER TABLE CancelExperienceRequests
+ADD COLUMN CancelStatusID INT DEFAULT 1,
 ADD FOREIGN KEY (CancelStatusID) REFERENCES CancelStatus(CancelStatusID);
 
 
@@ -287,25 +286,25 @@ SELECT OrderDate FROM Orders WHERE OrderID = 15;
         FROM BookingExperience b
         JOIN Experiences e ON e.ExperienceID = b.ExperienceID
         WHERE b.OrderID = 15;
-        
+
 SELECT P.ProductName, P.ProductImage, P.ProductPrice, OP.Quantity, O.OrderDate
         FROM ProductOrders OP
         JOIN Product P ON OP.ProductID = P.ProductID
         JOIN Orders O ON OP.OrderID = O.OrderID
         WHERE O.UserID =1
         ORDER BY O.OrderDate DESC;
-        
-SELECT 
+
+SELECT
             E.ExperienceName, E.ExperienceImage, E.ExperiencePrice,
             B.Guests, B.BookingDate, B.BookingTime, B.BookingID,
-            (SELECT Status FROM CancelExperienceRequests 
+            (SELECT Status FROM CancelExperienceRequests
              WHERE BookingID = B.BookingID AND UserID = 1 LIMIT 1) AS CancelStatus
         FROM BookingExperience B
         JOIN Experiences E ON B.ExperienceID = E.ExperienceID
         JOIN Orders O ON B.OrderID = O.OrderID
         WHERE O.UserID = 1
         ORDER BY B.BookingDate DESC;
-        
+
 SELECT c.CancelRequestID, c.RequestDate, cs.StatusName AS Status, u.FirstName, u.LastName, u.Email,
                e.ExperienceName, b.BookingDate
         FROM CancelExperienceRequests c

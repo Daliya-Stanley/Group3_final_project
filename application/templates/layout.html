@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enchanted Getaway | {% block title%} {% endblock%}</title>
+    <title>Enchanted Getaways | {% block title%} {% endblock%}</title>
     <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'styles.css') }}">
      <link rel="stylesheet" href="{{ url_for('static', filename= 'frozen_styles.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+        background-color: #9954BA;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,6 +45,10 @@
     <img src="{{ url_for('static', filename='images/EG_logo_transparent.png') }}" alt="Enchanted Getaways" height="45px">
     <h4 class="mb-0">Enchanted Getaways</h4>
   </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
 
   <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
     <ul class="navbar-nav">
@@ -171,7 +180,7 @@
     <img src="{{url_for('static', filename = 'images/EG_logo_transparent.png') }}" width="50" height="125" style="display: block; margin: 0 auto; width: 150px;">
 <p style="background-color: #9954BA;"> &copy; Enchanted Getaways 2025</p>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-YUe2LzesAfftltw+PEaao2tjU/QATaW/rOitAq67e0CT0Zi2VVRL0oC4+gAaeBKu" crossorigin="anonymous"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
   const toastElList = [].slice.call(document.querySelectorAll('.toast'));
