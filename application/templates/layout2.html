@@ -28,6 +28,7 @@
 {% if 'user_email' in session %}
 <div id="booking-form" class="scroll-anchor"></div>
 <section class="booking-bar">
+    <h3 style="text-align: center;">Book you holiday here and start the magical journey.</h3>
   <form class="booking-form" method="POST" action="{{ url_for('add_to_destination_cart', destination_id=destination.DestinationID) }}">
     <input type="date" name="checkin" class="flatpickr-date" placeholder="Start date" required/>
     <input type="date" name="checkout" class="flatpickr-date" placeholder="End date" required />
@@ -35,6 +36,7 @@
     <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
     <button type="submit" class="btn-submit">Book Now</button>
   </form>
+
 </section>
 {% else %}
 <div style="text-align:center;">
@@ -73,7 +75,7 @@
     altInput: true,
     altFormat: "F j, Y",
     dateFormat: "Y-m-d",
-    minDate: "today"
+    minDate: new Date().fp_incr(1),
   });
 </script>
 {% endblock %}

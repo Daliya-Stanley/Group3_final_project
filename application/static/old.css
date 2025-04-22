@@ -1,0 +1,54 @@
+
+.top-section{
+height: 100vh;
+            position: relative;
+            top:0;
+            max-width: auto;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: "Pattaya", sans-serif;
+            height: 100vh;
+            position: relative;
+            top:0;
+            max-width: auto;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+}
+
+#customer-feedback {
+     width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: none;
+    font-family: "Quicksand", sans-serif;
+}
+
+#customer-feedback .carousel-inner {
+  margin: 0 auto;
+  max-width: 700px;
+  max-hegiht: 500px;
+  font-family: "Pattaya", sans-serif;
+}
+
+#feedback{
+background-color: #9954BA;
+}
+
+.review {
+  font-family: 'Quicksand', sans-serif;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  color: #303633;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  }

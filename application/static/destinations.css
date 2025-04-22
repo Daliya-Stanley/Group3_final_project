@@ -28,7 +28,6 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
   color: #f2c7ff;
 }
 
@@ -188,7 +187,7 @@ a:hover {
 
 .booking-form input,
 .booking-form button {
-  padding: 0.9rem 1rem;
+  padding: 3rem 1rem;
   border-radius: 10px;
   font-size: 1rem;
   border: none;
@@ -196,7 +195,7 @@ a:hover {
 }
 
 .booking-form input {
-  background-color: #ffffffee;
+  background-color: #9966cc;
   color: #000;
 }
 
@@ -280,3 +279,8 @@ section {
 .booking-form input[type="number"] {
 }
 
+::placeholder {
+  color: white; /* Darker grey */
+  opacity: 2;     /* Make it fully visible */
+  font-family: "Quicksand", sans-serif; /* Optional if you want to change font too */
+}
