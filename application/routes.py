@@ -665,13 +665,60 @@ def my_account():
 
 @app.route("/cinderella_kingdom")
 def cinderella_kingdom():
+    destination = get_destination_by_name("Cinderella’s_Kingdom")
+    cards = [
+  {
+    "title": "Attend the Grand Ball",
+    "short_text": "",
+    "text": "Dress in your finest attire and dance the night away. Join fellow guests for a night of enchanting music, delightful dances and a chance to meet magical characters!",
+    "img": "grand_ball.jpg",
+    "alt": "Guests dancing at the Grand Ball"
+  },
+  {
+    "title": "Explore the Enchanted Gardens",
+    "short_text": "",
+    "text": "Wander through the beautiful Enchanted Gardens, where every flower tells a tale. Enjoy magical picnics or simply relax admist the fragrant blooms filled with butterflies.",
+    "img": "enchanted_gardens.jpg",
+    "alt": "Beautiful flowers"
+  },
+{
+    "title": "Meet the Fairy godmother",
+    "short_text": "",
+    "text": "Get a chance to meet your very own Fairy godmother. She’s ready to sprinkle a little magic into your life! Share your dreams and see them come to pass with her help.",
+    "img": "fairy_godmother.jpg",
+    "alt": "Fairy godmother assisting guests"
+  },
+
+  {
+    "title": "The Mystical Cinderella Carriage",
+    "short_text": "",
+    "text": "Shimmering chariot woven from moonlight and magic, where dreams take flight. Take a ride on the carriage Cinderella rode to meet her Prince Charming.",
+    "img": "carriage3.jpg",
+    "alt": "Beautiful carriage"
+  },
+    {
+    "title": "Vanishing Glass Slippers",
+    "short_text": "",
+    "text": "Race against time in this exquisite Glass Slippers, for in them lie a fairy tale waiting to be awakened!",
+    "img": "glass_slippers.jpg",
+    "alt": "Beautiful Glass Slippers"
+  },
+  {
+    "title": "Magical Mystery Dress",
+    "short_text": "",
+    "text": " Adorned with sparkling gems and twinkling fairy dust, this magical dress transforms a person into royalty!",
+    "img": "magic_dress.jpg",
+    "alt": "Cinderella’s Dress"
+  }]
     return render_template(
         "cinderellas_kingdom.html",
-        title_head="Cinderella's Kingdom",
-        title_body="Cinderella's Kingdom",
-        subtitle='★ Welcome to the destination where wishes come true ★',
-        img="static/images/cinderella.jpg"
-    )
+        cards=cards,
+        hero_title="Cinderella's Kingdom",
+        hero_subtitle="The Mystical Cinderella’s Kingdom",
+        intro_title="★ The Destination where wishes come true★",
+        css_file="cinderella.css",
+        destination=destination
+)
 
 
 #context processor is used to inject the cart_count variable into the context of every template rendered by the application
