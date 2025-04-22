@@ -235,6 +235,16 @@ CREATE TABLE CancelExperienceRequests (
   FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
+CREATE TABLE CancelDestinationRequests (
+  CancelRequestID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  BookingDestinationID INT NOT NULL,
+  UserID INT NOT NULL,
+  RequestDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CancelStatus VARCHAR(20) DEFAULT 'Pending',
+  FOREIGN KEY (BookingDestinationID) REFERENCES BookingDestination(BookingDestinationID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
 SHOW COLUMNS FROM CancelExperienceRequests;
 
 
@@ -320,3 +330,20 @@ select * from Product;
 use login;
 select * from bookingexperience;
 select * from bookingdestination;
+select * from Destinations;
+
+        SELECT *
+        FROM (
+            SELECT 
+                b.ExperienceID,
+                b.ReviewText,
+                b.Rating,
+                b.BookingDate,
+                u.FirstName,
+                u.LastName,
+                ROW_NUMBER() OVER (PARTITION BY b.ExperienceID ORDER BY b.BookingDate DESC) AS row_num
+            FROM BookingExperience b
+            JOIN User u ON b.UserID = u.UserID
+            WHERE b.ReviewText IS NOT NULL AND b.ExperienceID = 1
+        ) AS ranked
+        WHERE row_num <= 5

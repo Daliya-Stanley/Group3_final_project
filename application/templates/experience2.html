@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='experience.css') }}">
 
 <!-- Hero Gallery -->
@@ -105,14 +106,24 @@
             {% if experience.reviews %}
               <div id="carouselReviews{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  {% for review in experience.reviews %}
+                  {% for review in experience.reviews if review.text %}
                   <div class="carousel-item {% if loop.first %}active{% endif %}">
                     <blockquote class="blockquote ps-3 fst-italic">
                       <p>"{{ review.text }}"</p>
-                      <footer class="blockquote-footer">{{ review.author }}</footer>
+                      <footer class="blockquote-footer">
+                        {{ review.author }}<br>
+                        {% for star in range(1, 6) %}
+                          {% if review.rating is not none and star <= review.rating %}
+                            <i class="bi bi-star-fill text-warning"></i>
+                          {% else %}
+                            <i class="bi bi-star text-warning"></i>
+                          {% endif %}
+                        {% endfor %}
+                      </footer>
                     </blockquote>
                   </div>
-                  {% endfor %}
+                {% endfor %}
+
                 </div>
                 {% if experience.reviews|length > 1 %}
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews{{ loop.index }}" data-bs-slide="prev">
@@ -124,6 +135,7 @@
                   <span class="visually-hidden">Next</span>
                 </button>
                 {% endif %}
+
               </div>
             {% else %}
               <p class="fst-italic text-muted">No reviews yet.</p>
