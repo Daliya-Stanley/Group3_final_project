@@ -103,14 +103,33 @@
           <div class="mt-4">
             <h6 class="fw-bold">What Our Clients Say</h6>
             {% if experience.reviews %}
-              <blockquote class="blockquote border-start ps-3 fst-italic">
-                <p>"{{ experience.reviews[0].text }}"</p>
-                <footer class="blockquote-footer">{{ experience.reviews[0].author }}</footer>
-              </blockquote>
+              <div id="carouselReviews{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  {% for review in experience.reviews %}
+                  <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <blockquote class="blockquote ps-3 fst-italic">
+                      <p>"{{ review.text }}"</p>
+                      <footer class="blockquote-footer">{{ review.author }}</footer>
+                    </blockquote>
+                  </div>
+                  {% endfor %}
+                </div>
+                {% if experience.reviews|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselReviews{{ loop.index }}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselReviews{{ loop.index }}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+                {% endif %}
+              </div>
             {% else %}
               <p class="fst-italic text-muted">No reviews yet.</p>
             {% endif %}
           </div>
+
 
         </div>
       </div>

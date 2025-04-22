@@ -610,3 +610,41 @@ def update_user_password(user_id, new_password):
     finally:
         cursor.close()
         conn.close()
+
+def get_reviews_for_experience(experience_id):
+        print(f"experience id",type(experience_id))
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT *
+        FROM (
+            SELECT 
+                b.ExperienceID,
+                b.ReviewText,
+                b.Rating,
+                b.BookingDate,
+                u.FirstName,
+                u.LastName,
+                ROW_NUMBER() OVER (PARTITION BY b.ExperienceID ORDER BY b.BookingDate DESC) AS row_num
+            FROM BookingExperience b
+            JOIN User u ON b.UserID = u.UserID
+            WHERE b.ReviewText IS NOT NULL AND b.ExperienceID = %s
+        ) AS ranked
+        WHERE row_num <= 5
+          """, (experience_id,))
+        rows = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        # Construct a clean list of review dicts
+        reviews = []
+        for row in rows:
+            reviews.append({
+                'text': row['ReviewText'],
+                'rating': row['Rating'],
+                'author': f"{row['FirstName']}",
+                'date': row['BookingDate'].strftime("%B %d, %Y") if row['BookingDate'] else None
+            })
+
+        return reviews

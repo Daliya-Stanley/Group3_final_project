@@ -335,6 +335,12 @@ def experience_page():
         filename for filename in os.listdir(image_dir)
         if filename.startswith("gallery") and filename.lower().endswith((".jpg", ".png", ".jpeg", ".webp"))
     ])
+
+    for experience in experience_list:
+        exp_id = experience['experienceid']
+        experience['reviews'] = get_reviews_for_experience(int(exp_id))
+    print(experience_list)
+
     return render_template('experience2.html', title_head='Magical Experience', experiences = experience_list,gallery_images=gallery_images)
 
 
