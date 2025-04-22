@@ -28,7 +28,7 @@
 {% if 'user_email' in session %}
 <div id="booking-form" class="scroll-anchor"></div>
 <section class="booking-bar">
-    <h3 style="text-align: center;">Book you holiday here and start the magical journey.</h3>
+    <h3 style="text-align: center;">Book you holiday here and start the magical journey just for £{{destination.DestinationPricePerNight}} /night/person.</h3>
   <form class="booking-form" method="POST" action="{{ url_for('add_to_destination_cart', destination_id=destination.DestinationID) }}">
     <input type="date" name="checkin" class="flatpickr-date" placeholder="Start date" required/>
     <input type="date" name="checkout" class="flatpickr-date" placeholder="End date" required />
