@@ -25,7 +25,9 @@
 
 <!-- Booking Form (scroll target) -->
 {% if 'user_email' in session %}
+<br>
 <div id="booking-form" class="scroll-anchor"></div>
+<h3 style="text-align: center">Book your holiday here and start your magical journey with us!</h3>
 <section class="booking-bar">
     <form class="booking-form" method="POST" action="{{ url_for('add_to_destination_cart', destination_id=destination.DestinationID) }}">
 
