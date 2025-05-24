@@ -85,6 +85,16 @@ CREATE TABLE OrderStatus (
 INSERT INTO OrderStatus (StatusName)
 VALUES ('Pending'), ('Shipped'), ('Delivered');
 
+select * from Orders;
+select * from BookingDestination;
+select * from ProductOrders;
+DELETE from ProductOrders where ProductOrdersID = 10;
+select * from BookingExperience;
+DELETE from Orders where OrderID = 17;
+DELETE from BookingExperience where BookingID = 16;
+DELETE from BookingDestination where BookingDestinationID = 4;
+SELECT * from CancelDestinationRequests;
+DELETE from CancelDestinationRequests where CancelRequestID = 3;
 
 create table ProductOrders
 (
